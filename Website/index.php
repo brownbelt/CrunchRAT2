@@ -122,10 +122,16 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="">Hunter's MacBook Pro</a>
+                                <a href="">Hunter's MacBook Pro (664)</a> <!-- Where "664" is the PID -->
                             </li>
                             <li>
-                                <a href="">t3ntman's iMac</a>
+                                <a href="">Hunter's MacBook Pro (1238)</a> <!-- Where "1238" is the PID -->
+                            </li>
+                            <li>
+                                <a href="">Hunter's MacBook Pro (6890)</a> <!-- Where "6890" is the PID -->
+                            </li>
+                            <li>
+                                <a href="">t3ntman's iMac (7364)</a> <!-- Where "7364" is the PID -->
                             </li>
                         </ul>
                     </li>
