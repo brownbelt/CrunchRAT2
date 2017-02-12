@@ -1,5 +1,11 @@
 <?php
-    // PHP code here
+    # Includes MySQL connector information
+    include "config/connector.php";
+
+    # Establishes a connection to the RAT database
+    # Uses MySQL connector information from "config/connector.php"
+    # "SET NAMES utf8" is necessary to be Unicode-friendly
+    $DatabaseConnection = new PDO("mysql:host=localhost;dbname=$DatabaseName", $DatabaseUser, $DatabasePass, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
 ?>
 
 <!doctype html>
