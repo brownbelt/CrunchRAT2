@@ -6,6 +6,20 @@
     # Uses MySQL connector information from "config/connector.php"
     # "SET NAMES utf8" is necessary to be Unicode-friendly
     $DatabaseConnection = new PDO("mysql:host=localhost;dbname=$DatabaseName", $DatabaseUser, $DatabasePass, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+
+    # Gets total number of listeners for "Listeners" widget
+    $Statement = $DatabaseConnection->prepare("SELECT * FROM listeners");
+    $Statement->execute();
+    $ListenersCount = $Statement->rowCount();
+
+    # Gets total number of implants for "Implants" widget
+    $Statement = $DatabaseConnection->prepare("SELECT * FROM hosts");
+    $Statement->execute();
+    $ImplantsCount = $Statement->rowCount();
+
+    # TO DO: Get total number of online users here (similar to SQL command above)
+
+    # TO DO: Get total number of tasks here (similar to SQL command above)
 ?>
 
 <!doctype html>
@@ -190,7 +204,7 @@
                             </div>
                             <div class="content">
                                 <div class="text">IMPLANTS</div>
-                                <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20"></div> <!-- TO DO: Dynmically-generate this content -->
+                                <div class="number count-to" data-from="0" data-to="<?php echo $ImplantsCount; ?>" data-speed="15" data-fresh-interval="20"></div>
                             </div>
                         </div>
                     </div>
@@ -202,7 +216,7 @@
                             </div>
                             <div class="content">
                                 <div class="text">LISTENERS</div>
-                                <div class="number count-to" data-from="0" data-to="2" data-speed="1000" data-fresh-interval="20"></div> <!-- TO DO: Dynamically-generate this content -->
+                                <div class="number count-to" data-from="0" data-to="<?php echo $ListenersCount; ?>" data-speed="1000" data-fresh-interval="20"></div>
                             </div>
                         </div>
                     </div>
