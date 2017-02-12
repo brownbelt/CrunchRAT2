@@ -17,9 +17,10 @@
     $Statement->execute();
     $ImplantsCount = $Statement->rowCount();
 
-    # TO DO: Get total number of online users here (similar to SQL command above)
-
-    # TO DO: Get total number of tasks here (similar to SQL command above)
+    # Gets total number of tasks
+    $Statement = $DatabaseConnection->prepare("SELECT * FROM tasks");
+    $Statement->execute();
+    $TasksCount = $Statement->rowCount();
 ?>
 
 <!doctype html>
@@ -220,18 +221,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- "Users Online" widget -->
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <div class="info-box bg-orange hover-expand-effect">
-                            <div class="icon">
-                                <i class="material-icons">mood</i>
-                            </div>
-                            <div class="content">
-                                <div class="text">USERS ONLINE</div>
-                                <div class="number count-to" data-from="0" data-to="4" data-speed="1000" data-fresh-interval="20"></div> <!-- TO DO: Dynamically-generate this content -->
-                            </div>
-                        </div>
-                    </div>
                     <!-- "Tasks" widget -->
                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                         <div class="info-box bg-green hover-expand-effect">
@@ -240,7 +229,7 @@
                             </div>
                             <div class="content">
                                 <div class="text">TASKS</div>
-                                <div class="number count-to" data-from="0" data-to="10" data-speed="1000" data-fresh-interval="20"></div> <!-- TO DO: Dynamically-generate this content -->
+                                <div class="number count-to" data-from="0" data-to="<?php echo $TasksCount; ?>" data-speed="1000" data-fresh-interval="20"></div> <!-- TO DO: Dynamically-generate this content -->
                             </div>
                         </div>
                     </div>
