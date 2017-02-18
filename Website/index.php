@@ -125,7 +125,7 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="">View All Users</a>
+                                <a href="">View All</a>
                             </li>
                             <li>
                                 <a href="">Add User</a>
@@ -156,6 +156,9 @@
                                 <a href="">t3ntman's iMac (7364)</a>
                             </li>
                             -->
+                            <li>
+                                <a href="hosts.php?hostname=all">View All</a>
+                            </li>
                             <?php
                                 $Statement = $DatabaseConnection->prepare("SELECT `hostname`, `process_id` FROM hosts");
                                 $Statement->execute();
