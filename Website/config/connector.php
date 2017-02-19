@@ -1,5 +1,5 @@
 <?php
-	$DatabaseUser = "root";
-	$DatabasePass = "root";
-	$DatabaseName = "RAT";
+	$database_user = "root";
+	$database_pass = "root";
+	$database_name = "RAT";
 ?>
