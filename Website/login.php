@@ -36,6 +36,12 @@
                 <button type="submit" class="btn btn-def btn-block">Login</button>
             </div>
         </form><!-- End login form -->
+        <br>
+        <?php
+            if (isset($_GET["err"])) {
+                echo "<div class='alert alert-danger'><strong>Invalid credentials supplied.</strong></div>";
+            }
+        ?>
     </body>
 
     <!-- JavaScript -->
