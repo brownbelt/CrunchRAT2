@@ -3,6 +3,7 @@
     session_start();
 
     include "connector.php";
+    include "generateDashboard.php";
 
     # If unauthenticated
     if (!isset($_SESSION["authenticated"])) {
@@ -66,12 +67,12 @@
                                 <li class="footer">
                                     <a href="notifications.php">View All Notifications</a>
                                 </li>
-                            </ul> <!-- End of unread notifications -->
+                            </ul><!-- End of unread notifications -->
                         </li>
                     </ul>
-                </div> <!-- End of notifications drop-down -->
+                </div><!-- End of notifications drop-down -->
             </div>
-        </nav> <!-- End of navigation bar (top) -->
+        </nav><!-- End of navigation bar (top) -->
 
         <!-- Start of navigation bar (left) -->
         <section>
@@ -82,17 +83,17 @@
                     <img src="images/Bebop.png" width="48" height="48" alt="User" />
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">t3ntman</div> <!-- TO DO: Dynamically-generate this -->
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION["username"]; ?></div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href=""><i class="material-icons">person</i>User Profile</a></li>
+                            <li><a href="">Change Password</a></li>
                             <li role="seperator" class="divider"></li>
-                            <li><a href=""><i class="material-icons">input</i>Sign Out</a></li>
+                            <li><a href="logout.php"><i class="material-icons">input</i>Sign Out</a></li>
                         </ul>
                     </div>
                 </div>
-            </div> <!-- End of user information -->
+            </div><!-- End of user information -->
 
             <!-- Start of left menu links -->
             <div class="menu">
@@ -112,7 +113,7 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="">View All</a>
+                                <a href="">View All Users</a>
                             </li>
                             <li>
                                 <a href="">Add User</a>
@@ -129,36 +130,18 @@
                             <span>Implanted Systems</span>
                         </a>
                         <ul class="ml-menu">
-                            <!-- 
                             <li>
-                                <a href="">Hunter's MacBook Pro (664)</a>
+                                <a href="">Hunter's MacBook Pro (664)</a><!-- Where "664" is the PID -->
                             </li>
                             <li>
-                                <a href="">Hunter's MacBook Pro (1238)</a>
+                                <a href="">Hunter's MacBook Pro (1238)</a><!-- Where "1238" is the PID -->
                             </li>
                             <li>
-                                <a href="">Hunter's MacBook Pro (6890)</a>
+                                <a href="">Hunter's MacBook Pro (6890)</a><!-- Where "6890" is the PID -->
                             </li>
                             <li>
-                                <a href="">t3ntman's iMac (7364)</a>
+                                <a href="">t3ntman's iMac (7364)</a><!-- Where "7364" is the PID -->
                             </li>
-                            -->
-                            <li>
-                                <a href="hosts.php?hostname=all">View All</a>
-                            </li>
-                            <?php
-                                $Statement = $DatabaseConnection->prepare("SELECT `hostname`, `process_id` FROM hosts");
-                                $Statement->execute();
-                                $results = $Statement->fetchAll();
-
-                                foreach ($results as $row)
-                                {
-                                    echo "<li>";
-                                    # TO DO: Add in hyperlink with the associated "pid" and "hostname" HTTP GET parameters
-                                    echo "<a href=\"\">" . $row["hostname"] . " (" . $row["process_id"] . ") " . "</a>";
-                                    echo "</li>";
-                                }
-                            ?>
                         </ul>
                     </li>
                     <!-- Payload Generator -->
@@ -191,9 +174,9 @@
                         </a>
                     </li>
                 </ul>
-            </div> <!-- End of left menu links -->
+            </div><!-- End of left menu links -->
             </aside>
-        </section> <!-- End of navigation bar (left) -->
+        </section><!-- End of navigation bar (left) -->
 
         <!-- Start of dashboard -->
         <section class="content">
@@ -210,7 +193,7 @@
                             </div>
                             <div class="content">
                                 <div class="text">IMPLANTS</div>
-                                <div class="number count-to" data-from="0" data-to="<?php echo $ImplantsCount; ?>" data-speed="15" data-fresh-interval="20"></div>
+                                <div class="number count-to" data-from="0" data-to="<?php echo get_implants_count(); ?>" data-speed="15" data-fresh-interval="20"></div>
                             </div>
                         </div>
                     </div>
@@ -222,7 +205,7 @@
                             </div>
                             <div class="content">
                                 <div class="text">LISTENERS</div>
-                                <div class="number count-to" data-from="0" data-to="<?php echo $ListenersCount; ?>" data-speed="1000" data-fresh-interval="20"></div>
+                                <div class="number count-to" data-from="0" data-to="<?php echo get_listeners_count(); ?>" data-speed="1000" data-fresh-interval="20"></div>
                             </div>
                         </div>
                     </div>
@@ -234,13 +217,14 @@
                             </div>
                             <div class="content">
                                 <div class="text">TASKS</div>
-                                <div class="number count-to" data-from="0" data-to="<?php echo $TasksCount; ?>" data-speed="1000" data-fresh-interval="20"></div> <!-- TO DO: Dynamically-generate this content -->
+                                <div class="number count-to" data-from="0" data-to="<?php echo get_tasks_count(); ?>" data-speed="1000" data-fresh-interval="20"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section> <!-- End of dashboard -->
+        </section><!-- End of dashboard -->
+
         <!-- JavaScript -->
         <script src="plugins/jquery/jquery.min.js"></script>
         <script src="plugins/bootstrap/js/bootstrap.js"></script>
