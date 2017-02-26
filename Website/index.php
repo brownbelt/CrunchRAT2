@@ -1,29 +1,16 @@
 <?php
-    # Includes MySQL connector information
-    include "config/connector.php";
+    # Necessary at the top of every page for session management
+    session_start();
 
-    # Establishes a connection to the RAT database
-    # Uses MySQL connector information from "config/connector.php"
-    # "SET NAMES utf8" is necessary to be Unicode-friendly
-    $DatabaseConnection = new PDO("mysql:host=localhost;dbname=$DatabaseName", $DatabaseUser, $DatabasePass, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+    include "connector.php";
 
-    # Gets total number of listeners for "Listeners" widget
-    $Statement = $DatabaseConnection->prepare("SELECT * FROM listeners");
-    $Statement->execute();
-    $ListenersCount = $Statement->rowCount();
-
-    # Gets total number of implants for "Implants" widget
-    $Statement = $DatabaseConnection->prepare("SELECT * FROM hosts");
-    $Statement->execute();
-    $ImplantsCount = $Statement->rowCount();
-
-    # Gets total number of tasks
-    $Statement = $DatabaseConnection->prepare("SELECT * FROM tasks");
-    $Statement->execute();
-    $TasksCount = $Statement->rowCount();
+    # If unauthenticated
+    if (!isset($_SESSION["authenticated"])) {
+        header("Location: 403.php");
+    }
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">

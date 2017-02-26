@@ -20,6 +20,7 @@
         <div class='alert alert-danger'>
             <strong>You are not authorized for the requested resource.</strong>
         </div>
+        <h5>Click <a class="text-info" href="login.php">here</a> to login</h5>
     </body>
 
     <!-- JavaScript -->
