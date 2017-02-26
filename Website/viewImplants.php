@@ -163,7 +163,7 @@
                     </li>
                     <!-- Listeners -->
                     <li>
-                        <a href="">
+                        <a href="viewListeners.php">
                             <i class="material-icons">phone</i>
                             <span>Listeners</span>
                         </a>
