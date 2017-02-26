@@ -1,7 +1,7 @@
 <?php
     function get_implants_count() {
         # Purpose: This function gets the total number of listeners
-        # Returns: Implants count
+        # Returns: Returns an integer that contains the total number of implants
         include "connector.php";
         $statement = $database_connection->prepare("SELECT * FROM `implants`");
         $statement->execute();
@@ -11,7 +11,7 @@
 
     function get_listeners_count() {
         # Purpose: This function gets the total number of listeners
-        # Returns: Listener count
+        # Returns: Returns an integer that contains the total number of listeners
         include "connector.php";
         $statement = $database_connection->prepare("SELECT * FROM `listeners`");
         $statement->execute();
@@ -21,7 +21,7 @@
 
     function get_tasks_count() {
         # Purpose: This function gets the total number of tasks
-        # Returns: Tasks count
+        # Returns: Returns an integer that contains the total number of tasks
         include "connector.php";
         $statement = $database_connection->prepare("SELECT * FROM `tasks`");
         $statement->execute();
