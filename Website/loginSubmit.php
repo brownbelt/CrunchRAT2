@@ -21,6 +21,8 @@
     $statement->execute();
     $row_count = $statement->rowCount();
 
+    $statement->connection = null;
+
     # If valid authentication
     if ($row_count == 1) {
         $_SESSION["authenticated"] = 1;
