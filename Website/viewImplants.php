@@ -22,12 +22,15 @@
         <!-- CSS -->
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&amp;subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
-        <link href="plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
-        <link href="plugins/node-waves/waves.css" rel="stylesheet" />
-        <link href="plugins/animate-css/animate.css" rel="stylesheet" />
-        <link href="plugins/morrisjs/morris.css" rel="stylesheet" />
-        <link href="css/style.css" rel="stylesheet">
-        <link href="css/themes/all-themes.css" rel="stylesheet" />
+        <link href="plugins/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+        <link href="plugins/node-waves/waves.css" rel="stylesheet" type="text/css">
+        <link href="plugins/animate-css/animate.css" rel="stylesheet" type="text/css">
+        <link href="plugins/morrisjs/morris.css" rel="stylesheet" type="text/css">
+        <link href="css/style.css" rel="stylesheet" type="text/css">
+        <link href="css/themes/all-themes.css" rel="stylesheet" type="text/css">
+        <link href="plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css">
+    </head>
+
     </head>
 
     <body class="theme-red">
@@ -177,52 +180,53 @@
             </aside>
         </section><!-- End of navigation bar (left) -->
 
-        <!-- Start of dashboard -->
+        <!-- Start of main content -->
         <section class="content">
             <div class="container-fluid">
-                <div class="block-header">
-                    <h2>DASHBOARD</h2>
-                </div>
+                <!-- Start of dataTable -->
                 <div class="row clearfix">
-                    <!-- "Implants" widget -->
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <div class="info-box bg-red hover-expand-effect">
-                            <div class="icon">
-                                <i class="material-icons">computer</i>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2>IMPLANTS</h2>
                             </div>
-                            <div class="content">
-                                <div class="text">IMPLANTS</div>
-                                <div class="number count-to" data-from="0" data-to="<?php echo get_implants_count(); ?>" data-speed="15" data-fresh-interval="20"></div>
+                            <div class="body">
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Hostname</th>
+                                            <th>Username</th>
+                                            <th>Process ID</th>
+                                            <th>Operating System</th>
+                                            <th>Last Seen</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                            # Dynamically builds the dataTable
+                                            $statement = $database_connection->prepare("SELECT `hostname`, `current_user`, `process_id`, `os`, `last_seen` FROM implants");
+                                            $statement->execute();
+                                            $results = $statement->fetchAll();
+                                            $statement->connection = null;
+
+                                            foreach ($results as $row) {
+                                                echo "<tr>";
+                                                echo "<td>" . $row["hostname"] ."</td>";
+                                                echo "<td>" . $row["current_user"] ."</td>";
+                                                echo "<td>" . $row["process_id"] ."</td>";
+                                                echo "<td>" . $row["os"] ."</td>";
+                                                echo "<td>" . $row["last_seen"] ."</td>";
+                                                echo "</tr>";
+                                            }
+                                        ?>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <!-- "Listeners" widget -->
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <div class="info-box bg-cyan hover-expand-effect">
-                            <div class="icon">
-                                <i class="material-icons">phone</i>
-                            </div>
-                            <div class="content">
-                                <div class="text">LISTENERS</div>
-                                <div class="number count-to" data-from="0" data-to="<?php echo get_listeners_count(); ?>" data-speed="1000" data-fresh-interval="20"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- "Tasks" widget -->
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <div class="info-box bg-green hover-expand-effect">
-                            <div class="icon">
-                                <i class="material-icons">view_list</i>
-                            </div>
-                            <div class="content">
-                                <div class="text">TASKS</div>
-                                <div class="number count-to" data-from="0" data-to="<?php echo get_tasks_count(); ?>" data-speed="1000" data-fresh-interval="20"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </div><!-- End of dataTable -->
             </div>
-        </section><!-- End of dashboard -->
+        </section><!-- End of main content -->
 
         <!-- JavaScript -->
         <script src="plugins/jquery/jquery.min.js"></script>
@@ -230,17 +234,17 @@
         <script src="plugins/bootstrap-select/js/bootstrap-select.js"></script>
         <script src="plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
         <script src="plugins/node-waves/waves.js"></script>
-        <script src="plugins/jquery-countto/jquery.countTo.js"></script>
-        <script src="plugins/raphael/raphael.min.js"></script>
-        <script src="plugins/morrisjs/morris.js"></script>
-        <script src="plugins/chartjs/Chart.bundle.js"></script>
-        <script src="plugins/flot-charts/jquery.flot.js"></script>
-        <script src="plugins/flot-charts/jquery.flot.resize.js"></script>
-        <script src="plugins/flot-charts/jquery.flot.pie.js"></script>
-        <script src="plugins/flot-charts/jquery.flot.categories.js"></script>
-        <script src="plugins/flot-charts/jquery.flot.time.js"></script>
-        <script src="plugins/jquery-sparkline/jquery.sparkline.js"></script>
+        <script src="plugins/jquery-datatable/jquery.dataTables.js"></script>
+        <script src="plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+        <script src="plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+        <script src="plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
+        <script src="plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
+        <script src="plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
+        <script src="plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+        <script src="plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+        <script src="plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
         <script src="js/admin.js"></script>
-        <script src="js/pages/index.js"></script>
+        <script src="js/pages/tables/jquery-datatable.js"></script>
+        <script src="js/demo.js"></script>
     </body>
 </html>
