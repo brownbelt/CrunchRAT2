@@ -204,7 +204,7 @@
                                     <tbody>
                                         <?php
                                             # Dynamically builds the dataTable
-                                            $statement = $database_connection->prepare("SELECT `hostname`, `current_user`, `process_id`, `os`, `last_seen` FROM implants");
+                                            $statement = $database_connection->prepare("SELECT `hostname`, `current_user`, `process_id`, `os`, `last_seen` FROM `implants`");
                                             $statement->execute();
                                             $results = $statement->fetchAll();
                                             $statement->connection = null;
