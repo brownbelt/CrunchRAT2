@@ -130,18 +130,16 @@
                             <span>Implanted Systems</span>
                         </a>
                         <ul class="ml-menu">
-                            <li>
-                                <a href="">Hunter's MacBook Pro (664)</a><!-- Where "664" is the PID -->
-                            </li>
-                            <li>
-                                <a href="">Hunter's MacBook Pro (1238)</a><!-- Where "1238" is the PID -->
-                            </li>
-                            <li>
-                                <a href="">Hunter's MacBook Pro (6890)</a><!-- Where "6890" is the PID -->
-                            </li>
-                            <li>
-                                <a href="">t3ntman's iMac (7364)</a><!-- Where "7364" is the PID -->
-                            </li>
+                            <?php
+                                # Dynamically generates "Implanted Systems" links
+                                $statement = $database_connection->prepare("SELECT `hostname`, `process_id` FROM `implants`");
+                                $statement->execute();
+                                $results = $statement->fetchAll();
+
+                                foreach ($results as $row) {
+                                    echo "<li><a href=''>" . $row["hostname"] . " (" . $row["process_id"] . ") " . "</a></li>";
+                                }
+                            ?>
                         </ul>
                     </li>
                     <!-- Payload Generator -->
