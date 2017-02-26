@@ -6,6 +6,7 @@
         $statement = $database_connection->prepare("SELECT * FROM `implants`");
         $statement->execute();
         $implants_count = $statement->rowCount();
+        $statement->connection = null;
         return $implants_count;
     }
 
@@ -16,6 +17,7 @@
         $statement = $database_connection->prepare("SELECT * FROM `listeners`");
         $statement->execute();
         $listeners_count = $statement->rowCount();
+        $statement->connection = null;
         return $listeners_count;
     }
 
@@ -26,6 +28,7 @@
         $statement = $database_connection->prepare("SELECT * FROM `tasks`");
         $statement->execute();
         $tasks_count = $statement->rowCount();
+        $statement->connection = null;
         return $tasks_count;
     }
 ?>
