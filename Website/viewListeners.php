@@ -108,24 +108,6 @@
                             <span>Home</span>
                         </a>
                     </li>
-                    <!-- Users -->
-                    <li>
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">mood</i>
-                            <span>Users</span>
-                        </a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="">View All Users</a>
-                            </li>
-                            <li>
-                                <a href="">Add User</a>
-                            </li>
-                            <li>
-                                <a href="">Remove User</a>
-                            </li>
-                        </ul>
-                    </li>
                     <!-- Implanted Systems -->
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
