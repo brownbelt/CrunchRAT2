@@ -12,9 +12,9 @@
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <meta charset="utf-8">
+        <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <title>CrunchRAT</title>
@@ -39,38 +39,6 @@
                     <a href="" class="bars"></a>
                     <a class="navbar-brand" href="index.php">CrunchRAT</a>
                 </div>
-                <!-- Start of notifications drop-down -->
-                <div class="collapse navbar-collapse" id="navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                                <i class="material-icons">flag</i>
-                                <span class="label-count">79</span> <!-- TO DO: Allow this to be dynamically-generated from "notifications" MySQL table -->
-                            </a>
-                            <!-- Start of unread notifications --> <!-- TO DO: Create "x" to allow marking of a notification as "read" -->
-                            <ul class="dropdown-menu">
-                                <li class="header">UNREAD NOTIFICATIONS</li>
-                                <li class="body">
-                                    <ul class="menu tasks">
-                                        <li>
-                                            <a href=""> <!-- TO DO: Allow this to be dynamically-generated from "notifications" MySQL table -->
-                                                <h4>New Beacon:</h4><h6>t3ntman's MacBook Pro</h6>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href=""> <!-- TO DO: Allow this to be dynamically-generated from "notifications" MySQL table -->
-                                                <h4>New Beacon:</h4><h6>t3ntman's iMac</h6>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="footer">
-                                    <a href="notifications.php">View All Notifications</a>
-                                </li>
-                            </ul><!-- End of unread notifications -->
-                        </li>
-                    </ul>
-                </div><!-- End of notifications drop-down -->
             </div>
         </nav><!-- End of navigation bar (top) -->
 
