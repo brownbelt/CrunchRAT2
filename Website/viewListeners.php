@@ -54,7 +54,7 @@
                     <img src="images/Bebop.png" width="48" height="48" alt="User" />
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION["username"]; ?></div>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo htmlentities($_SESSION["username"]); ?></div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
@@ -91,7 +91,7 @@
                                 $results = $statement->fetchAll();
 
                                 foreach ($results as $row) {
-                                    echo "<li><a href=''>" . $row["hostname"] . " (" . $row["process_id"] . ") " . "</a></li>";
+                                    echo "<li><a href=''>" . htmlentities($row["hostname"]) . " (" . htmlentities($row["process_id"]) . ") " . "</a></li>";
                                 }
                             ?>
                         </ul>
@@ -154,11 +154,11 @@
 
                                             foreach ($results as $row) {
                                                 echo "<tr>";
-                                                echo "<td>" . $row["external_address"] ."</td>";
-                                                echo "<td>" . $row["protocol"] ."</td>";
-                                                echo "<td>" . $row["port"] ."</td>";
-                                                echo "<td>" . $row["beacon_uri"] ."</td>";
-                                                echo "<td>" . $row["update_uri"] ."</td>";
+                                                echo "<td>" . htmlentities($row["external_address"]) ."</td>";
+                                                echo "<td>" . htmlentities($row["protocol"]) ."</td>";
+                                                echo "<td>" . htmlentities($row["port"]) ."</td>";
+                                                echo "<td>" . htmlentities($row["beacon_uri"]) ."</td>";
+                                                echo "<td>" . htmlentities($row["update_uri"]) ."</td>";
                                                 echo "</tr>";
                                             }
                                         ?>
