@@ -115,13 +115,6 @@
                             <span>Listeners</span>
                         </a>
                     </li>
-                    <!-- Tasks -->
-                    <li>
-                        <a href="pages/changelogs.html">
-                            <i class="material-icons">view_list</i>
-                            <span>Tasks</span>
-                        </a>
-                    </li>
                 </ul>
             </div><!-- End of left menu links -->
             </aside>
