@@ -91,6 +91,8 @@
                                     $url = "interact.php?h=" . urlencode($row["hostname"]) . "&pid=" . $row["process_id"];
                                     echo "<li><a href='" . $url . "'>" . htmlentities($row["hostname"]) . " (" . htmlentities($row["process_id"]) . ") " . "</a></li>";
                                 }
+
+                                $statement->connection = null;
                             ?>
                         </ul>
                     </li>

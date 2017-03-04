@@ -94,6 +94,8 @@
                                     $url = "interact.php?h=" . urlencode($row["hostname"]) . "&pid=" . $row["process_id"];
                                     echo "<li><a href='" . $url . "'>" . htmlentities($row["hostname"]) . " (" . htmlentities($row["process_id"]) . ") " . "</a></li>";
                                 }
+
+                                $statement->connection = null;
                             ?>
                         </ul>
                     </li>
@@ -151,7 +153,6 @@
                                             $statement = $database_connection->prepare("SELECT `hostname`, `current_user`, `process_id`, `os`, `last_seen` FROM `implants`");
                                             $statement->execute();
                                             $results = $statement->fetchAll();
-                                            $statement->connection = null;
 
                                             foreach ($results as $row) {
                                                 echo "<tr>";
@@ -162,6 +163,8 @@
                                                 echo "<td>" . htmlentities($row["last_seen"]) ."</td>";
                                                 echo "</tr>";
                                             }
+
+                                            $statement->connection = null;
                                         ?>
                                     </tbody>
                                 </table>
