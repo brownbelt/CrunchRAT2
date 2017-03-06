@@ -160,7 +160,16 @@
                                     <div role="tabpanel" class="tab-pane fade in active" id="command">
                                         <!-- Command Output -->
                                         <div class="form-group">
-                                            <textarea class="form-control" rows="12" readonly>This is example command output here.</textarea>
+                                            <pre id="output"></pre><!-- This will be populated with output from <PID>.log -->
+                                            <script src="plugins/jquery/jquery.min.js" type="text/javascript"></script>
+                                            <script type="text/javascript">
+                                                // Updates "output" id every second
+                                                $("document").ready(function(){
+                                                    setInterval(function(){
+                                                        $("#output").load("getLog.php");
+                                                    },1000);
+                                                });
+                                            </script>
                                         </div>
                                         <!-- "Task Command" form and button -->
                                         <div class="form-group">
