@@ -2,6 +2,11 @@
     # Necessary at the top of every page for session management
     session_start();
 
+    # If unauthenticated
+    if (!isset($_SESSION["authenticated"])) {
+        header("Location: 403.php");
+    }
+
     include "connector.php";
 
     $hostname = $_GET["h"];
