@@ -166,7 +166,7 @@
                                                 // Updates "output" id every second
                                                 $("document").ready(function(){
                                                     setInterval(function(){
-                                                        $("#output").load("getLog.php");
+                                                        $("#output").load("getLog.php?h=Hunter%27s+iMac&pid=1781"); // TO DO: Removed hard-coded URL and generate dynamically
                                                     },1000);
                                                 });
                                             </script>
