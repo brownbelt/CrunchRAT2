@@ -158,6 +158,11 @@
                                 <div class="tab-content">
                                     <!-- "COMMAND" tab -->
                                     <div role="tabpanel" class="tab-pane fade in active" id="command">
+                                        <!-- Command Output -->
+                                        <div class="form-group">
+                                            <textarea class="form-control" rows="12" readonly>This is example command output here.</textarea>
+                                        </div>
+                                        <!-- "Task Command" form and button -->
                                         <div class="form-group">
                                             <div class="form-line">
                                                 <textarea rows="1" class="form-control no-resize auto-growth" placeholder="Command"></textarea>
