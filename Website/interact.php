@@ -158,7 +158,12 @@
                                 <div class="tab-content">
                                     <!-- "COMMAND" tab -->
                                     <div role="tabpanel" class="tab-pane fade in active" id="command">
-                                        <p>Example text here.</p>
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <textarea rows="1" class="form-control no-resize auto-growth" placeholder="Command"></textarea>
+                                            </div>
+                                            <button type="button" class="btn btn-primary m-t-15 waves-effect">TASK COMMAND</button>
+                                        </div>
                                     </div>
                                     <!-- "TASKS" tab -->
                                     <div role="tabpanel" class="tab-pane fade" id="tasks">
