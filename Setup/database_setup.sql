@@ -1,6 +1,7 @@
 CREATE TABLE implants (`hostname` TEXT, `current_user` TEXT, `process_id` TEXT, `os` TEXT, `last_seen` TEXT);
 CREATE TABLE users (`username` TEXT, `hashed_password` TEXT, `salt` TEXT);
 CREATE TABLE listeners (`external_address` TEXT, `protocol` TEXT, `port` TEXT, `beacon_uri` TEXT, `update_uri` TEXT, `crt_file` TEXT, `key_file` TEXT);
+CREATE TABLE tasks (`hostname` TEXT, `task_action` TEXT, `task_secondary` TEXT);
 
 INSERT INTO implants (`hostname`, `current_user`, `process_id`, `os`, `last_seen`) VALUES ("Hunter's iMac", "user", "1781", "Mac OS X 10.8", "2017-02-15 01:32:17");
 INSERT INTO implants (`hostname`, `current_user`, `process_id`, `os`, `last_seen`) VALUES ("Hunter's iMac", "user", "2053", "Mac OS X 10.8", "2017-02-15 01:33:10");
