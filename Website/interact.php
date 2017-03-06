@@ -160,6 +160,13 @@
                                     <div role="tabpanel" class="tab-pane fade in active" id="command">
                                         <!-- Command Output -->
                                         <div class="form-group">
+                                            <!-- Custom CSS to make command output a certain height (and ultimately scroll-able) -->
+                                            <style>
+                                                pre {
+                                                    height: 500px;
+                                                    overflow: auto;
+                                                }
+                                            </style>
                                             <pre id="output"></pre><!-- This will be populated with output from <PID>.log -->
                                             <script src="plugins/jquery/jquery.min.js" type="text/javascript"></script>
                                             <script type="text/javascript">
