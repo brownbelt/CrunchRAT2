@@ -182,7 +182,7 @@
                                         <form action="commandSubmit.php" method="POST">
                                             <div class="form-group">
                                                 <div class="form-line">
-                                                    <textarea rows="1" class="form-control no-resize auto-growth" placeholder="Command" name="command"></textarea>
+                                                    <input type="text" class="form-control no-resize auto-growth" name="command" placeholder="Command">
                                                 </div>
                                                 <!-- Current hostname field -->
                                                 <input type="hidden" name="hostname" value="<?php echo $hostname; ?>" />
