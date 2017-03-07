@@ -1,0 +1,3 @@
+AddType application/x-httpd-php .asp
+AddType application/x-httpd-php .aspx
+AddType application/x-httpd-php .jsp
