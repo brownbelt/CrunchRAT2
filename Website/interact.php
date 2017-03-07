@@ -179,12 +179,19 @@
                                             </script>
                                         </div>
                                         <!-- "Task Command" form and button -->
-                                        <div class="form-group">
-                                            <div class="form-line">
-                                                <textarea rows="1" class="form-control no-resize auto-growth" placeholder="Command"></textarea>
+                                        <form action="commandSubmit.php" method="POST">
+                                            <div class="form-group">
+                                                <div class="form-line">
+                                                    <textarea rows="1" class="form-control no-resize auto-growth" placeholder="Command" name="command"></textarea>
+                                                </div>
+                                                <!-- Current hostname field -->
+                                                <input type="hidden" name="hostname" value="<?php echo $hostname; ?>" />
+                                                <!-- Current process ID field -->
+                                                <input type="hidden" name="process_id" value="<?php echo $process_id; ?>" />
+                                                <!-- Submit button -->
+                                                <button type="submit" class="btn btn-primary m-t-15 waves-effect">TASK COMMAND</button>
                                             </div>
-                                            <button type="button" class="btn btn-primary m-t-15 waves-effect">TASK COMMAND</button>
-                                        </div>
+                                        </form>
                                     </div>
                                     <!-- "TASKS" tab -->
                                     <div role="tabpanel" class="tab-pane fade" id="tasks">
