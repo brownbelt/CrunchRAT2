@@ -31,4 +31,7 @@
 
     # Kills database connection
     $statement->connection = null;
+
+    # Redirects to previous page
+    header("Location: " . $_SERVER["HTTP_REFERER"]);
 ?>
