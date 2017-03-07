@@ -195,33 +195,38 @@
                                     </div>
                                     <!-- "TASKS" tab -->
                                     <div role="tabpanel" class="tab-pane fade" id="tasks">
-                                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
-                                            <thead>
-                                                <tr>
-                                                    <th>Task Action</th>
-                                                    <th>Task Secondary</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                    # Dynamically builds the dataTable
-                                                    $statement = $database_connection->prepare("SELECT `task_action`, `task_secondary` FROM `tasks` WHERE `hostname` = :hostname AND `process_id` = :process_id");
-                                                    $statement->bindValue(":hostname", $hostname);
-                                                    $statement->bindValue(":process_id", $process_id);
-                                                    $statement->execute();
-                                                    $results = $statement->fetchAll();
+                                        <!-- Start of dataTable -->
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Task Management</th>
+                                                        <th>Task Action</th>
+                                                        <th>Task Secondary</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                        # Dynamically builds the dataTable
+                                                        $statement = $database_connection->prepare("SELECT `task_action`, `task_secondary` FROM `tasks` WHERE `hostname` = :hostname AND `process_id` = :process_id");
+                                                        $statement->bindValue(":hostname", $hostname);
+                                                        $statement->bindValue(":process_id", $process_id);
+                                                        $statement->execute();
+                                                        $results = $statement->fetchAll();
 
-                                                    foreach ($results as $row) {
-                                                        echo "<tr>";
-                                                        echo "<td>" . htmlentities($row["task_action"]) ."</td>";
-                                                        echo "<td>" . htmlentities($row["task_secondary"]) ."</td>";
-                                                        echo "</tr>";
-                                                    }
+                                                        foreach ($results as $row) {
+                                                            echo "<tr>";
+                                                            echo "<td>BUTTON_HERE</td>"; # TO DO: Add in button that will allow deletion of tasks here
+                                                            echo "<td>" . htmlentities($row["task_action"]) ."</td>";
+                                                            echo "<td>" . htmlentities($row["task_secondary"]) ."</td>";
+                                                            echo "</tr>";
+                                                        }
 
-                                                    $statement->connection = null;
-                                                ?>
-                                            </tbody>
-                                        </table>
+                                                        $statement->connection = null;
+                                                    ?>
+                                                </tbody>
+                                            </table>
+                                        </div><!-- End of dataTable -->
                                     </div>
                                 </div>
                             </div>
@@ -237,17 +242,17 @@
         <script src="plugins/bootstrap-select/js/bootstrap-select.js"></script>
         <script src="plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
         <script src="plugins/node-waves/waves.js"></script>
-        <script src="plugins/jquery-countto/jquery.countTo.js"></script>
-        <script src="plugins/raphael/raphael.min.js"></script>
-        <script src="plugins/morrisjs/morris.js"></script>
-        <script src="plugins/chartjs/Chart.bundle.js"></script>
-        <script src="plugins/flot-charts/jquery.flot.js"></script>
-        <script src="plugins/flot-charts/jquery.flot.resize.js"></script>
-        <script src="plugins/flot-charts/jquery.flot.pie.js"></script>
-        <script src="plugins/flot-charts/jquery.flot.categories.js"></script>
-        <script src="plugins/flot-charts/jquery.flot.time.js"></script>
-        <script src="plugins/jquery-sparkline/jquery.sparkline.js"></script>
+        <script src="plugins/jquery-datatable/jquery.dataTables.js"></script>
+        <script src="plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+        <script src="plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+        <script src="plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
+        <script src="plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
+        <script src="plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
+        <script src="plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+        <script src="plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+        <script src="plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
         <script src="js/admin.js"></script>
-        <script src="js/pages/index.js"></script>
+        <script src="js/pages/tables/jquery-datatable.js"></script>
+        <script src="js/demo.js"></script>
     </body>
 </html>
