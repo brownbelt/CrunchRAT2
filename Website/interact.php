@@ -195,7 +195,33 @@
                                     </div>
                                     <!-- "TASKS" tab -->
                                     <div role="tabpanel" class="tab-pane fade" id="tasks">
-                                        <p>Example text here.</p>
+                                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Task Action</th>
+                                                    <th>Task Secondary</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                    # Dynamically builds the dataTable
+                                                    $statement = $database_connection->prepare("SELECT `task_action`, `task_secondary` FROM `tasks` WHERE `hostname` = :hostname AND `process_id` = :process_id");
+                                                    $statement->bindValue(":hostname", $hostname);
+                                                    $statement->bindValue(":process_id", $process_id);
+                                                    $statement->execute();
+                                                    $results = $statement->fetchAll();
+
+                                                    foreach ($results as $row) {
+                                                        echo "<tr>";
+                                                        echo "<td>" . htmlentities($row["task_action"]) ."</td>";
+                                                        echo "<td>" . htmlentities($row["task_secondary"]) ."</td>";
+                                                        echo "</tr>";
+                                                    }
+
+                                                    $statement->connection = null;
+                                                ?>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
