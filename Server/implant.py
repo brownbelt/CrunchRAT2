@@ -9,7 +9,7 @@ import sys
 
 def get_system_info():
     '''
-       Purpose: Collects system information
+        Purpose: Collects system information
         Returns: hostname (str), current_user (str), process_id (int), operating_system (str)
     '''
     hostname = socket.gethostname()
