@@ -13,7 +13,7 @@
     include "connector.php";
 
     # Determines if the supplied "uid" value is valid and not a fuzzed parameter
-    $statement = $database_connection->prepare("SELECT * FROM tasks WHERE `unique_id` = :unique_id");
+    $statement = $database_connection->prepare("SELECT * FROM `tasks` WHERE `unique_id` = :unique_id");
     $statement->bindValue(":unique_id", $_GET["uid"]);
     $statement->execute();
     $row_count = $statement->rowCount();
@@ -27,11 +27,11 @@
         $statement = $database_connection->prepare("DELETE FROM tasks WHERE `unique_id` = :unique_id");
         $statement->bindValue(":unique_id", $_GET["uid"]);
         $statement->execute();
+
+        # Redirects to previous page
+        header("Location: " . $_SERVER["HTTP_REFERER"]);
     }
 
     # Kills database connection
     $statement->connection = null;
-
-    # Redirects to previous page
-    header("Location: " . $_SERVER["HTTP_REFERER"]);
 ?>
