@@ -22,13 +22,12 @@
     if ($row_count == "0") {
         header("Location: 404.php");
     }
-    # Else deletes specified task
+    # Else deletes specified task and redirects to previous page
     else {
         $statement = $database_connection->prepare("DELETE FROM tasks WHERE `unique_id` = :unique_id");
         $statement->bindValue(":unique_id", $_GET["uid"]);
         $statement->execute();
 
-        # Redirects to previous page
         header("Location: " . $_SERVER["HTTP_REFERER"]);
     }
 
