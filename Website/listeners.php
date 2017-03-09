@@ -27,6 +27,8 @@
         <link href="plugins/morrisjs/morris.css" rel="stylesheet" />
         <link href="css/style.css" rel="stylesheet">
         <link href="css/themes/all-themes.css" rel="stylesheet" />
+        <!-- Bootstrap select CSS (page-specific) -->
+        <link href="plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
     </head>
 
     <body class="theme-red">
@@ -142,7 +144,43 @@
                                 <div class="tab-content">
                                     <!-- "CONFIGURE" tab -->
                                     <div role="tabpanel" class="tab-pane fade in active" id="configure">
-                                        <p>Example text here.</p>
+                                        <!-- Start of listener configuration form -->
+                                        <form action="createListener.php" method="POST">
+                                            <!-- Start of row -->
+                                            <div class="row clearfix">
+                                                <!-- IP Address field -->
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <div class="form-line">
+                                                            <strong>IP Address</strong>
+                                                            <input type="text" class="form-control" name="address" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Port field -->
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <div class="form-line">
+                                                            <strong>Port</strong>
+                                                            <input type="text" class="form-control" name="port" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Port field -->
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <div class="form-line">
+                                                            <strong>Protocol</strong>
+                                                            <select class="form-control show-tick">
+                                                                <option value="">Select</option>
+                                                                <option value="10">http</option>
+                                                                <option value="20">https</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><!-- End of row -->
+                                        </form><!-- End of listener configuration form -->
                                     </div>
                                     <!-- "TASKS" tab -->
                                     <div role="tabpanel" class="tab-pane fade" id="view">
