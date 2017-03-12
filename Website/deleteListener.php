@@ -24,11 +24,6 @@
     }
     # Else deletes specified listener
     else {
-        # Deletes specified listener
-        $statement = $database_connection->prepare("DELETE FROM `listeners` WHERE `id` = :id");
-        $statement->bindValue(":id", $_GET["id"]);
-        $statement->execute();
-
         # Kills the "beacon.php" and "update.php" symbolic links
         $statement = $database_connection->prepare("SELECT `beacon_uri`, `update_uri` FROM `listeners` WHERE `id` = :id");
         $statement->bindValue(":id", $_GET["id"]);
@@ -36,6 +31,11 @@
         $results = $statement->fetch();
         unlink($results["beacon_uri"]);
         unlink($results["update_uri"]);
+
+        # Deletes specified listener
+        $statement = $database_connection->prepare("DELETE FROM `listeners` WHERE `id` = :id");
+        $statement->bindValue(":id", $_GET["id"]);
+        $statement->execute();
 
         # Redirects to "listeners.php"
         header("Location: listeners.php");
