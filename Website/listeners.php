@@ -150,36 +150,61 @@
                                             <div class="row clearfix">
                                                 <!-- IP Address field -->
                                                 <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <div class="form-line">
-                                                            <strong>IP Address</strong>
-                                                            <input type="text" class="form-control" name="address" />
-                                                        </div>
+                                                    <div class="input-group">
+                                                        <strong>IP Address</strong>
+                                                        <input type="text" class="form-control" name="address" placeholder="Ex: 54.123.213.123">
                                                     </div>
                                                 </div>
                                                 <!-- Port field -->
                                                 <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <div class="form-line">
-                                                            <strong>Port</strong>
-                                                            <input type="text" class="form-control" name="port" />
-                                                        </div>
+                                                    <div class="input-group">
+                                                        <strong>Port</strong>
+                                                        <input type="text" class="form-control" name="port" placeholder="Ex: 8080" />
                                                     </div>
                                                 </div>
                                                 <!-- Port field -->
                                                 <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <div class="form-line">
-                                                            <strong>Protocol</strong>
-                                                            <select class="form-control show-tick">
-                                                                <option value="">Select</option>
-                                                                <option value="10">http</option>
-                                                                <option value="20">https</option>
-                                                            </select>
-                                                        </div>
+                                                    <div class="input-group">
+                                                        <strong>Protocol</strong>
+                                                        <select class="form-control show-tick">
+                                                            <option value="">Select</option>
+                                                            <option value="10">http</option>
+                                                            <option value="20">https</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div><!-- End of row -->
+                                            <!-- Start of row -->
+                                            <div class="row clearfix">
+                                                <!-- Beacon URI field -->
+                                                <div class="col-sm-3">
+                                                    <div class="input-group">
+                                                        <strong>Beacon URI</strong>
+                                                        <input type="text" class="form-control" name="beaconuri" placeholder="Ex: home.aspx" />
+                                                    </div>
+                                                </div>
+                                                <!-- Update URI field -->
+                                                <div class="col-sm-3">
+                                                    <div class="input-group">
+                                                        <strong>Update URI</strong>
+                                                        <input type="text" class="form-control" name="updateuri" placeholder="Ex: index.jsp" />
+                                                    </div>
+                                                </div>
+                                                <!-- User Agent field -->
+                                                <div class="col-sm-6">
+                                                    <div class="input-group">
+                                                        <strong>User Agent</strong>
+                                                        <input type="text" class="form-control" name="useragent" placeholder="Ex: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36" />
+                                                    </div>
+                                                </div>
+                                            </div><!-- End of row -->
+                                            <!-- Start of row -->
+                                            <div class="row clearfix">
+                                                <div class="col-sm-3">
+                                                    <!-- "Create Listener" button -->
+                                                    <button type="submit" class="btn btn-primary m-t-15 waves-effect">CREATE LISTENER</button>
+                                                </div>
+                                            </div>
                                         </form><!-- End of listener configuration form -->
                                     </div>
                                     <!-- "TASKS" tab -->
