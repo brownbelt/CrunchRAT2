@@ -33,6 +33,10 @@
     $statement->execute();
     $statement->connection = null;
 
+    # Creates symbolic links to "beacon.php" and "update.php"
+    symlink("beacon.php", $beacon_uri);
+    symlink("update.php", $update_uri);  
+
     # Redirects user back to "listeners.php"
     header("Location: listeners.php");
 
