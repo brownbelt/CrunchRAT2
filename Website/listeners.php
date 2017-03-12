@@ -210,6 +210,7 @@
                                             <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
                                                 <thead>
                                                     <tr>
+                                                        <th>Listener Management</th>
                                                         <th>ID</th>
                                                         <th>External Address</th>
                                                         <th>Port</th>
@@ -227,7 +228,11 @@
                                                         $results = $statement->fetchAll();
 
                                                         foreach ($results as $row) {
+                                                            # Builds "Delete Listener" link
+                                                            $url = "deleteListener.php?id=" . $row["id"];
+
                                                             echo "<tr>";
+                                                            echo "<td><div class='btn-group'><a class='btn bg-red waves-effect' href=" . $url . ">Delete Listener</a></div></td>";
                                                             echo "<td>" . htmlentities($row["id"]) ."</td>";
                                                             echo "<td>" . htmlentities($row["external_address"]) ."</td>";
                                                             echo "<td>" . htmlentities($row["port"]) ."</td>";
