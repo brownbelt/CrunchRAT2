@@ -82,14 +82,14 @@
             <div class="menu">
                 <ul class="list">
                     <!-- Home -->
-                    <li class="active">
+                    <li>
                         <a href="index.php">
                             <i class="material-icons">home</i>
                             <span>Home</span>
                         </a>
                     </li>
                     <!-- Implanted Systems -->
-                    <li>
+                    <li class="active">
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">computer</i>
                             <span>Implanted Systems</span>
