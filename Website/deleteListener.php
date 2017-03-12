@@ -22,11 +22,22 @@
     if ($row_count == "0") {
         header("Location: 404.php");
     }
-    # Else deletes specified listener and redirects to previous page
+    # Else deletes specified listener
     else {
+        # Deletes specified listener
         $statement = $database_connection->prepare("DELETE FROM `listeners` WHERE `id` = :id");
         $statement->bindValue(":id", $_GET["id"]);
         $statement->execute();
+
+        # Kills the "beacon.php" and "update.php" symbolic links
+        $statement = $database_connection->prepare("SELECT `beacon_uri`, `update_uri` FROM `listeners` WHERE `id` = :id");
+        $statement->bindValue(":id", $_GET["id"]);
+        $statement->execute();
+        $results = $statement->fetch();
+        unlink($results["beacon_uri"]);
+        unlink($results["update_uri"]);
+
+        # Redirects to "listeners.php"
         header("Location: listeners.php");
     }
 
