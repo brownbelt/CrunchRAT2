@@ -205,7 +205,42 @@
                                     </div>
                                     <!-- "TASKS" tab -->
                                     <div role="tabpanel" class="tab-pane fade" id="view">
-                                        <p>Example text here.</p>
+                                        <!-- Start of dataTable -->
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>External Address</th>
+                                                        <th>Port</th>
+                                                        <th>Protocol</th>
+                                                        <th>Beacon URI</th>
+                                                        <th>Update URI</th>
+                                                        <th>User Agent</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                        # Dynamically builds the dataTable
+                                                        $statement = $database_connection->prepare("SELECT `external_address`, `port`, `protocol`, `beacon_uri`, `update_uri`, `user_agent` FROM `listeners`");
+                                                        $statement->execute();
+                                                        $results = $statement->fetchAll();
+
+                                                        foreach ($results as $row) {
+                                                            echo "<tr>";
+                                                            echo "<td>" . htmlentities($row["external_address"]) ."</td>";
+                                                            echo "<td>" . htmlentities($row["port"]) ."</td>";
+                                                            echo "<td>" . htmlentities($row["protocol"]) ."</td>";
+                                                            echo "<td>" . htmlentities($row["beacon_uri"]) ."</td>";
+                                                            echo "<td>" . htmlentities($row["update_uri"]) ."</td>";
+                                                            echo "<td>" . htmlentities($row["user_agent"]) ."</td>";
+                                                            echo "</tr>";
+                                                        }
+
+                                                        $statement->connection = null;
+                                                    ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
