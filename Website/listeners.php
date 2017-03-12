@@ -68,7 +68,7 @@
             <div class="menu">
                 <ul class="list">
                     <!-- Home -->
-                    <li class="active">
+                    <li>
                         <a href="index.php">
                             <i class="material-icons">home</i>
                             <span>Home</span>
@@ -113,8 +113,8 @@
                         </ul>
                     </li>
                     <!-- Listeners -->
-                    <li>
-                        <a href="viewListeners.php">
+                    <li class="active">
+                        <a href="listeners.php">
                             <i class="material-icons">phone</i>
                             <span>Listeners</span>
                         </a>

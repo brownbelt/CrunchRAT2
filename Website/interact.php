@@ -128,7 +128,7 @@
                     </li>
                     <!-- Listeners -->
                     <li>
-                        <a href="viewListeners.php">
+                        <a href="listeners.php">
                             <i class="material-icons">phone</i>
                             <span>Listeners</span>
                         </a>
