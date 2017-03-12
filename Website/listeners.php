@@ -162,15 +162,11 @@
                                                         <input type="text" class="form-control" name="port" placeholder="Ex: 8080" />
                                                     </div>
                                                 </div>
-                                                <!-- Port field -->
-                                                <div class="col-sm-3">
+                                                <!-- Protocol field -->
+                                                <div class="col-md-3">
                                                     <div class="input-group">
                                                         <strong>Protocol</strong>
-                                                        <select class="form-control show-tick">
-                                                            <option value="">Select</option>
-                                                            <option value="10">http</option>
-                                                            <option value="20">https</option>
-                                                        </select>
+                                                        <input type="text" class="form-control" name="protocol" placeholder="Ex: http https" />
                                                     </div>
                                                 </div>
                                             </div><!-- End of row -->
