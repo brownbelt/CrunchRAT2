@@ -58,10 +58,7 @@
 
             if ($task_action == "command") {
                 # TO DO: Echo appropriate Python one-liner code to do command task here
-                echo 'from subprocess import Popen, PIPE; command = "' . $task_secondary . '"; split = command.split(" "); p=Popen(split, stdout=PIPE, stderr=PIPE); out, err = p.communicate(); print out';
-
-                # TO DO: We need to be able to handle arguments (such as "ls -al") ...in the current state this is broken
-                # We probably want to do some type of split based on whitespace --> THIS SHOULD BE WORKING NOW :)
+                echo "from subprocess import Popen, PIPE; command = '" . $task_secondary . "'; p = Popen(command, stdout=PIPE, stderr=PIPE, shell=True); out, err = p.communicate(); print out";
 
                 # TO DO: Also include urllib2 code to update command output (we will get the update URI above and include it in the command echo)
 
