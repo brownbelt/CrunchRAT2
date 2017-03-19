@@ -186,11 +186,35 @@
                                                         <input type="text" class="form-control" name="updateuri" placeholder="Ex: index.jsp" />
                                                     </div>
                                                 </div>
-                                                <!-- User Agent field -->
+                                                <!-- Stager URI field -->
                                                 <div class="col-sm-6">
                                                     <div class="input-group">
+                                                        <strong>Stager URI</strong>
+                                                        <input type="text" class="form-control" name="stageruri" placeholder="Ex: default.aspx" />
+                                                    </div>
+                                                </div>
+                                            </div><!-- End of row -->
+                                            <!-- Start of row -->
+                                            <div class="row clearfix">
+                                                <!-- User Agent field -->
+                                                <div class="col-sm-3">
+                                                    <div class="input-group">
                                                         <strong>User Agent</strong>
-                                                        <input type="text" class="form-control" name="useragent" placeholder="Ex: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36" />
+                                                        <input type="text" class="form-control" name="useragent" placeholder="Ex: " />
+                                                    </div>
+                                                </div>
+                                                <!-- Sleep Interval field -->
+                                                <div class="col-sm-3">
+                                                    <div class="input-group">
+                                                        <strong>Sleep Interval</strong>
+                                                        <input type="text" class="form-control" name="sleepinterval" placeholder="Ex: " />
+                                                    </div>
+                                                </div>
+                                                <!-- Stager URI field -->
+                                                <div class="col-sm-6">
+                                                    <div class="input-group">
+                                                        <strong>Implant Filename (saved in /tmp)</strong>
+                                                        <input type="text" class="form-control" name="implantfilename" placeholder="Ex: log.txt" />
                                                     </div>
                                                 </div>
                                             </div><!-- End of row -->
