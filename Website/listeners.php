@@ -200,17 +200,17 @@
                                                 <div class="col-sm-3">
                                                     <div class="input-group">
                                                         <strong>User Agent</strong>
-                                                        <input type="text" class="form-control" name="useragent" placeholder="Ex: " />
+                                                        <input type="text" class="form-control" name="useragent" placeholder="Ex: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36" />
                                                     </div>
                                                 </div>
                                                 <!-- Sleep Interval field -->
                                                 <div class="col-sm-3">
                                                     <div class="input-group">
-                                                        <strong>Sleep Interval</strong>
-                                                        <input type="text" class="form-control" name="sleepinterval" placeholder="Ex: " />
+                                                        <strong>Sleep Interval (in seconds)</strong>
+                                                        <input type="text" class="form-control" name="sleepinterval" placeholder="Ex: 10" />
                                                     </div>
                                                 </div>
-                                                <!-- Stager URI field -->
+                                                <!-- Implant Filename field -->
                                                 <div class="col-sm-6">
                                                     <div class="input-group">
                                                         <strong>Implant Filename (saved in /tmp)</strong>
