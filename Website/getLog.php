@@ -1,4 +1,5 @@
 <?php
+    /*
     # Necessary at the top of every page for session management
     session_start();
 
@@ -37,4 +38,5 @@
     
     # Echo's contents of <PID>.log to the screen
     echo file_get_contents($path);
+    */
 ?>
