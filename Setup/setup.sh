@@ -50,3 +50,8 @@ else
 fi
 
 # TO DO: MySQL database and table setup here
+
+# TO DO: Create /var/log/CrunchRAT directory and chown it to "www-data"
+# Make it a green status bar letting the user know it's creating this directory as well
+sudo mkdir /var/log/CrunchRAT
+sudo chown www-data:www-data /var/log/CrunchRAT
