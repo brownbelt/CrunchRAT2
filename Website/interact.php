@@ -173,7 +173,12 @@
                                                 // Updates "output" id every second
                                                 $("document").ready(function(){
                                                     setInterval(function(){
-                                                        $("#output").load("getLog.php?h=Hunter%27s+iMac&pid=1781"); // TO DO: Removed hard-coded URL and generate dynamically
+                                                        $("#output").load("getLog.php?h=CRUNCH-SERVER&pid=75623"); // TO DO: Removed hard-coded URL and generate dynamically
+
+                                                        // Scrolls to end
+                                                        // Source: http://stackoverflow.com/questions/270612/scroll-to-bottom-of-div
+                                                        $("#output").scrollTop($("#output")[0].scrollHeight);
+
                                                     },1000);
                                                 });
                                             </script>
