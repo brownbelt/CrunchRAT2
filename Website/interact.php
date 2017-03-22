@@ -173,7 +173,13 @@
                                                 // Updates "output" id every second
                                                 $("document").ready(function(){
                                                     setInterval(function(){
-                                                        $("#output").load("getLog.php?h=CRUNCH-SERVER&pid=75623"); // TO DO: Removed hard-coded URL and generate dynamically
+                                                        // Parses HTTP GET parameters
+                                                        var hostname = "<?php echo $_GET['h']; ?>";
+                                                        var process_id = "<?php echo $_GET['pid']; ?>";
+
+                                                        // Builds URL and loads log file
+                                                        var url = 'getLog.php?h=' + hostname + '&pid=' + process_id;
+                                                        $("#output").load(url);
 
                                                         // Scrolls to end
                                                         // Source: http://stackoverflow.com/questions/270612/scroll-to-bottom-of-div
