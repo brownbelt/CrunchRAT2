@@ -1,5 +1,6 @@
 <?php
     include "connector.php";
+    include "randomize.php";
 
     # Gets Base64-encoded handshake
     $base64 = key($_POST);
@@ -30,7 +31,7 @@
     $current_user = $temp[1];
 
     # uniqid() is used to generate a new encryption key
-    $encryption_key = uniqid();
+    $encryption_key = generate_random_string();
 
     # TO DO: I should probably do some checks for valid data before INSERT'ing into the "implants" table
 
