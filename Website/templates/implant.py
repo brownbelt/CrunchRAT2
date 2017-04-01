@@ -7,6 +7,9 @@ user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36
 sleep_interval = 10 # TO DO: Add in sleep interval jitter
 
 
+# TO DO: Wrap everything in a nice try catch statement
+
+
 def handshake_beacon():
     hostname_var = "".join(random.choice(string.lowercase) for i in range(10))
     current_user_var = "".join(random.choice(string.lowercase) for i in range(10))
