@@ -1,9 +1,9 @@
 <?php
     function generate_random_string() {
-        # Description: Generates a random 2048 character string
+        # Description: Generates a random 32 character string
         # Source: http://www.xeweb.net/2011/02/11/generate-a-random-string-a-z-0-9-in-php
 
-        $length = 2048;
+        $length = 32;
         $generated_string = "";
         $allowed_characters = array_merge(range("A","Z"), range("a","z"), range("0","9"));
         $max = count($allowed_characters) - 1;
