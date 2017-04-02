@@ -52,5 +52,9 @@
     # Else RC4 encrypted POST data (recurring beacon)
     else {
         echo "rc4 data";
+
+        # TO DO: Query all encryption keys in the "implants" table
+
+        # TO DO: After querying, loop through each of those encryption keys and look for which once decrypts and has the "nonce" POST parameter
     }
 ?>
