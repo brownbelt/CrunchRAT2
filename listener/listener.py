@@ -4,6 +4,12 @@ import json
 import socket
 import sys
 from colorama import Fore, Style
+from flask import Flask
+
+# DEBUGGING
+from core.server import Server
+
+app = Flask(__name__)
 
 
 if __name__ == "__main__":
@@ -31,6 +37,8 @@ if __name__ == "__main__":
         print(Style.BRIGHT + Fore.RED + '[!] Invalid protocol supplied. Please enter "http" or "https".' + Style.RESET_ALL)
         sys.exit(0)
 
+    # TO DO: add in check for "https" so we can add in the flask ssl context
+
     # checks if supplied address is valid
     try:
         ipaddress.ip_address(external_address)
@@ -53,10 +61,14 @@ if __name__ == "__main__":
     except:
         pass
 
-    # tries to load json profile
+    # tries to load and parse the json profile
     # exception raised means an invalid json profile was provided
     try:
-        json.load(profile)
+        with open("profiles/pandora.json") as data_file:
+            profile_json = json.load(profile)
+
+            # DEBUGGING - NOT SOLD ON THE VARIABLE NAME ABOVE
+            print(profile_json)
 
     # prints error and exits the program
     except:
@@ -65,8 +77,12 @@ if __name__ == "__main__":
 
     # all arguments have been validated at this point
 
-    # TO DO: parse the supplied json profile
+    # DEBUGGING
+    s = Server()
+    s.beacon()
+    s.update()
 
     # TO DO: INSERT entry into "listeners" table
 
     # TO DO: start flask listener
+    #app.run("0.0.0.0", port)
