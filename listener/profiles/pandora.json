@@ -1,4 +1,8 @@
-{ 
+{
+    "implant_user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36",
+    "implant_default_sleep": "10",
+    "implant_jitter_percent": "30",
+
     "beacon_uri": "/api/v1/playlist/getFragment",
     "beacon_host": "www.pandora.com",
     "beacon_referer": "https://www.pandora.com/station/play/238310031526667624",
