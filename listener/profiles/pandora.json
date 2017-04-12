@@ -1,0 +1,19 @@
+{
+    "beacon": {
+        "uri": "/api/v1/playlist/getFragment",
+        "host": "www.pandora.com",
+        "referer": "https://www.pandora.com/station/play/238310031526667624",
+        "accept": "application/json, text/plain, */*",
+        "accept-language": "en-US,en;q=0.5",
+        "content-type": "application/json"
+    },
+
+    "update": {
+        "uri": "/api/v1/station/trackStarted",
+        "host": "www.pandora.com",
+        "referer": "https://www.pandora.com/station/play/238310031526667624",
+        "accept": "application/json, text/plain, */*",
+        "accept-language": "en-US,en;q=0.5",
+        "content-type": "application/json"
+    }
+}
