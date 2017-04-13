@@ -1,19 +1,27 @@
 {
-    "implant_user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36",
-    "implant_default_sleep": "10",
-    "implant_jitter_percent": "30",
+    "implant": {
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36",
+        "sleep": "10",
+        "jitter": "30"
+    },
 
-    "beacon_uri": "/api/v1/playlist/getFragment",
-    "beacon_host": "www.pandora.com",
-    "beacon_referer": "https://www.pandora.com/station/play/238310031526667624",
-    "beacon_accept": "application/json, text/plain, */*",
-    "beacon_accept-language": "en-US,en;q=0.5",
-    "beacon_content-type": "application/json",
+    "beacon": {
+        "uri": "/api/v1/playlist/getFragment",
 
-    "update_uri": "/api/v1/station/trackStarted",
-    "update_host": "www.pandora.com",
-    "update_referer": "https://www.pandora.com/station/play/238310031526667624",
-    "update_accept": "application/json, text/plain, */*",
-    "update_accept-language": "en-US,en;q=0.5",
-    "update_content-type": "application/json"
+        "Host": "www.pandora.com",
+        "Referer": "https://www.pandora.com/station/play/238310031526667624",
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Content-Type": "application/json"
+    },
+
+    "update": {
+        "uri": "/api/v1/station/trackStarted",
+
+        "Host": "www.pandora.com",
+        "Referer": "https://www.pandora.com/station/play/238310031526667624",
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Content-Type": "application/json"
+    }
 }
