@@ -15,7 +15,7 @@ class ArgChecks(object):
     def protocol_check(self, protocol):
         if protocol != "http" and protocol != "https":
             print(Style.BRIGHT + Fore.RED + '[!] Invalid protocol supplied. Please enter "http" or "https".' + Style.RESET_ALL)
-            sys.exit(0)
+            sys.exit()
 
         else:
             self.protocol = protocol
@@ -27,7 +27,7 @@ class ArgChecks(object):
 
         except:
             print(Style.BRIGHT + Fore.RED + "[!] Invalid external address supplied." + Style.RESET_ALL)
-            sys.exit(0)
+            sys.exit()
 
     def port_check(self, port):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -35,7 +35,7 @@ class ArgChecks(object):
         try:
             s.connect(("localhost", port))
             print(Style.BRIGHT + Fore.RED + "[!] Port already in use. Please choose another port." + Style.RESET_ALL)
-            sys.exit(0)
+            sys.exit()
 
         except:
             self.port = port
@@ -47,4 +47,4 @@ class ArgChecks(object):
 
         except:
             print(Style.BRIGHT + Fore.RED + "[!] Error parsing the provided JSON profile." + Style.RESET_ALL)
-            sys.exit(0)
+            sys.exit()
