@@ -16,10 +16,10 @@ if __name__ == "__main__":
 
     # parses arguments
     parser = argparse.ArgumentParser(prog="listener.py", description="CrunchRAT2 Listener - Written by Hunter Hardman @t3ntman")
-    parser.add_argument("protocol", nargs="?", type=str, help="listener protocol [http][https]")
-    parser.add_argument("external_address", nargs="?", type=str, help="listener external address")
-    parser.add_argument("port", nargs="?", type=int, help="listener port")
-    parser.add_argument("profile", nargs="?", type=str, help="json profile")
+    parser.add_argument("protocol", action="store", type=str, help="listener protocol [http][https]")
+    parser.add_argument("external_address", action="store", type=str, help="listener external address")
+    parser.add_argument("port", action="store", type=int, help="listener port")
+    parser.add_argument("profile", action="store", type=str, help="json profile")
     args = parser.parse_args()
 
     # performs argument checks
