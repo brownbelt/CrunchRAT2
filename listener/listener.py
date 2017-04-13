@@ -2,9 +2,11 @@
 
 import argparse
 import os
+import pymysql
 import sys
 from colorama import Fore, Style
 from core.argchecks import ArgChecks
+from core.config import *
 
 
 if __name__ == "__main__":
@@ -28,3 +30,9 @@ if __name__ == "__main__":
     c.external_address_check(args.external_address)
     c.port_check(args.port)
     c.profile_check(args.profile)
+
+    # TO DO: parses json profile
+
+    # TO DO: adds an entry into the "listeners" table
+
+    # TO DO: starts flask listener
