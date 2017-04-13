@@ -23,7 +23,9 @@ class WebServer(object):
         resp = make_response()
 
         for name in data["beacon"]:
-            resp.headers[name] = data["beacon"][name]
+            # prevents beacon "uri" object from being added to the HTTP response headers
+            if name != "uri":
+                resp.headers[name] = data["beacon"][name]
 
         # TO DO: we should actually do parsing here to check if this an initial implant beacon
         resp.data = "beacon response"
