@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import argparse
+import json
 import os
 import pymysql
 import sys
@@ -25,7 +26,7 @@ if __name__ == "__main__":
     parser.add_argument("profile", action="store", type=str, help="json profile")
     args = parser.parse_args()
 
-    # performs argument checks
+    # performs checks on provided arguments
     c = ArgChecks()
     c.protocol_check(args.protocol)
     c.external_address_check(args.external_address)
@@ -34,10 +35,8 @@ if __name__ == "__main__":
 
     # TO DO: if "https" protocol, adds in flask ssl context
 
-    # TO DO: parses json profile
-
     # TO DO: adds an entry into the "listeners" table
 
     # TO DO: starts flask listener
-    s = WebServer()
+    s = WebServer(args.profile)
     s.start_webserver(args.port)
