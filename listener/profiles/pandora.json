@@ -13,7 +13,7 @@
         "Accept": "application/json, text/plain, */*",
         "Accept-Language": "en-US,en;q=0.5",
         "Content-Type": "application/json",
-        "Server": "Apache"
+        "Server": "Jetty(9.3.7.v20160115)"
     },
 
     "update": {
@@ -24,6 +24,6 @@
         "Accept": "application/json, text/plain, */*",
         "Accept-Language": "en-US,en;q=0.5",
         "Content-Type": "application/json",
-        "Server": "Apache"
+        "Server": "Jetty(9.3.7.v20160115)"
     }
 }
