@@ -33,6 +33,6 @@ if __name__ == "__main__":
     c.port_check(args.port)
     c.profile_check(args.profile)
 
-    # TO DO: starts flask listener
+    # starts flask listener
     s = WebServer(args.protocol, args.external_address, args.port, args.profile)
     s.start_webserver()
