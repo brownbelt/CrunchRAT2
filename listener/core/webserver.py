@@ -14,30 +14,31 @@ class WebServer(object):
         self.port = port
         self.profile = profile
 
+        # reads json profile
+        with open(self.profile) as file:
+            self.json_data = json.load(file)
+
     def start_webserver(self):
         if self.protocol == "https":
             # TO DO: add in flask ssl context here instead of print()
             print("https protocol selected")
 
-        # reads json profile
-        with open(self.profile) as file:
-            json_data = json.load(file)
-
-        # TO DO: check if json_data["implant"]["beacon_uri"] and json_data["implant"]["update_uri"] exist
-        # if these do not exist, the user has a malformed json profile
-
-        # TO DO: configure malleable http responses via make_response() here
-
         # TO DO: inserts entry into "listeners" table
 
-        # adds URIs and starts flask web server
-        app.add_url_rule(json_data["implant"]["beacon_uri"], None, self.beacon, methods=["GET", "POST"])
-        app.add_url_rule(json_data["implant"]["update_uri"], None, self.update, methods=["GET", "POST"])
-        #app.add_url_rule("/beacon", None, self.beacon, methods=["GET", "POST"])
+        # adds routes and starts flask web server
+        app.add_url_rule(self.json_data["implant"]["beacon_uri"], None, self.beacon, methods=["GET", "POST"])
+        app.add_url_rule(self.json_data["implant"]["update_uri"], None, self.update, methods=["GET", "POST"])
         app.run("0.0.0.0", self.port)
 
     def beacon(self):
-        return "beacon response"
+        # parses json profile and configures malleable beacon http response
+        self.resp = make_response()
+        self.resp.data = "beacon response"
+        return self.resp
+
 
     def update(self):
-        return "update response"
+        # parses json profile and configures malleable beacon http response
+        self.resp = make_response()
+        self.resp.data = "update response"
+        return self.resp
