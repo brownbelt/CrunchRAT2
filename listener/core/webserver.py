@@ -38,7 +38,7 @@ class WebServer(object):
 
 
     def update(self):
-        # parses json profile and configures malleable beacon http response
+        # parses json profile and configures malleable update http response
         self.resp = make_response()
         self.resp.data = "update response"
         return self.resp
