@@ -38,5 +38,5 @@ if __name__ == "__main__":
     # TO DO: adds an entry into the "listeners" table
 
     # TO DO: starts flask listener
-    s = WebServer(args.profile)
-    s.start_webserver(args.port)
+    s = WebServer(args.protocol, args.external_address, args.port, args.profile)
+    s.start_webserver()
