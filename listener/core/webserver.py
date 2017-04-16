@@ -1,5 +1,8 @@
+import base64
 import json
 import pymysql
+import random
+import string
 import sys
 from core.config import *
 from colorama import Fore, Style
@@ -59,7 +62,22 @@ class WebServer(object):
     def beacon(self):
         # parses json profile and configures malleable beacon http response
         self.resp = make_response()
-        self.resp.data = "beacon response"
+
+        # TO DO: check if initial beacon or not
+        raw_post_data = request.get_data()
+
+        # initial base64 beacon
+        try:
+            base64.b64decode(raw_post_data)
+            #self.resp.data = "base64"
+
+            # generates 32 character encryption key and echoes out to the screen
+            self.resp.data = "".join(random.choice(string.ascii_lowercase + string.digits) for i in range(32))
+
+        # rc4 beacon
+        except:
+            self.resp.data = "rc4"
+
         return self.resp
 
 
