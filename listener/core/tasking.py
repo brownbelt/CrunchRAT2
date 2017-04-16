@@ -35,5 +35,8 @@ class Tasking(object):
                 self.generate_command_code()
 
     def generate_command_code(self):
+        '''
+            Description: Generates Python 2.x code to execute a tasked command
+        '''
         command = "import subprocess; process = subprocess.Popen('" + self.task_action + "', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE); output, error = process.communicate(); print output, error;"
         print(command)
