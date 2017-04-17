@@ -1,8 +1,8 @@
+import json
 import pymysql
 from core.config import *
 from colorama import Fore, Style
 from flask import Flask
-from flask import request
 
 
 class WebServer(object):
@@ -13,6 +13,13 @@ class WebServer(object):
         self.profile = profile
 
         self.app = Flask(__name__)
+
+        # parses json profile and gets "beacon_uri" and "update_uri"
+        with open(self.profile) as file:
+            j = json.load(file)
+
+        self.app.add_url_rule(j["implant"]["beacon_uri"], None, self.beacon, methods=["GET", "POST"])
+        self.app.add_url_rule(j["implant"]["update_uri"], None, self.update, methods=["GET", "POST"])
 
         # tries to establish a connection to the database
         try:
@@ -32,3 +39,9 @@ class WebServer(object):
         except:
             print(Style.BRIGHT + Fore.RED + "[!] Error starting web server." + Style.RESET_ALL)
             sys.exit()
+
+    def beacon(self):
+        return "beacon response"
+
+    def update(self):
+        return "update response"
