@@ -7,6 +7,7 @@ import pymysql
 import sys
 from colorama import Fore, Style
 from core.argchecks import ArgChecks
+from core.webserver import WebServer
 from core.config import *
 
 
@@ -27,7 +28,9 @@ if __name__ == "__main__":
     # checks provided arguments for errors
     a = ArgChecks(args.protocol, args.external_address, args.port)
     a.protocol_check()
-    a.external_address_check()
+    a.external_address_check()    
     a.port_check()
 
-    print("testing")
+    # starts flask
+    w = WebServer(args.protocol, args.external_address, args.port)
+    w.start_web_server()
