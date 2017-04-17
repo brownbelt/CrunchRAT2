@@ -6,8 +6,6 @@ import os
 import pymysql
 import sys
 from colorama import Fore, Style
-from core.argchecks import ArgChecks
-from core.webserver import WebServer
 from core.config import *
 
 
@@ -23,16 +21,4 @@ if __name__ == "__main__":
     parser.add_argument("protocol", action="store", type=str, help="listener protocol [http][https]")
     parser.add_argument("external_address", action="store", type=str, help="listener external address")
     parser.add_argument("port", action="store", type=int, help="listener port")
-    parser.add_argument("profile", action="store", type=str, help="json profile")
     args = parser.parse_args()
-
-    # performs checks on provided arguments
-    c = ArgChecks()
-    c.protocol_check(args.protocol)
-    c.external_address_check(args.external_address)
-    c.port_check(args.port)
-    c.profile_check(args.profile)
-
-    # starts flask listener
-    s = WebServer(args.protocol, args.external_address, args.port, args.profile)
-    s.start_webserver()
