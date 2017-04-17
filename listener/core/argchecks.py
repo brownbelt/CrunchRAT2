@@ -37,4 +37,4 @@ class ArgChecks(object):
             sys.exit()
 
         except socket.error:
-            sys.exit()
+            pass
