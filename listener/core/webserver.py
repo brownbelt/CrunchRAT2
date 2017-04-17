@@ -1,7 +1,9 @@
 import json
 import pymysql
+import sys
 from core.config import *
 from colorama import Fore, Style
+from gevent import wsgi
 from flask import Flask
 
 
@@ -38,7 +40,11 @@ class WebServer(object):
 
         try:
             print(Style.BRIGHT + Fore.GREEN + "[+] Starting listener..." + Style.RESET_ALL)
-            self.app.run("0.0.0.0", self.port)
+            server = wsgi.WSGIServer(("0.0.0.0", self.port), self.app)
+            server.serve_forever()
+
+        except KeyboardInterrupt:
+            pass
 
         # exits the program if an exception is raised
         except:
