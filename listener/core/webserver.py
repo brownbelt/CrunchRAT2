@@ -75,3 +75,7 @@ class WebServer(object):
             Description: This is the function called when an implant updates
         '''
         return "update response"
+
+    # TO DO: create function to parse initial beacon
+
+    # TO DO: create function to parse rc4 beacon
