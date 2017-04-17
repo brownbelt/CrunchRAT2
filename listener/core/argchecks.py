@@ -6,10 +6,11 @@ from colorama import Fore, Style
 
 
 class ArgChecks(object):
-    def __init__(self, protocol, external_address, port):
+    def __init__(self, protocol, external_address, port, profile):
         self.protocol = protocol
         self.external_address = external_address
         self.port = port
+        self.profile = profile
 
     def protocol_check(self):
         if self.protocol != "http" and self.protocol != "https":
@@ -38,3 +39,6 @@ class ArgChecks(object):
 
         except socket.error:
             pass
+
+    def profile_check(self):
+        # TO DO: add in profile check here
