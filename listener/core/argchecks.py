@@ -41,4 +41,19 @@ class ArgChecks(object):
             pass
 
     def profile_check(self):
-        # TO DO: add in profile check here
+        try:
+            with open(self.profile) as file:
+                j = json.load(file)
+
+                # if "beacon_uri" property does not exist in json
+                if "beacon_uri" not in j["implant"]:
+                    print(Style.BRIGHT + Fore.RED + '[!] Profile must contain a "beacon_uri" property.' + Style.RESET_ALL)
+                    sys.exit()
+
+                if "update_uri" not in j["implant"]:
+                    print(Style.BRIGHT + Fore.RED + '[!] Profile must contain a "update_uri" property.' + Style.RESET_ALL)
+                    sys.exit()
+
+        except:
+            print(Style.BRIGHT + Fore.RED + "[!] Invalid profile supplied. Please make sure the profile is a valid JSON file." + Style.RESET_ALL)
+            sys.exit()
