@@ -55,6 +55,10 @@ class ArgChecks(object):
                     print(Style.BRIGHT + Fore.RED + '[!] Profile must contain a "update_uri" property.' + Style.RESET_ALL)
                     sys.exit()
 
+                # TO DO: add in check for "sleep" property
+
+                # TO DO: add in check for "user_agent" property
+
         except:
             print(Style.BRIGHT + Fore.RED + "[!] Invalid profile supplied. Please make sure the profile is a valid JSON file." + Style.RESET_ALL)
             sys.exit()
