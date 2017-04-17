@@ -6,10 +6,11 @@ from flask import request
 
 
 class WebServer(object):
-    def __init__(self, protocol, external_address, port):
+    def __init__(self, protocol, external_address, port, profile):
         self.protocol = protocol
         self.external_address = external_address
         self.port = port
+        self.profile = profile
 
         self.app = Flask(__name__)
 

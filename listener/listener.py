@@ -34,5 +34,5 @@ if __name__ == "__main__":
     a.profile_check()
 
     # starts flask
-    w = WebServer(args.protocol, args.external_address, args.port)
+    w = WebServer(args.protocol, args.external_address, args.port, args.profile)
     w.start_web_server()
