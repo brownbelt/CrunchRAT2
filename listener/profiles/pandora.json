@@ -2,7 +2,6 @@
     "implant": {
         "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36",
         "sleep": "10",
-        "jitter": "30",
         "beacon_uri": "/api/v1/playlist/getFragment",
         "update_uri": "/api/v1/station/trackStarted"
     }
