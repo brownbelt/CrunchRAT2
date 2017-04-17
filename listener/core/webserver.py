@@ -69,8 +69,8 @@ class WebServer(object):
             Description: This is the function called when an implant beacons
         '''
         # DEBUGGING
-        self.raw_request_data = request.get_data()
-        return self.raw_request_data
+        raw_request_data = request.get_data()
+        return raw_request_data
 
         # TO DO: determine if initial beacon or rc4 beacon here
         # TO DO: subsequently call either parse_initial_beacon() or parse_rc4_beacon()
@@ -79,8 +79,8 @@ class WebServer(object):
         '''
             Description: This is the function called when an implant updates
         '''
-        self.raw_request_data = request.get_data()
-        return self.raw_request_data
+        raw_request_data = request.get_data()
+        return raw_request_data
 
     # TO DO: create function to parse initial beacon
 
