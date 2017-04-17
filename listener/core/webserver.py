@@ -37,7 +37,7 @@ class WebServer(object):
                 (self.protocol, self.external_address, self.port, self.profile, self.j["implant"]["user_agent"], self.j["implant"]["sleep"], self.j["implant"]["beacon_uri"], self.j["implant"]["update_uri"]))
 
         try:
-            print(Style.BRIGHT + Fore.GREEN + "[+] Starting listener...." + Style.RESET_ALL)
+            print(Style.BRIGHT + Fore.GREEN + "[+] Starting listener..." + Style.RESET_ALL)
             self.app.run("0.0.0.0", self.port)
 
         # exits the program if an exception is raised
@@ -48,7 +48,7 @@ class WebServer(object):
         # web server is killed at this point
         # we remove the entry from the "listeners" table
         finally:
-            print(Style.BRIGHT + Fore.GREEN + "[+] Stopping listener...." + Style.RESET_ALL)
+            print(Style.BRIGHT + Fore.GREEN + "[+] Stopping listener..." + Style.RESET_ALL)
 
             with self.connection.cursor() as cursor:
                 cursor.execute("DELETE FROM `listeners`")
