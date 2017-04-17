@@ -45,11 +45,12 @@ class ArgChecks(object):
             with open(self.profile) as file:
                 j = json.load(file)
 
-                # if "beacon_uri" property does not exist in json
+                # if "beacon_uri" property does not exist in profile
                 if "beacon_uri" not in j["implant"]:
                     print(Style.BRIGHT + Fore.RED + '[!] Profile must contain a "beacon_uri" property.' + Style.RESET_ALL)
                     sys.exit()
 
+                # if "update_uri" property does not exist in profile
                 if "update_uri" not in j["implant"]:
                     print(Style.BRIGHT + Fore.RED + '[!] Profile must contain a "update_uri" property.' + Style.RESET_ALL)
                     sys.exit()
