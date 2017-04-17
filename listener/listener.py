@@ -6,6 +6,7 @@ import os
 import pymysql
 import sys
 from colorama import Fore, Style
+from core.argchecks import ArgChecks
 from core.config import *
 
 
@@ -22,3 +23,11 @@ if __name__ == "__main__":
     parser.add_argument("external_address", action="store", type=str, help="listener external address")
     parser.add_argument("port", action="store", type=int, help="listener port")
     args = parser.parse_args()
+
+    # checks provided arguments for errors
+    a = ArgChecks(args.protocol, args.external_address, args.port)
+    a.protocol_check()
+    a.external_address_check()
+    a.port_check()
+
+    print("testing")

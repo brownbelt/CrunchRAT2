@@ -32,5 +32,9 @@ class ArgChecks(object):
             print(Style.BRIGHT + Fore.RED + "[!] Port already in use. Please choose another port." + Style.RESET_ALL)
             sys.exit()
 
-        except:
-            pass
+        except OverflowError:
+            print(Style.BRIGHT + Fore.RED + "[!] Invalid port supplied. Please choose a port between 1-65535." + Style.RESET_ALL)
+            sys.exit()
+
+        except socket.error:
+            sys.exit()
