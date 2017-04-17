@@ -7,6 +7,7 @@ from core.tasking import Tasking
 from colorama import Fore, Style
 from gevent import wsgi
 from flask import Flask
+from flask import request
 
 
 class WebServer(object):
@@ -67,14 +68,19 @@ class WebServer(object):
         '''
             Description: This is the function called when an implant beacons
         '''
-        return "beacon response"
+        # DEBUGGING
+        self.raw_request_data = request.get_data()
+        return self.raw_request_data
 
+        # TO DO: determine if initial beacon or rc4 beacon here
+        # TO DO: subsequently call either parse_initial_beacon() or parse_rc4_beacon()
 
     def update(self):
         '''
             Description: This is the function called when an implant updates
         '''
-        return "update response"
+        self.raw_request_data = request.get_data()
+        return self.raw_request_data
 
     # TO DO: create function to parse initial beacon
 
