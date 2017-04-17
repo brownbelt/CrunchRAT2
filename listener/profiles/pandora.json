@@ -5,25 +5,5 @@
         "jitter": "30",
         "beacon_uri": "/api/v1/playlist/getFragment",
         "update_uri": "/api/v1/station/trackStarted"
-    },
-
-    "beacon_response_headers": {
-        "Server": "Jetty(9.3.7.v20160115)",
-        "Content-Type": "application/json;charset=utf-8",
-        "Vary": "Accept-Encoding"
-    },
-
-    "beacon_response_cookies": {
-        "csrftoken": "deleted"
-    },
-
-    "update_response_headers": {
-        "Server": "Jetty(9.3.7.v20160115)",
-        "Content-Type": "application/json;charset=utf-8",
-        "Vary": "Accept-Encoding"
-    },
-
-    "update_response_cookies": {
-        "csrftoken": "deleted"
     }
 }
