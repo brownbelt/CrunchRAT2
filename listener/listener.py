@@ -23,13 +23,15 @@ if __name__ == "__main__":
     parser.add_argument("protocol", action="store", type=str, help="listener protocol [http][https]")
     parser.add_argument("external_address", action="store", type=str, help="listener external address")
     parser.add_argument("port", action="store", type=int, help="listener port")
+    parser.add_argument("profile", action="store", type=str, help="listener profile")
     args = parser.parse_args()
 
     # checks provided arguments for errors
-    a = ArgChecks(args.protocol, args.external_address, args.port)
+    a = ArgChecks(args.protocol, args.external_address, args.port, args.profile)
     a.protocol_check()
     a.external_address_check()    
     a.port_check()
+    a.profile_check()
 
     # starts flask
     w = WebServer(args.protocol, args.external_address, args.port)
