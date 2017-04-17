@@ -23,6 +23,11 @@ class WebServer(object):
             sys.exit()
 
     def start_web_server(self):
-        print(Style.BRIGHT + Fore.GREEN + "[+] Starting web server." + Style.RESET_ALL)
+        try:
+            print(Style.BRIGHT + Fore.GREEN + "[+] Starting web server." + Style.RESET_ALL)
+            self.app.run("0.0.0.0", self.port)
 
-        self.app.run("0.0.0.0", self.port)
+        # exits the program if an exception is raised
+        except:
+            print(Style.BRIGHT + Fore.RED + "[!] Error starting web server." + Style.RESET_ALL)
+            sys.exit()
