@@ -1,29 +1,17 @@
-import base64
-import json
 import pymysql
-import random
-import string
-import sys
 from core.config import *
 from colorama import Fore, Style
 from flask import Flask
 from flask import request
-from flask import make_response
-
-app = Flask(__name__)
 
 
 class WebServer(object):
-    def __init__(self, protocol, external_address, port, profile):
+    def __init__(self, protocol, external_address, port):
         self.protocol = protocol
         self.external_address = external_address
-        self.profile = profile
         self.port = port
-        self.profile = profile
 
-        # reads json profile
-        with open(self.profile) as file:
-            self.json_data = json.load(file)
+        self.app = Flask(__name__)
 
         # tries to establish a connection to the database
         try:
@@ -31,58 +19,10 @@ class WebServer(object):
 
         # exits the program if an exception is raised
         except:
-            print(Style.BRIGHT + Fore.RED + "[!] Unable to establish database connection." + Style.RESET_ALL)
+            print(Style.BRIGHT + Fore.RED + "[!] Unable to establish a database connection." + Style.RESET_ALL)
             sys.exit()
 
-    def start_webserver(self):
-        if self.protocol == "https":
-            # TO DO: add in flask ssl context here instead of print()
-            print("https protocol selected")
+    def start_web_server(self):
+        print(Style.BRIGHT + Fore.GREEN + "[+] Starting web server." + Style.RESET_ALL)
 
-        # inserts entry into "listeners" table
-        cursor = self.connection.cursor()
-        cursor.execute("INSERT INTO listeners (protocol, external_address, port, profile) VALUES (%s, %s, %s, %s)",
-            (self.protocol, self.external_address, self.port, self.profile))
-        cursor.close()
-
-        # TO DO: wrap this in a try except statement
-
-        # adds routes and starts flask web server
-        app.add_url_rule(self.json_data["implant"]["beacon_uri"], None, self.beacon, methods=["GET", "POST"])
-        app.add_url_rule(self.json_data["implant"]["update_uri"], None, self.update, methods=["GET", "POST"])
-        app.run("0.0.0.0", self.port)
-
-    def stop_webserver(self):
-        # TO DO: stop flask webserver
-        # this will be called if a keyboard exception (CTRL+C) is raised
-
-        # TO DO: delete entry from "listeners" table
-        print("stopping webserver") # DEBUGGING
-
-    def beacon(self):
-        # parses json profile and configures malleable beacon http response
-        self.resp = make_response()
-
-        # TO DO: check if initial beacon or not
-        raw_post_data = request.get_data()
-
-        # initial base64 beacon
-        try:
-            base64.b64decode(raw_post_data)
-            #self.resp.data = "base64"
-
-            # generates 32 character encryption key and echoes out to the screen
-            self.resp.data = "".join(random.choice(string.ascii_lowercase + string.digits) for i in range(32))
-
-        # rc4 beacon
-        except:
-            self.resp.data = "rc4"
-
-        return self.resp
-
-
-    def update(self):
-        # parses json profile and configures malleable update http response
-        self.resp = make_response()
-        self.resp.data = "update response"
-        return self.resp
+        self.app.run("0.0.0.0", self.port)
