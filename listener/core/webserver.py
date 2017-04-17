@@ -1,7 +1,9 @@
+import base64
 import json
 import pymysql
 import sys
 from core.config import *
+from core.tasking import Tasking
 from colorama import Fore, Style
 from gevent import wsgi
 from flask import Flask
@@ -62,7 +64,14 @@ class WebServer(object):
             sys.exit()
 
     def beacon(self):
+        '''
+            Description: This is the function called when an implant beacons
+        '''
         return "beacon response"
 
+
     def update(self):
+        '''
+            Description: This is the function called when an implant updates
+        '''
         return "update response"
