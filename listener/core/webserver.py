@@ -18,6 +18,8 @@ class WebServer(object):
         self.profile = profile
 
         self.app = Flask(__name__)
+        # turns on Flask debugging - REMOVE LATER
+        self.app.debug = True
 
         # parses json profile and gets "beacon_uri" and "update_uri"
         with open(self.profile) as file:
