@@ -68,20 +68,38 @@ class WebServer(object):
         '''
             Description: This is the function called when an implant beacons
         '''
+
+
         # DEBUGGING
         raw_request_data = request.get_data()
-        return raw_request_data
 
-        # TO DO: determine if initial beacon or rc4 beacon here
-        # TO DO: subsequently call either parse_initial_beacon() or parse_rc4_beacon()
+        # tries to base64 decode beacon
+        try:
+            base64.b64decode(raw_request_data)
+            #return "base64"
+            return self.parse_initial_beacon()
+
+        # an exception was raised trying to base64 decode beacon
+        except:
+            #return "rc4"
+            return self.parse_rc4_beacon()
+
+
 
     def update(self):
         '''
             Description: This is the function called when an implant updates
         '''
-        raw_request_data = request.get_data()
-        return raw_request_data
+        # DEBUGGING
+        return "update response"
+
+
+
 
     # TO DO: create function to parse initial beacon
+    def parse_initial_beacon(self):
+        return "parsing initial beacon here"
 
     # TO DO: create function to parse rc4 beacon
+    def parse_rc4_beacon(self):
+        return "parsing rc4 beacon here"
