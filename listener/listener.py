@@ -2,6 +2,7 @@
 
 import argparse
 import ipaddress
+import json
 import os
 import socket
 import sys
@@ -23,10 +24,39 @@ def do_arg_checks(args):
         Message.display_error("[!] Invalid external address.\n" + str(e))
         return False
 
-    # checks port here
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
+    # checks json profile here
     try:
+        with open(args.profile) as file:
+            j = json.load(file)
+
+            # if "beacon_uri" property does not exist in profile
+            if "beacon_uri" not in j["implant"]:
+                Message.display_error('[!] Profile must contain a "beacon_uri" property.')
+                return False
+
+            # if "update_uri" property does not exist in profile
+            if "update_uri" not in j["implant"]:
+                Message.display_error('[!] Profile must contain a "update_uri" property.')
+                return False
+
+            # if "sleep" property does not exist in profile
+            if "sleep" not in j["implant"]:
+                Message.display_error('[!] Profile must contain a "sleep" property.')
+                return False
+
+            # if "user_agent" property does not exist in profile
+            if "user_agent" not in j["implant"]:
+                Message.display_error('[!] Profile must contain a "user_agent" property.')
+                return False
+
+    except:
+        Message.display_error("[!] Invalid profile supplied. Please make sure the profile is a valid JSON file.")
+        return False
+
+    # checks port here
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
         s.bind(("", args.port))
         return False
 
@@ -37,8 +67,6 @@ def do_arg_checks(args):
     except socket.error as e:
         Message.display_error("[!] Port already in use. Please choose another port.\n" + str(e))
         return False
-
-    # TO DO: checks json profile here
 
     # all checks passed at this point
     return True
