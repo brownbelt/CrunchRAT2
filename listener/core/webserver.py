@@ -5,11 +5,11 @@ from core.config import *
 
 class WebServer(object):
 
-    def __init__(self, protocol, external_address, port, profile):
-        self.protocol = protocol
-        self.external_address = external_address
-        self.port = port
-        self.profile = profile
+    def __init__(self, args):
+        self.protocol = args.protocol
+        self.external_address = args.external_address
+        self.port = args.port
+        self.profile = args.profile
 
         self.app = Flask(__name__)
         self.app.debug = True
