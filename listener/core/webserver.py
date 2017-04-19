@@ -1,4 +1,5 @@
 import pymysql
+from flask import Flask
 from core.config import *
 
 
