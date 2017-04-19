@@ -3,6 +3,7 @@
 import argparse
 import ipaddress
 import os
+import socket
 import sys
 from core.message import Message
 from core.webserver import WebServer
@@ -22,7 +23,20 @@ def do_arg_checks(args):
         Message.display_error("[!] Invalid external address.\n" + str(e))
         return False
 
-    # TO DO: checks port here
+    # checks port here
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    try:
+        s.bind(("", args.port))
+        return False
+
+    except OverflowError:
+        Message.display_error("[!] Invalid port supplied. Please choose a port between 1-65535.")
+        return False
+
+    except socket.error as e:
+        Message.display_error("[!] Port already in use. Please choose another port.\n" + str(e))
+        return False
 
     # TO DO: checks json profile here
 
