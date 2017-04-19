@@ -49,8 +49,8 @@ def do_arg_checks(args):
                 Message.display_error('[!] Profile must contain a "user_agent" property.')
                 return False
 
-    except:
-        Message.display_error("[!] Invalid profile supplied. Please make sure the profile is a valid JSON file.")
+    except Exception as e:
+        Message.display_error("[!] Invalid profile supplied. Please make sure the profile is a valid JSON file.\n" + str(e))
         return False
 
     # checks port here
@@ -60,8 +60,8 @@ def do_arg_checks(args):
         s.bind(("", args.port))
         return False
 
-    except OverflowError:
-        Message.display_error("[!] Invalid port supplied. Please choose a port between 1-65535.")
+    except OverflowError as e:
+        Message.display_error("[!] Invalid port supplied. Please choose a port between 1-65535.\n" + str(e))
         return False
 
     except socket.error as e:
