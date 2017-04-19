@@ -67,7 +67,7 @@ if __name__ == "__main__":
 
     # tries to instantiate WebServer class
     try:
-        w = WebServer(args.protocol, args.external_address, args.port, args.profile)
+        w = WebServer(args)
 
     # exception raised during WebServer class instantiation
     # exits the program
