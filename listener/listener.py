@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import argparse
+import ipaddress
 import os
 import sys
 from core.message import Message
@@ -8,12 +9,18 @@ from core.webserver import WebServer
 
 
 def do_arg_checks(args):
-    # if invalid protocol
+    # checks protocol
     if args.protocol != "http" and args.protocol != "https":
-        Message.display_error('[!] Invalid protocol supplied. Please enter "http" or "https" instead.')
+        Message.display_error('[!] Invalid protocol. Please enter "http" or "https" instead.')
         return False
 
-    # TO DO: checks external address here
+    # checks external address
+    try:
+        ipaddress.ip_address(args.external_address)
+
+    except Exception as e:
+        Message.display_error("[!] Invalid external address.\n" + str(e))
+        return False
 
     # TO DO: checks port here
 
