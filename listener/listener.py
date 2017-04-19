@@ -3,9 +3,24 @@
 import argparse
 import os
 import sys
-from core.argchecks import ArgChecks
 from core.message import Message
 from core.webserver import WebServer
+
+
+def do_arg_checks(args):
+    # if invalid protocol
+    if args.protocol != "http" and args.protocol != "https":
+        Message.display_error('[!] Invalid protocol supplied. Please enter "http" or "https" instead.')
+        return False
+
+    # TO DO: checks external address here
+
+    # TO DO: checks port here
+
+    # TO DO: checks json profile here
+
+    # all checks passed at this point
+    return True
 
 
 if __name__ == "__main__":
@@ -24,7 +39,10 @@ if __name__ == "__main__":
     # parses command-line arguments
     args = parser.parse_args()
 
-    # TO DO: add in command-line argument checks here
+    # checks command-line arguments for issues
+    # exits the program if any issues
+    if do_arg_checks(args) is not True:
+        sys.exit()
 
     # tries to instantiate WebServer class
     try:
