@@ -24,6 +24,19 @@ def do_arg_checks(args):
         Message.display_error("[!] Invalid external address.\n" + str(e))
         return False
 
+    # checks port here
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.bind(("", args.port))
+
+    except OverflowError as e:
+        Message.display_error("[!] Invalid port supplied. Please choose a port between 1-65535.\n" + str(e))
+        return False
+
+    except socket.error as e:
+        Message.display_error("[!] Port already in use. Please choose another port.\n" + str(e))
+        return False
+
     # checks json profile here
     try:
         with open(args.profile) as file:
@@ -51,21 +64,6 @@ def do_arg_checks(args):
 
     except Exception as e:
         Message.display_error("[!] Invalid profile supplied. Please make sure the profile is a valid JSON file.\n" + str(e))
-        return False
-
-    # checks port here
-    try:
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-        s.bind(("", args.port))
-        return False
-
-    except OverflowError as e:
-        Message.display_error("[!] Invalid port supplied. Please choose a port between 1-65535.\n" + str(e))
-        return False
-
-    except socket.error as e:
-        Message.display_error("[!] Port already in use. Please choose another port.\n" + str(e))
         return False
 
     # all checks passed at this point
