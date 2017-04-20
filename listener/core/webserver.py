@@ -52,8 +52,15 @@ class WebServer(object):
 
             # add an entry in the "listeners" table
             with self.connection.cursor() as cursor:
-                cursor.execute("INSERT INTO `listeners` (`protocol`, `external_address`, `port`, `profile`, `user_agent`, `sleep`, `beacon_uri`, `update_uri`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
-                (self.protocol, self.external_address, self.port, self.profile, self.j["implant"]["user_agent"], self.j["implant"]["sleep"], self.j["implant"]["beacon_uri"], self.j["implant"]["update_uri"]))
+                statement = "INSERT INTO `listeners` (`protocol`, `external_address`, `port`, `profile`, `user_agent`, `sleep`, `beacon_uri`, `update_uri`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+
+                cursor.execute(statement, (self.protocol,
+                                           self.external_address,
+                                           self.port, self.profile,
+                                           self.j["implant"]["user_agent"],
+                                           self.j["implant"]["sleep"],
+                                           self.j["implant"]["beacon_uri"],
+                                           self.j["implant"]["update_uri"]))
 
             Message.display_status("[+] Successfully started listener on " + self.external_address + ":" + str(self.port))
             server.serve_forever()
