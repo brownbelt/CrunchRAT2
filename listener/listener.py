@@ -106,5 +106,5 @@ if __name__ == "__main__":
         w.start_web_server()
 
     except Exception as e:
-        Message.display_error("[!] Error starting Flask web server.\n" + str(e))
+        Message.display_error("[!] Error starting listener.\n" + str(e))
         sys.exit()

@@ -33,7 +33,7 @@ class WebServer(object):
         # tries to start Flask web server
         try:
             server = wsgi.WSGIServer(("0.0.0.0", self.port), self.app)
-            Message.display_status("[+] Successfully started web server on " + self.external_address + ":" + str(self.port))
+            Message.display_status("[+] Successfully started listener on " + self.external_address + ":" + str(self.port))
             server.serve_forever()
 
         except KeyboardInterrupt:
