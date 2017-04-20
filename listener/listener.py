@@ -101,6 +101,14 @@ if __name__ == "__main__":
         Message.display_error("[!] Unable to establish database connection.\n" + str(e))
         sys.exit()
 
+    # tries to parse profile
+    try:
+        w.parse_profile_and_route()
+
+    except Exception as e:
+        print("[!] Unable to parse profile.\n" + str(e))
+        sys.exit()
+
     # tries to start Flask web server using WebServer class
     try:
         w.start_web_server()
