@@ -1,6 +1,8 @@
 import json
 import pymysql
 from flask import Flask
+from flask import request
+from flask import make_response
 from gevent import wsgi
 from core.config import *
 from core.message import Message
@@ -40,8 +42,6 @@ class WebServer(object):
                 self.app.add_url_rule(self.j["implant"]["beacon_uri"], None, self.beacon, methods=["GET", "POST"])
                 self.app.add_url_rule(self.j["implant"]["update_uri"], None, self.update, methods=["GET", "POST"])
 
-                # TO DO: add in malleable HTTP responses here
-
         except Exception:
             raise
 
@@ -70,7 +70,25 @@ class WebServer(object):
                 cursor.execute("DELETE FROM `listeners`")
 
     def beacon(self):
-        return "beacon response"
+        try:
+            resp = make_response()
+
+            # TO DO: loop through profile and add in malleable headers and cookies here
+
+            resp.data = "beacon response"
+            return resp
+
+        except Exception:
+            raise
 
     def update(self):
-        return "update response"
+        try:
+            resp = make_response()
+
+            # TO DO: loop through profile and add in malleable headers and cookies here
+
+            resp.data = "update response"
+            return resp
+
+        except Exception:
+            raise
