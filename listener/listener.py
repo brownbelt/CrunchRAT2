@@ -107,3 +107,4 @@ if __name__ == "__main__":
 
     except Exception as e:
         Message.display_error("[!] Error starting Flask web server.\n" + str(e))
+        sys.exit()
