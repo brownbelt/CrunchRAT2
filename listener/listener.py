@@ -100,3 +100,10 @@ if __name__ == "__main__":
     except Exception as e:
         Message.display_error("[!] Unable to establish database connection.\n" + str(e))
         sys.exit()
+
+    # tries to start Flask web server using WebServer class
+    try:
+        w.start_web_server()
+
+    except Exception as e:
+        Message.display_error("[!] Error starting Flask web server.\n" + str(e))
