@@ -1,3 +1,4 @@
+import base64
 import json
 import pymysql
 from flask import Flask
@@ -19,13 +20,31 @@ class WebServer(object):
         self.app = Flask(__name__)
         self.app.debug = True
 
+        # reads profile as a file
+        with open(self.profile) as file:
+            self.json = json.load(file)
+
+        # tries to open a database connection
+        try:
+            self.connection = pymysql.connect(
+                host="localhost",
+                port=3306,
+                user=username,
+                passwd=password,
+                db=database,
+                autocommit=True)
+
+        except Exception:
+            raise
+
     def start_web_server(self):
         """
         Description:
-            Tries to start the Flask web server
+            This function starts the Flask web server
         """
         try:
             server = wsgi.WSGIServer(("0.0.0.0", self.port), self.app)
+            self.app.add_url_rule(self.json["implant"]["beacon_uri"], None, self.beacon_response, methods=["GET", "POST"])
             Message.display_status("[+] Started listener")
             server.serve_forever()
 
@@ -34,3 +53,19 @@ class WebServer(object):
 
         except Exception:
             raise
+
+    def beacon_response(self):
+        """
+        Description:
+            This function is called when an implant beacons
+        """
+        self.data = request.get_data()
+
+        # tries to base64 decode beacon post data
+        try:
+            base64.b64decode(self.data)
+            return "base64 beacon"
+
+        # exception means it is an rc4 beacon instead
+        except:
+            return "rc4 beacon"
