@@ -23,7 +23,7 @@ class Tasking(object):
             This function checks the "tasks" table for tasking
 
         RETURNS:
-            Boolean: True if tasks, False if no tasks
+            Boolean: True if the beaconing implant has tasks, False if no tasks
         """
 
         # tries to check tasking
