@@ -17,12 +17,13 @@ class Tasking(object):
         except Exception:
             raise
 
-    def close_db(self):
+    def close_database_connection(self):
         """
         DESCRIPTION:
             This function closes the database connection
         """
-        self.connection.close()
+        if self.connection.open:
+            self.connection.close()
 
     def has_tasking(self, hostname, process_id):
         """
@@ -36,8 +37,6 @@ class Tasking(object):
         RETURNS:
             bool: true if tasks, false if no tasks
         """
-
-        # tries to check tasking
         try:
             with self.connection.cursor() as cursor:
                 statement = "SELECT * FROM tasks WHERE hostname = %s AND process_id = %s LIMIT 1"
