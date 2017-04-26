@@ -41,7 +41,7 @@ class WebServer(object):
         except Exception:
             raise
 
-     def close_database_connection(self):
+    def close_database_connection(self):
         """
         DESCRIPTION:
             This function closes the database connection
@@ -51,17 +51,6 @@ class WebServer(object):
         """
         if self.connection.open:
             self.connection.close()
-
-
-
-
-
-
-
-
-
-
-
 
 
 
