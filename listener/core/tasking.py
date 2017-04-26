@@ -20,10 +20,14 @@ class Tasking(object):
     def has_tasking(self, hostname, process_id):
         """
         DESCRIPTION:
-            This function checks the "tasks" table for tasking
+            This function queries the "tasks" table for tasking
+
+        ARGUMENTS:
+            str: hostname
+            str: process_id
 
         RETURNS:
-            Boolean: True if the beaconing implant has tasks, False if no tasks
+            bool: true if tasks, false if no tasks
         """
 
         # tries to check tasking
@@ -32,9 +36,11 @@ class Tasking(object):
                 statement = "SELECT * FROM tasks WHERE hostname = %s AND process_id = %s LIMIT 1"
                 cursor.execute(statement, (hostname, process_id))
 
+                # if tasks
                 if cursor.rowcount == 1:
                     return True
 
+                # else no tasks
                 else:
                     return False
 
