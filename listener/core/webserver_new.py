@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.debug = True
 
 # configures flask logging
-log_handler = RotatingFileHandler("access.log", maxBytes=1000000, backupCount=1)
+log_handler = RotatingFileHandler("../logs/access.log", maxBytes=1000000, backupCount=1)
 app.logger.addHandler(log_handler)
 app.logger.setLevel(logging.INFO)
 
