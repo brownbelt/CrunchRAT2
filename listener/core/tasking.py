@@ -5,7 +5,7 @@ from core.config import *
 class Tasking(object):
 
     def __init__(self):
-        # tries to open a database connection
+        # tries to open the database connection
         try:
             self.connection = pymysql.connect(host="localhost",
                                               port=3306,
@@ -16,6 +16,13 @@ class Tasking(object):
 
         except Exception:
             raise
+
+    def close_db(self):
+        """
+        DESCRIPTION:
+            This function closes the database connection
+        """
+        self.connection.close()
 
     def has_tasking(self, hostname, process_id):
         """
@@ -46,7 +53,3 @@ class Tasking(object):
 
         except Exception:
             raise
-
-        # finally closes database connection
-        finally:
-            self.connection.close()
