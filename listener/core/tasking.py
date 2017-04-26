@@ -18,17 +18,6 @@ class Tasking(object):
         except Exception:
             raise
 
-    def close_database_connection(self):
-        """
-        DESCRIPTION:
-            This function closes the database connection
-
-        RETURNS:
-            None
-        """
-        if self.connection.open:
-            self.connection.close()
-
     def has_tasking(self, hostname, process_id):
         """
         DESCRIPTION:
