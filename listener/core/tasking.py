@@ -1,6 +1,5 @@
 import pymysql
-#from core.config import *
-from config import *
+from core.config import *
 
 
 class Tasking(object):
@@ -45,6 +44,3 @@ class Tasking(object):
         # finally closes database connection
         finally:
             self.connection.close()
-
-t = Tasking()
-print(t.has_tasking("MINT-TESTING", "90735"))
