@@ -48,10 +48,25 @@ class WebServer(object):
             app.logger.addHandler(log_handler)
             app.logger.setLevel(logging.INFO)
 
+            # TO DO: add in "INSERT INTO listeners" statement here
+
             # starts Flask web server
             server = WSGIServer(("0.0.0.0", port), app, log=app.logger)
             server.serve_forever()
 
+        # keyboard interrupt exception
+        except KeyboardInterrupt:
+            pass
+
         # exception raised creating and starting the Flask web server
         except Exception:
             raise
+
+        # deletes all entries from "listeners" table
+        # also closes the database connection
+        finally:
+            # TO DO: add in "DELETE FROM listeners" statement here
+            print("delete from listeners table here")
+
+            # TO DO: kill database connection here
+            print("kill database connection here")
