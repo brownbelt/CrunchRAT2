@@ -1,18 +1,50 @@
 import logging
+import pymysql
+from core.config import *
 from gevent.wsgi import WSGIServer
 from flask import Flask
 from logging.handlers import RotatingFileHandler
 
-# creates flask app
-app = Flask(__name__)
-app.debug = True
 
-# configures flask logging
-# 100 meg maximum file size
-log_handler = RotatingFileHandler("../logs/access.log", maxBytes=100000000, backupCount=3)
-app.logger.addHandler(log_handler)
-app.logger.setLevel(logging.INFO)
+class WebServer(object):
+    def __init__(self):
+        # tries to open the database connection
+        try:
+            self.connection = pymysql.connect(host="localhost",
+                                              port=3306,
+                                              user=username,
+                                              passwd=password,
+                                              db=database,
+                                              autocommit=True)
 
-# starts flask web server
-server = WSGIServer(("0.0.0.0", 8000), app, log=app.logger)
-server.serve_forever()
+        # exception raised during database connection
+        except Exception:
+            raise
+
+    def start_web_server(self):
+        """
+        DESCRIPTION:
+            This function creates and starts the Flask web server
+
+        RETURNS:
+            None
+        """
+        # tries to create and start the Flask web server
+        try:
+            # creates Flask app
+            app = Flask(__name__)
+            app.debug = True
+
+            # configures Flask logging with 100 meg max file size
+            # all requests are logged to "listener/logs/access.log"
+            log_handler = RotatingFileHandler("../logs/access.log", maxBytes=100000000, backupCount=3)
+            app.logger.addHandler(log_handler)
+            app.logger.setLevel(logging.INFO)
+
+            # starts Flask web server
+            server = WSGIServer(("0.0.0.0", 8000), app, log=app.logger)
+            server.serve_forever()
+
+        # exception raised creating and starting the Flask web server
+        except Exception:
+            raise
