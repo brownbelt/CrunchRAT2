@@ -4,6 +4,7 @@
         "sleep": "10",
         "file_path": "/tmp/log.txt",
         "beacon_uri": "/api/v1/playlist/getFragment",
-        "update_uri": "/api/v1/station/trackStarted"
+        "update_uri": "/api/v1/station/trackStarted",
+        "redirect_url": "https://www.pandora.com"
     }
 }
