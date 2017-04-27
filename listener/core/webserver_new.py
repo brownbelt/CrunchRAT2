@@ -65,8 +65,8 @@ class WebServer(object):
         # deletes all entries from "listeners" table
         # also closes the database connection
         finally:
-            # TO DO: add in "DELETE FROM listeners" statement here
-            print("delete from listeners table here")
+            with self.connection.cursor() as cursor:
+                cursor.execute("DELETE FROM listeners")
 
-            # TO DO: kill database connection here
-            print("kill database connection here")
+            if self.connection.open:
+                self.connection.close()
