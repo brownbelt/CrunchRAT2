@@ -1,3 +1,4 @@
+import base64
 import logging
 import pymysql
 from core.config import *
@@ -27,6 +28,21 @@ class WebServer(object):
         # exception raised during database connection
         except Exception:
             raise
+
+    def is_base64(self, string):
+        """
+        DESCRIPTION:
+            This function checks if the specified string is Base64 encoded or not
+
+        RETURNS:
+            Bool
+        """
+        try:
+            base64.b64decode(string).decode()
+            return True
+
+        except Exception:
+            return False
 
     def start_web_server(self, port):
         """
