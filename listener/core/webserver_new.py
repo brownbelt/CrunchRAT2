@@ -54,7 +54,7 @@ class WebServer(object):
             server = WSGIServer(("0.0.0.0", port), app, log=app.logger)
             server.serve_forever()
 
-        # keyboard interrupt exception
+        # ignores KeyboardInterrupt exception
         except KeyboardInterrupt:
             pass
 
