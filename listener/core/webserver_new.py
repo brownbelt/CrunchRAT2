@@ -7,7 +7,14 @@ from logging.handlers import RotatingFileHandler
 
 
 class WebServer(object):
-    def __init__(self):
+
+    def __init__(self, args):
+        # we will reference these variables throughout the class
+        self.protocol = args.protocol
+        self.external_address = args.external_address
+        self.port = args.port
+        self.profile = args.profile
+
         # tries to open the database connection
         try:
             self.connection = pymysql.connect(host="localhost",
@@ -37,7 +44,7 @@ class WebServer(object):
 
             # configures Flask logging with 100 meg max file size
             # all requests are logged to "listener/logs/access.log"
-            log_handler = RotatingFileHandler("../logs/access.log", maxBytes=100000000, backupCount=3)
+            log_handler = RotatingFileHandler("logs/access.log", maxBytes=100000000, backupCount=3)
             app.logger.addHandler(log_handler)
             app.logger.setLevel(logging.INFO)
 
