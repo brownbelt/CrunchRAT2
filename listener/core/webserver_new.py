@@ -21,7 +21,7 @@ class WebServer(object):
         except Exception:
             raise
 
-    def start_web_server(self):
+    def start_web_server(self, port):
         """
         DESCRIPTION:
             This function creates and starts the Flask web server
@@ -42,7 +42,7 @@ class WebServer(object):
             app.logger.setLevel(logging.INFO)
 
             # starts Flask web server
-            server = WSGIServer(("0.0.0.0", 8000), app, log=app.logger)
+            server = WSGIServer(("0.0.0.0", port), app, log=app.logger)
             server.serve_forever()
 
         # exception raised creating and starting the Flask web server
