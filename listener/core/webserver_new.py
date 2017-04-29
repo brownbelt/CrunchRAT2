@@ -2,6 +2,7 @@ import logging
 import json
 import pymysql
 from core.config import *
+from core.message import Message
 from gevent.wsgi import WSGIServer
 from flask import Flask, request, redirect
 from logging.handlers import RotatingFileHandler
@@ -87,7 +88,9 @@ class WebServer(object):
 
             # TO DO: INSERT entry into "listeners" table
 
+            # starts Flask web server
             server = WSGIServer(("0.0.0.0", port), app, log=app.logger)
+            Message().display_status("[+] Started listener on tcp/" + str(port))
             server.serve_forever()
 
         # ignores KeyboardInterrupt exception
