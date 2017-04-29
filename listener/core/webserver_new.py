@@ -1,3 +1,4 @@
+import base64
 import logging
 import json
 import pymysql
@@ -73,7 +74,19 @@ class WebServer(object):
 
         # else valid method
         else:
-            return "beacon response"
+            raw_data = request.get_data()
+
+            # if initial Base64 beacon
+            if self.is_base64(raw_data) is True:
+                # TO DO: generate 32 character encryption key
+
+                return "base64"
+
+            # else RC4 beacon
+            else:
+                # TO DO: query "implants" table and try to decrypt POST data
+
+                return "rc4"
 
     def start_flask(self, protocol, port, profile):
         """
