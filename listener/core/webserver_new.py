@@ -31,7 +31,7 @@ def catch_all_redirect(path):
 
 class WebServer(object):
 
-    def __init__(self, args):
+    def __init__(self):
         # tries to open the database connection
         try:
             self.connection = pymysql.connect(host="localhost",
