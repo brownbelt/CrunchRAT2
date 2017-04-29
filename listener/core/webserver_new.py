@@ -46,6 +46,20 @@ class WebServer(object):
         except Exception:
             raise
 
+    def is_base64(self, string):
+        """
+        Description:
+            This function checks if a specified string is Base64 encoded or not
+        """
+        # tries to Base64 decode
+        try:
+            base64.b64decode(string).decode()
+            return True
+
+        # exception raised during Base64 decode
+        except Exception:
+            return False
+
     def beacon_response(self):
         """
         DESCRIPTION:
