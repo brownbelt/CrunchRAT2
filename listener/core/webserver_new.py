@@ -40,7 +40,7 @@ class WebServer(object):
         # tries to open the database connection
         try:
             self.connection = pymysql.connect(host="localhost",
-                                              port=3306,
+                                              port=port,
                                               user=username,
                                               passwd=password,
                                               db=database,
