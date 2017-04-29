@@ -11,4 +11,4 @@ parser.add_argument("profile", action="store", type=str, help="listener profile"
 args = parser.parse_args()
 
 w = WebServer(args)
-w.start_flask()
+w.start_flask(args.protocol, args.port, args.profile)
