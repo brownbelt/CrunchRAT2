@@ -8,6 +8,7 @@ from logging.handlers import RotatingFileHandler
 app = Flask(__name__)
 app.debug = True
 
+
 @app.errorhandler(404)
 def page_not_found_redirect(error):
     """
@@ -16,6 +17,7 @@ def page_not_found_redirect(error):
     """
     return redirect(app.config["redirect_url"])
 
+
 @app.route("/<path:path>")
 def catch_all_redirect(path):
     """
@@ -23,9 +25,6 @@ def catch_all_redirect(path):
         This function redirects all other requests to "redirect_url"
     """
     return redirect(app.config["redirect_url"])
-
-
-
 
 
 class WebServer(object):
