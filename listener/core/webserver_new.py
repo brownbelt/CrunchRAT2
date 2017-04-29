@@ -8,6 +8,14 @@ from logging.handlers import RotatingFileHandler
 app = Flask(__name__)
 app.debug = True
 
+@app.errorhandler(404)
+def page_not_found(error):
+    """
+    DESCRIPTION:
+        This function redirects all 404 requests to "redirect_url"
+    """
+    return redirect(app.config["redirect_url"])
+
 @app.route("/<path:path>")
 def catch_all(path):
     """
@@ -16,13 +24,7 @@ def catch_all(path):
     """
     return redirect(app.config["redirect_url"])
 
-@app.errorhandler(404)
-def page_not_found(error):
-    """
-    DESCRIPTION:
-        This function redirects all 404 requests to "redirect_url"
-    """
-    return redirect(app.config["redirect_url"])
+
 
 
 
