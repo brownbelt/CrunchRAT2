@@ -144,6 +144,7 @@ class WebServer(object):
                     results = cursor.fetchall()
 
                     # loops through each encryption key
+                    # tries to decrypt using each key
                     for row in results:
                         # if successful decryption
                         if "hostname" in self.crypt(row[0], raw_data):
