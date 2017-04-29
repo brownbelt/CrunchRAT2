@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.debug = True
 
 @app.errorhandler(404)
-def page_not_found(error):
+def page_not_found_redirect(error):
     """
     DESCRIPTION:
         This function redirects all 404 requests to "redirect_url"
@@ -17,7 +17,7 @@ def page_not_found(error):
     return redirect(app.config["redirect_url"])
 
 @app.route("/<path:path>")
-def catch_all(path):
+def catch_all_redirect(path):
     """
     DESCRIPTION:
         This function redirects all other requests to "redirect_url"
