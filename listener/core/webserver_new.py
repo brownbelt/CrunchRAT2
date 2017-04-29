@@ -50,9 +50,13 @@ class WebServer(object):
         DESCRIPTION:
             This function is called when an implant beacons
         """
+        # if request method is "GET"
+        # the implant will never use this method
+        # redirects client to the "redirect_url" specified in the profile
         if request.method == "GET":
             return redirect(app.config["redirect_url"])
 
+        # else valid method
         else:
             return "beacon response"
 
