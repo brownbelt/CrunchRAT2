@@ -1,4 +1,5 @@
 import base64
+import datetime
 import logging
 import json
 import pymysql
@@ -92,6 +93,10 @@ class WebServer(object):
 
                 # generates a random 32 character encryption key (upper and lower, no numbers)
                 encryption_key = "".join(random.SystemRandom().choice(string.ascii_letters) for _ in range(32))
+
+                # gets current time (uses server's time)
+                now = datetime.datetime.now()
+                time = now.strftime("%Y-%m-%d %H:%M:%S")
 
                 # TO DO: INSERT entry into "implants" table
 
