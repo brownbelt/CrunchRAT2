@@ -10,4 +10,5 @@ parser.add_argument("profile", action="store", type=str, help="listener profile"
 # parses command-line arguments
 args = parser.parse_args()
 
+WebServer().insert_into_listeners(args)
 WebServer().start_flask(args.protocol, args.port, args.profile)

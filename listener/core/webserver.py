@@ -50,6 +50,22 @@ class WebServer(object):
         except Exception:
             raise
 
+    def insert_into_listeners(self, args):
+        """
+        DESCRIPTION:
+            This function adds an entry in the "listeners" table
+        """
+        # TO DO: need to get other listener variables from profile here
+
+        # adds an entry in the "listeners" table
+        with self.connection.cursor() as cursor:
+            statement = """INSERT INTO `listeners` (`protocol`, `external_address`, `port`, `profile`)
+            VALUES (%s, %s, %s, %s)"""
+            cursor.execute(statement, (args.protocol,
+                                       args.external_address,
+                                       args.port,
+                                       args.profile))
+
     def crypt(self, key, data):
         """
         DESCRIPTION:
