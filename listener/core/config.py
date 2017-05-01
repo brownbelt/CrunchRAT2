@@ -1,4 +1,4 @@
 username = "root"
-password = "root"
+password = ""
 database = "RAT"
 port = 3306
