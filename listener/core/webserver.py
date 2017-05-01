@@ -55,16 +55,24 @@ class WebServer(object):
         DESCRIPTION:
             This function adds an entry in the "listeners" table
         """
-        # TO DO: need to get other listener variables from profile here
+        # reads profile as a file
+        with open(args.profile) as file:
+            j = json.load(file)
 
         # adds an entry in the "listeners" table
         with self.connection.cursor() as cursor:
-            statement = """INSERT INTO `listeners` (`protocol`, `external_address`, `port`, `profile`)
-            VALUES (%s, %s, %s, %s)"""
+            statement = """INSERT INTO `listeners` (`protocol`, `external_address`, `port`, `profile`, `user_agent`, `sleep`, `file_path`, `beacon_uri`, `update_uri`, `redirect_url`)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
             cursor.execute(statement, (args.protocol,
                                        args.external_address,
                                        args.port,
-                                       args.profile))
+                                       args.profile,
+                                       j["implant"]["user_agent"],
+                                       j["implant"]["sleep"],
+                                       j["implant"]["file_path"],
+                                       j["implant"]["beacon_uri"],
+                                       j["implant"]["update_uri"],
+                                       j["implant"]["redirect_url"]))
 
     def crypt(self, key, data):
         """
