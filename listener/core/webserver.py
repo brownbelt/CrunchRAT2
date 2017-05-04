@@ -69,7 +69,7 @@ class WebServer(object):
                                        args.profile,
                                        j["implant"]["user_agent"],
                                        j["implant"]["sleep"],
-                                       j["implant"]["file_path"],
+                                       j["implant"]["download_implant_to"],
                                        j["implant"]["beacon_uri"],
                                        j["implant"]["update_uri"],
                                        j["implant"]["redirect_url"]))
