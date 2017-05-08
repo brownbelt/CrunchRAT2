@@ -1,5 +1,8 @@
 # CrunchRAT
 
+### Database Setup
+1. From within the `listener` directory, run `sqlite3 rat.db < setup/database_setup.sql`. This will create all necessary sqlite tables.
+
 ### Listener Setup
 1. From within the `listener` directory, run `pip3 install -r requirements`. This will install all necessary Python libraries.
 
