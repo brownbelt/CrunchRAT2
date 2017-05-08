@@ -34,6 +34,21 @@ def catch_all_redirect(path):
     return redirect(app.config["redirect_url"])
 
 
+def is_base64(string):
+    """
+    DESCRIPTION:
+        This function checks if a specified string is Base64 encoded or not
+    """
+    # tries to Base64 decode
+    try:
+        base64.b64decode(string).decode()
+        return True
+
+    # exception raised during Base64 decode
+    except Exception:
+        return False
+
+
 def beacon_response():
     """
         This function is called when an implant beacons
@@ -46,7 +61,16 @@ def beacon_response():
 
     # else valid method
     else:
-        return "beacon response"
+        # gets raw HTTP POST data
+        raw_data = request.get_data()
+
+        # if initial Base64 beacon
+        # new beacon
+        if is_base64(raw_data) is True:
+            return "initial beacon"
+
+        else:
+            return "rc4 beacon"
 
 
 def start_flask_server(protocol, port, profile):
