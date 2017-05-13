@@ -19,12 +19,12 @@ app.debug = True
 class WebServer(object):
 
     def __init__(self):
-        # tries to open a database connection
+        # tries to open sqlite connection
         try:
             # uses database path specified in "config.py"
             self.connection = sqlite3.connect(database_path)
 
-        # exception raised during database connection
+        # exception raised during sqlite connection
         except Exception:
             raise
 
