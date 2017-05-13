@@ -58,9 +58,11 @@ class WebServer(object):
         except Exception:
             raise
 
+        # finally closes sqlite connection opened in __init__()
         finally:
-            # TO DO: kill sqlite connection here
-            print("kill database connection opened in __init__  here")
+            self.connection.close()
 
+# END OF CLASS
+# DEBUGGING BELOW
 w = WebServer()
 w.start_flask_server("http", "192.168.1.1", 8080, "../profiles/pandora.json")
