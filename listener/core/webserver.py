@@ -41,8 +41,6 @@ class WebServer(object):
             app.logger.addHandler(log_handler)
             app.logger.setLevel(logging.INFO)
 
-            # TO DO: INSERT entry into "listeners" table
-
             # starts Flask web server
             server = WSGIServer(("0.0.0.0", port), app, log=app.logger)
             print_status("[+] Started listener on tcp/" + str(port))
