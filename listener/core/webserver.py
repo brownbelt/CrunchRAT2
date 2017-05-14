@@ -28,12 +28,29 @@ class WebServer(object):
         except Exception:
             raise
 
+    def beacon_response(self):
+        """
+        DESCRIPTION:
+            This function is called when an implant beacons
+        """
+        return "beacon response"
+
     def start_flask_server(self, protocol, external_address, port, profile):
+        """
+        DESCRIPTION:
+            This function starts the Flask web server
+        """
         # tries to start the Flask web server
         try:
             # reads profile as a file
             with open(profile) as file:
                 j = json.load(file)
+
+            # adds beacon route for Flask
+            app.add_url_rule(j["implant"]["beacon_uri"],
+                             None,
+                             self.beacon_response,
+                             methods=["GET", "POST"])
 
             # configures Flask logging with 100 meg max file size
             # all requests are logged to "listener/logs/access.log"
