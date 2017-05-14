@@ -37,7 +37,9 @@ class WebServer(object):
 
             # configures Flask logging with 100 meg max file size
             # all requests are logged to "listener/logs/access.log"
-            log_handler = RotatingFileHandler("logs/access.log", maxBytes=100000000, backupCount=3)
+            log_handler = RotatingFileHandler("logs/access.log",
+                                              maxBytes=100000000,
+                                              backupCount=3)
             app.logger.addHandler(log_handler)
             app.logger.setLevel(logging.INFO)
 
