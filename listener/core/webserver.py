@@ -65,6 +65,13 @@ class WebServer(object):
         except Exception:
             raise
 
-        # finally closes sqlite connection opened in __init__()
+        # finally deletes all entries from "listeners" table
+        # and closes sqlite connection opened in __init__()
         finally:
+            # deletes all entries from "listeners" table
+            with self.connection:
+                cursor = self.connection.cursor()
+                cursor.execute("DELETE FROM listeners")
+
+            # closes sqlite connection
             self.connection.close()
