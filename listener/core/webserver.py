@@ -5,8 +5,8 @@ import json
 import random
 import sqlite3
 import string
-from config import *
-from message import *
+from core.config import *
+from core.message import *
 from gevent.wsgi import WSGIServer
 from flask import Flask, request, redirect
 from logging.handlers import RotatingFileHandler
@@ -37,7 +37,7 @@ class WebServer(object):
 
             # configures Flask logging with 100 meg max file size
             # all requests are logged to "listener/logs/access.log"
-            log_handler = RotatingFileHandler("../logs/access.log", maxBytes=100000000, backupCount=3)
+            log_handler = RotatingFileHandler("logs/access.log", maxBytes=100000000, backupCount=3)
             app.logger.addHandler(log_handler)
             app.logger.setLevel(logging.INFO)
 
@@ -66,8 +66,3 @@ class WebServer(object):
         # finally closes sqlite connection opened in __init__()
         finally:
             self.connection.close()
-
-# END OF CLASS
-# DEBUGGING BELOW
-w = WebServer()
-w.start_flask_server("http", "192.168.1.1", 8080, "../profiles/pandora.json")
