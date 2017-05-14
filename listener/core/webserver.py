@@ -28,12 +28,36 @@ class WebServer(object):
         except Exception:
             raise
 
+    def is_base64(self, string):
+        """
+        DESCRIPTION:
+            This function checks if a specified string is Base64 encoded or not
+        """
+        # tries to Base64 decode
+        try:
+            base64.b64decode(string).decode()
+            return True
+
+        # exception raised during Base64 decode
+        except Exception:
+            return False
+
     def beacon_response(self):
         """
         DESCRIPTION:
             This function is called when an implant beacons
         """
-        return "beacon response"
+        # gets raw POST data
+        raw_data = request.get_data()
+
+        # if initial Base64 beacon
+        # new beacon
+        if self.is_base64(raw_data) is True:
+            return "Base64 beacon"
+
+        # else RC4-encrypted beacon
+        else:
+            return "RC4 beacon"
 
     def start_flask_server(self, protocol, external_address, port, profile):
         """
@@ -50,7 +74,7 @@ class WebServer(object):
             app.add_url_rule(j["implant"]["beacon_uri"],
                              None,
                              self.beacon_response,
-                             methods=["GET", "POST"])
+                             methods=["POST"])
 
             # configures Flask logging with 100 meg max file size
             # all requests are logged to "listener/logs/access.log"
