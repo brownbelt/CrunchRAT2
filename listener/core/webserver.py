@@ -86,7 +86,7 @@ class WebServer(object):
             # returns Base64 encoded encryption key in the HTTP response
             return base64.b64encode(key.encode())
 
-        # else RC4-encrypted beacon
+        # else RC4 encrypted beacon
         else:
             return "RC4 beacon"
 
@@ -145,5 +145,5 @@ class WebServer(object):
                 cursor = self.connection.cursor()
                 cursor.execute("DELETE FROM listeners")
 
-            # closes sqlite connection
+            # closes sqlite connection opened in __init__()
             self.connection.close()
