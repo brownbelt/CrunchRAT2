@@ -41,9 +41,14 @@ class WebServer(object):
             app.logger.addHandler(log_handler)
             app.logger.setLevel(logging.INFO)
 
-            # INSERTS an entry into the "listener" table
-            # CREATE TABLE listeners (protocol TEXT, external_address TEXT, port TEXT, profile TEXT);
-            # ** ONLY INCLUDE THE COLUMNS ABOVE - SHOULD HAVE FUNCTION CALLED insert_into_listeners() **
+            # INSERTS an entry into the "listeners" table
+            with self.connection:
+                cursor = self.connection.cursor()
+                cursor.execute("INSERT INTO listeners VALUES (?,?,?,?)",
+                              (protocol,
+                               external_address,
+                               port,
+                               profile))
 
             # starts Flask web server
             server = WSGIServer(("0.0.0.0", port), app, log=app.logger)
