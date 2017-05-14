@@ -28,6 +28,29 @@ class WebServer(object):
         except Exception:
             raise
 
+    def crypt(self, key, data):
+        """
+        DESCRIPTION:
+            This function is the encryption and decryption routine
+        """
+        S = list(range(256))
+        j = 0
+        out = []
+
+        for i in list(range(256)):
+            j = (j + S[i] + ord(key[i % len(key)])) % 256
+            S[i], S[j] = S[j], S[i]
+
+        i = j = 0
+
+        for char in data:
+            i = (i + 1) % 256
+            j = (j + S[i]) % 256
+            S[i], S[j] = S[j], S[i]
+            out.append(chr(char ^ S[(S[i] + S[j]) % 256]))
+
+        return "".join(out)
+
     def is_base64(self, string):
         """
         DESCRIPTION:
