@@ -45,10 +45,10 @@ class WebServer(object):
             with self.connection:
                 cursor = self.connection.cursor()
                 cursor.execute("INSERT INTO listeners VALUES (?,?,?,?)",
-                              (protocol,
-                               external_address,
-                               port,
-                               profile))
+                               (protocol,
+                                external_address,
+                                port,
+                                profile))
 
             # starts Flask web server
             server = WSGIServer(("0.0.0.0", port), app, log=app.logger)
