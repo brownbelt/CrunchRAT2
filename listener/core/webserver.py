@@ -131,14 +131,13 @@ class WebServer(object):
                         operating_system = j["operating_system"]
 
                         # updates "last_beacon" time in "implants" table
-                        with self.connection:
-                            cursor = self.connection.cursor()
-                            cursor.execute("""UPDATE implants SET last_beacon = ?
-                                              WHERE hostname = ?
-                                              AND process_id = ?""",
-                                           (current_time,
-                                            hostname,
-                                            process_id))
+                        # uses previously opened cursor
+                        cursor.execute("""UPDATE implants SET last_beacon = ?
+                                          WHERE hostname = ?
+                                          AND process_id = ?""",
+                                       (current_time,
+                                        hostname,
+                                        process_id))
 
                         # TO DO: checks for tasking
 
