@@ -153,6 +153,12 @@ class WebServer(object):
 
                         # if we have tasking
                         if result is not None:
+                            # TO DO: check if task_action is "command"
+                            # TO DO: create function that generates server-side
+                            # Popen() code. We will return that code in the
+                            # HTTP response so that the implant can execute
+                            # using exec()
+
                             return "we have tasking"
 
                         # else we return a blank response
