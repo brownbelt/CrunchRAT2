@@ -1,6 +1,7 @@
 import argparse
 from flask import Flask
 from flask import request
+from flask import redirect
 from flask import render_template
 from flask import session
 from gevent.wsgi import WSGIServer
@@ -42,16 +43,18 @@ def login_submit():
     password = request.form["password"]
 
     if password == args.password:
+        flash("success")
         return "successful authentication"
 
     else:
+        flash("failure")
         return "failed authentication"
 
 
 # this is the index "view"
 @app.route("/")
 def index():
-    return "<p>This is the index page.</p>"
+    return redirect("/login", 302)
 
 
 # this is the user "view"
