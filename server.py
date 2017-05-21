@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import request
 from flask import render_template
+from gevent.wsgi import WSGIServer
 
 # creates Flask application instance
 app = Flask(__name__)
@@ -44,4 +45,5 @@ def user(name):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    server = WSGIServer(("0.0.0.0", 80), app)
+    server.serve_forever()
