@@ -4,6 +4,7 @@ from flask import request
 from flask import redirect
 from flask import render_template
 from flask import session
+from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_login import UserMixin
 from flask_login import login_required
@@ -19,6 +20,10 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 # creates Flask application instance
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.urandom(32)
+
+bcrypt = Bcrypt(app)
+
+# SQLAlchemy configuration
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "rat.db")
 app.config["SQLALCHEMY_COMMIT_ON_TEARDOWN"] = True
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -31,9 +36,11 @@ login_manager.init_app(app)
 
 
 class User(db.Model):
+    # creates SQLite "users" table
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True, index=True)
+    password_hash = db.Column(db.String(255))
 
     def __repr__(self):
         return "<User %r>" % self.username
@@ -75,11 +82,23 @@ def login_submit():
     username = request.form["username"]
     password = request.form["password"]
 
-    user = User(username=username)
-    db.session.add(user)
+    # TO DO: check if valid credentials
+    # OBVIOUSLY THIS WON'T BE HARDCODED
+    # WE NEED TO QUERY THE FIRST FIELD FROM THE "users" TABLE
+    # THEN CROSS-REF IT AGAINST THE SECOND ARG (THE TYPED IN PASSWORD)
+    print(bcrypt.check_password_hash("$2b$12$6YgIwJR56oQqXNTg/3f0punBzsk6CyYMFlUkVRkvLh20KWrCa8LJK", password))
 
+    if bcrypt.check_password_hash("$2b$12$6YgIwJR56oQqXNTg/3f0punBzsk6CyYMFlUkVRkvLh20KWrCa8LJK", password) == True:
+        return "successful authentication"
+
+    else:
+        return "failed authentication"
+
+    # generates password hash using bcrypt
+    #password_hash = bcrypt.generate_password_hash(password).decode("utf-8")
+    #user = User(username=username, password_hash=password_hash)
+    #db.session.add(user)
     #login_user("hunter")
-    return "boop"
 
 
 @app.route("/home")
@@ -104,6 +123,11 @@ if __name__ == "__main__":
                         help="server password")
 
     args = parser.parse_args()
+
+    # THIS CODE WILL NEED MOVED SOMEWHERE ELSE
+    #pw_hash = bcrypt.generate_password_hash('hunter2').decode("utf-8")
+    #print(bcrypt.check_password_hash(pw_hash, 'hunter2')) # returns True
+    #print(bcrypt.check_password_hash(pw_hash, 'hunter3')) # returns False
 
     # starts Flask listener
     server = WSGIServer(("0.0.0.0", 80), app)
