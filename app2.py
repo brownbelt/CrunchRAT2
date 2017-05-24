@@ -3,8 +3,16 @@
 
 import argparse
 import os
-from flask import Flask, request, redirect, url_for
-from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
+from flask import Flask
+from flask import request
+from flask import redirect
+from flask import url_for
+from flask_login import LoginManager
+from flask_login import UserMixin
+from flask_login import login_user
+from flask_login import logout_user
+from flask_login import current_user
+from flask_login import login_required
 from gevent.wsgi import WSGIServer
 
 # creates Flask() instance
