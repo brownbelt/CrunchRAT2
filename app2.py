@@ -1,13 +1,17 @@
 # Working authentication code
 # Source: https://github.com/maxcountryman/flask-login
 
-import flask
+import argparse
+import os
+from flask import Flask, request, redirect, url_for
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
 from gevent.wsgi import WSGIServer
-import os
 
-app = flask.Flask(__name__)
-app.secret_key = 'super secret string'  # Change this!
+# creates Flask() instance
+app = Flask(__name__)
+app.config["SECRET_KEY"] = os.urandom(32)
+
+# creates LoginManager() instance
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -46,7 +50,7 @@ def request_loader(request):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if flask.request.method == 'GET':
+    if request.method == 'GET':
         return '''
                <form action='login' method='POST'>
                 <input type='text' name='email' id='email' placeholder='email'></input>
@@ -55,12 +59,12 @@ def login():
                </form>
                '''
 
-    email = flask.request.form['email']
-    if flask.request.form['pw'] == users[email]['pw']:
+    email = request.form['email']
+    if request.form['pw'] == users[email]['pw']:
         user = User()
         user.id = email
         login_user(user)
-        return flask.redirect(flask.url_for('protected'))
+        return redirect(url_for('protected'))
 
     return 'Bad login'
 
