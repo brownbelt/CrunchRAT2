@@ -2,19 +2,19 @@
 # Source: https://github.com/maxcountryman/flask-login
 
 import flask
-import flask_login
+from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
 from gevent.wsgi import WSGIServer
 import os
 
 app = flask.Flask(__name__)
 app.secret_key = 'super secret string'  # Change this!
-login_manager = flask_login.LoginManager()
+login_manager = LoginManager()
 login_manager.init_app(app)
 
 # Our mock database.
 users = {'admin': {'pw': 'secret'}}
 
-class User(flask_login.UserMixin):
+class User(UserMixin):
     pass
 
 
@@ -59,20 +59,20 @@ def login():
     if flask.request.form['pw'] == users[email]['pw']:
         user = User()
         user.id = email
-        flask_login.login_user(user)
+        login_user(user)
         return flask.redirect(flask.url_for('protected'))
 
     return 'Bad login'
 
 
 @app.route('/protected')
-@flask_login.login_required
+@login_required
 def protected():
-    return 'Logged in as: ' + flask_login.current_user.id
+    return 'Logged in as: ' + current_user.id
 
 @app.route('/logout')
 def logout():
-    flask_login.logout_user()
+    logout_user()
     return 'Logged out'
 
 @login_manager.unauthorized_handler
