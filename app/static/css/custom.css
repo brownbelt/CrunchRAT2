@@ -1,0 +1,15 @@
+.http-error {
+  margin: 0 auto;
+  text-align: center;
+  max-width: 480px;
+  padding: 60px 30px;
+  color: #A8A8A8;
+}
+
+.custom-login-form {
+  margin: 0 auto;
+  text-align: center;
+  max-width: 300px;
+  padding: 60px 30px;
+  color: #A8A8A8;
+}

