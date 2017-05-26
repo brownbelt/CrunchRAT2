@@ -1,5 +1,5 @@
-from app.main.controllers import main
-from app.admin.controllers import admin
+from app.main.views import main
+from app.admin.views import admin
 from flask import Flask
 
 app = Flask(__name__)
