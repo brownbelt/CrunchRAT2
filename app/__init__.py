@@ -1,6 +1,6 @@
-from flask import Flask
 from app.main.controllers import main
 from app.admin.controllers import admin
+from flask import Flask
 
 app = Flask(__name__)
 
