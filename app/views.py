@@ -1,14 +1,15 @@
 from flask import render_template
 from app import app
 
+
 @app.route("/", methods=["GET"])
 def index():
-    return "this is the index page"
+    return "index page here"
 
 
-@app.route("/test", methods=["GET"])
-def test():
-    return "this is the test page"
+@app.route("/login", methods=["GET"])
+def login():
+    return "login page here"
 
 
 @app.errorhandler(404)
