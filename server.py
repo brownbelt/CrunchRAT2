@@ -1,4 +1,5 @@
 import argparse
+from colorama import Fore, Style
 from gevent.wsgi import WSGIServer
 from app import app
 
@@ -14,11 +15,11 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    # tries to start Flask server on tcp/8080
+    # tries to start Flask server on tcp/8888
     try:
-        server = WSGIServer(("0.0.0.0", 8080), app)
+        server = WSGIServer(("0.0.0.0", 8888), app)
         server.serve_forever()
 
     # exception raised starting Flask server
     except Exception as e:
-        print("[!] Error: " + str(e))
+        print(Fore.RED + "[-] " + str(e) + Style.RESET_ALL)
