@@ -9,4 +9,9 @@ def index():
 
 @app.route("/login", methods=["GET"])
 def login():
-    return "login page here"
+    return render_template("login.html"), 200
+
+
+@app.route("/loginSubmit", methods=["POST"])
+def login_submit():
+    return "you submitted the login page"
