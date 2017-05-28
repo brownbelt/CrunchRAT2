@@ -2,7 +2,9 @@
 
 {% block container %}
     <div class="custom-login-form">
-        <h3>CrunchRAT 2.0</h3><br>
+        <h3>CrunchRAT 2.0</h3>
+        <img src="{{ url_for('static', filename ='images/smiley.png') }}">
+        <h3>Written by t3ntman</h3><br>
         <form action="{{ url_for('login_submit') }}" method="post">
             <!-- "Username" input -->
             <div class="form-group">
