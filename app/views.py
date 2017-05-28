@@ -1,10 +1,10 @@
-from flask import render_template
+from flask import render_template, redirect
 from app import app
 
 
 @app.route("/", methods=["GET"])
 def index():
-    return "index page here"
+    return redirect("/login", code=302)
 
 
 @app.route("/login", methods=["GET"])
