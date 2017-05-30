@@ -10,12 +10,6 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
-@login_manager.unauthorized_handler
-def unauthorized_handler():
-    return render_template("401.html"), 401
-
-
-
 users = {'admin': {'pw': 'secret'}}
 
 @login_manager.user_loader
