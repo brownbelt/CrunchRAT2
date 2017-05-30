@@ -1,14 +1,10 @@
-from flask import render_template, redirect, request
-from flask_login import login_required, LoginManager
+from flask import render_template, redirect, request, url_for
+from flask_login import login_required, login_user, logout_user, current_user, LoginManager
 from app import app
 from .models import User
 
 # AUTHENTICATION DEBUGGING!
 # Source: https://github.com/maxcountryman/flask-login
-
-import flask
-import flask_login
-
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -50,7 +46,7 @@ def request_loader(request):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if flask.request.method == 'GET':
+    if request.method == 'GET':
         return '''
                <form action='login' method='POST'>
                 <input type='text' name='email' id='email' placeholder='email'></input>
@@ -59,23 +55,23 @@ def login():
                </form>
                '''
 
-    email = flask.request.form['email']
-    if flask.request.form['pw'] == users[email]['pw']:
+    email = request.form['email']
+    if request.form['pw'] == users[email]['pw']:
         user = User()
         user.id = email
-        flask_login.login_user(user)
-        return flask.redirect(flask.url_for('protected'))
+        login_user(user)
+        return redirect(url_for('protected'))
 
     return 'Bad login'
 
 
 @app.route('/protected')
-@flask_login.login_required
+@login_required
 def protected():
-    return 'Logged in as: ' + flask_login.current_user.id
+    return 'Logged in as: ' + current_user.id
 
 
 @app.route('/logout')
 def logout():
-    flask_login.logout_user()
+    logout_user()
     return 'Logged out'
