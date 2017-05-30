@@ -3,7 +3,7 @@ from app import app
 
 
 @app.errorhandler(401)
-def forbidden(e):
+def unauthorized(e):
     return render_template('401.html'), 401
 
 
