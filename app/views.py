@@ -1,16 +1,13 @@
 from flask import render_template, redirect, request
-from flask_login import login_required, LoginManager, UserMixin
+from flask_login import login_required, LoginManager
 from app import app
+from .models import User
 
 # AUTHENTICATION DEBUGGING!
 # Source: https://github.com/maxcountryman/flask-login
 
 import flask
 import flask_login
-
-
-class User(UserMixin):
-    pass
 
 
 login_manager = LoginManager()
