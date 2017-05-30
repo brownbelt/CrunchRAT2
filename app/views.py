@@ -60,18 +60,22 @@ def login():
         user = User()
         user.id = email
         login_user(user)
-        return redirect(url_for('protected'))
+        return redirect(url_for('home'))
 
     return 'Bad login'
 
 
-@app.route('/protected')
+@app.route('/home')
 @login_required
-def protected():
-    return 'Logged in as: ' + current_user.id
+def home():
+    #return 'Logged in as: ' + current_user.id
+    return render_template("home.html"), 200
 
 
-@app.route('/logout')
+@app.route("/logout", methods=["GET"])
 def logout():
+    """
+    DESCRIPTION: Logs out the current user and redirects to login page
+    """
     logout_user()
-    return 'Logged out'
+    return redirect(url_for("login"))
