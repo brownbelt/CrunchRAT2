@@ -8,12 +8,10 @@ if __name__ == '__main__':
     # command-line argument parsing
     parser = argparse.ArgumentParser(prog='CrunchRAT.py',
                                      description='CrunchRAT v2.0')
-
     parser.add_argument('password',
                         action='store',
                         type=str,
                         help='server password')
-
     args = parser.parse_args()
 
     # sets application-wide variable for the server password
