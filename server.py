@@ -3,10 +3,6 @@ from colorama import Fore, Style
 from gevent.wsgi import WSGIServer
 from app import app
 
-# global variable for server password
-# TO DO: see if there's an alternative to this
-global server_password
-
 
 if __name__ == '__main__':
     # command-line argument parsing
@@ -20,8 +16,8 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    # sets server password
-    server_password = args.password
+    # sets application-wide variable for the server password
+    app.server_password = args.password
 
     # tries to start Flask server on tcp/8888
     try:

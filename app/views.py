@@ -2,6 +2,7 @@ from flask import render_template, redirect, request, url_for
 from flask_login import login_required, login_user, logout_user, current_user, LoginManager
 from app import app
 from .models import User
+#import server
 
 # AUTHENTICATION DEBUGGING!
 # Source: https://github.com/maxcountryman/flask-login
@@ -40,6 +41,8 @@ def request_loader(request):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    print(app.server_password)
+
     if request.method == 'GET':
         return '''
                <form action='login' method='POST'>
@@ -62,7 +65,7 @@ def login():
 # CODE ABOVE NEEDS CLEANED UP
 
 
-@app.route('/home')
+@app.route('/home', methods=['GET'])
 @login_required
 def home():
     '''
