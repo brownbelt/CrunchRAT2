@@ -59,17 +59,25 @@ def login():
     return 'Bad login'
 
 
+# CODE ABOVE NEEDS CLEANED UP
+
+
 @app.route('/home')
 @login_required
 def home():
-    #return 'Logged in as: ' + current_user.id
-    return render_template("home.html"), 200
+    '''
+        DESCRIPTION:
+            The user is brought here post-authentication
+    '''
+    return render_template('home.html'), 200
 
 
-@app.route("/logout", methods=["GET"])
+@app.route('/logout', methods=['GET'])
 def logout():
-    """
-    DESCRIPTION: Logs out the current user and redirects to login page
-    """
+    '''
+        DESCRIPTION:
+            Logs out the current user and redirects back
+            to the login page
+    '''
     logout_user()
-    return redirect(url_for("login"))
+    return redirect(url_for('login'))
