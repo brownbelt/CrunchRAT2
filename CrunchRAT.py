@@ -6,7 +6,7 @@ from app import app
 
 if __name__ == '__main__':
     # command-line argument parsing
-    parser = argparse.ArgumentParser(prog='server.py',
+    parser = argparse.ArgumentParser(prog='CrunchRAT.py',
                                      description='CrunchRAT v2.0')
 
     parser.add_argument('password',
